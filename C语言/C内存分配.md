@@ -199,3 +199,343 @@ int main()
 }	
 ```
 
+------
+
+##### 3 栈相关
+
+##### 3.1 初步跟踪
+
+下面以一简单代码为背景，使用gdb调试来分析函数是如何在栈中被调用，以期加深对c代码执行的理解；代码如下：
+
+```c
+#include <stdio.h>
+
+void foo(int a, int b) {
+    int c = a + b;
+    printf("Result: %d\n", c);
+}
+
+int main() {
+    int x = 3;
+    int y = 4;
+    foo(x, y);
+    return 0;
+}
+```
+
+首先，分别依次执行以下命令：
+
+` gcc -g hello.c`
+
+`gdb a.out`
+
+`(gdb) b main`：main函数处打断点
+
+`(gdb) b foo`：foo函数处打断点
+
+`(gdb) r` :运行至main函数处
+
+`(gdb) disas main`:反汇编main函数
+
+下图分别为main函数和foo函数的汇编代码，最左侧为代码地址
+
+<div style="display: flex; justify-content: space-between;">
+    <img src="Stack-01.png" style="zoom:70%;" />
+    <img src="Stack-02.png" style="zoom:60%;" />
+</div>
+
+此刻程序依然在main函数中，下面查看当前栈帧信息，命令如下
+
+`(gdb) i frame`
+
+```html
+Breakpoint 1, main () at hello.c:8
+8	int main() {
+(gdb) i frame
+Stack level 0, frame at 0x7fffffffe000:
+ rip = 0x55555555517f in main (hello.c:8); saved rip = 0x7ffff7dea083
+ source language c.
+ Arglist at 0x7fffffffdff0, args: 
+ Locals at 0x7fffffffdff0, Previous frame's sp is 0x7fffffffe000
+ Saved registers:
+  rip at 0x7fffffffdff8
+```
+
+**栈帧信息说明**：
+
+`0x7fffffffe000 `为当前栈帧在内存中的起始地址；
+
+`rip = 0x55555555517f` 指令指针寄存器，保存了当前正在执行的指令地址，结合汇编代码可知，其值为main函数地址；
+
+`saved rip = 0x7ffff7dea083` 这是调用此函数时保存的返回地址。即，当`main`函数执行完毕时，程序将跳转回这个地址继续执行；
+
+`Locals at 0x7fffffffdff0` 这个地址是局部变量所在的栈地址；
+
+`Saved registers: rip at 0x7fffffffdff8` 指令指针寄存器存储的值在栈中的地址。
+
+
+
+继续步进调试代码，进入`foo`函数，查看栈帧信息：
+
+`(gdb) i frame`
+
+```html
+(gdb) i frame
+Stack level 0, frame at 0x7fffffffdfe0:
+ rip = 0x555555555149 in foo (hello.c:3); saved rip = 0x5555555551a8
+ called by frame at 0x7fffffffe000
+ source language c.
+ Arglist at 0x7fffffffdfd0, args: a=21845, b=1431654909
+ Locals at 0x7fffffffdfd0, Previous frame's sp is 0x7fffffffdfe0
+ Saved registers:
+  rip at 0x7fffffffdfd8
+```
+
+**栈帧信息说明**：(解释与main函数不同点)
+
+`called by frame at 0x7fffffffe000` ：这里的`0x7fffffffe000`就是`main`函数的栈帧起始地址，说明本栈帧由main函数栈帧调用；
+
+`saved rip = 0x5555555551a8`：指令指针寄存器存储的值，为函数调用后，主函数中的该被调函数代码的下一句代码的地址，从而实现函数返回后，可以继续执行剩余代码。
+
+
+
+使用命令查看地址映射：(可以查看整个程序在系统中内存分配情况)
+
+`(gdb) info proc mappings`
+
+![](Stack-03.png)
+
+
+
+##### 3.2 高级跟踪
+
+==入栈顺序：从下到上，从右至左==，**注意**：下图中的“返回地址”和“前栈栈底rbp”需要颠倒一下。
+
+![](Stack-04.png)
+
+代码如下：
+
+```c
+#include <stdio.h>
+int func(int x,int y){
+   char name[6];
+   int sum = 0; 
+   printf("Type you name: "); 
+   gets(name); //输入字符过多，name会越界，栈溢出崩溃
+   return x+y;
+}
+
+int main (int argc,char *argv[]) {
+    func(3,4);
+    return 0;
+}
+```
+
+注意编译时关闭栈保护：`gcc -g -fno-stack-protector -z execstack  main.c`
+
+反汇编结果如下：
+
+![](Stack-06.png)
+
+**设置main函数的断点，起初栈中只有main函数信息如下**：（命令：`bt full`）
+
+```bash
+(gdb) bt full
+#0  main (argc=1, argv=0x7fffffffe0e8) at hello.c:12
+No locals.
+```
+
+查看此时栈底（`x $rbp`）
+
+```bash
+(gdb) x $rbp
+0x7fffffffdff0:	0x00000000
+```
+
+查看栈顶：
+
+```bash
+(gdb) x/8 $rsp
+0x7fffffffdfe0:	0xffffe0e8	0x00007fff	0x00000000	0x00000001
+0x7fffffffdff0:	0x00000000	0x00000000	0xf7dea083	0x00007fff
+```
+
+查看地址映射：（栈起始地址为：`0x7ffffffde000`）
+
+![](Stack-07.png)
+
+**运行进入func函数， 查看栈帧信息**：
+
+```bash
+(gdb) bt full
+#0  func (x=21845, y=1431654957) at hello.c:2
+        name = "\000\000\340QUU"
+        sum = 21845
+#1  0x00005555555551d0 in main (argc=1, argv=0x7fffffffe0e8) at hello.c:12
+No locals.
+```
+
+查看当前栈底：
+
+```bash
+(gdb) x/12xw $rbp
+0x7fffffffdfd0:	0xffffdff0	0x00007fff	0x555551d0	0x00005555
+0x7fffffffdfe0:	0xffffe0e8	0x00007fff	0x00000000	0x00000001
+0x7fffffffdff0:	0x00000000	0x00000000	0xf7dea083	0x00007fff
+```
+
+查看当前栈的栈顶：
+
+```
+(gdb) x/20xw $rsp
+0x7fffffffdfb0:	0xffffdfd6	0x00007fff	0x00000004	0x00000003
+0x7fffffffdfc0:	0xf7fb72e8	0x00007fff	0x555551e0	0x00000000
+0x7fffffffdfd0:	0xffffdff0	0x00007fff	0x555551d0	0x00005555
+0x7fffffffdfe0:	0xffffe0e8	0x00007fff	0x00000000	0x00000001
+0x7fffffffdff0:	0x00000000	0x00000000	0xf7dea083	0x00007fff
+```
+
+查看sum值
+
+```bash
+(gdb) x &sum
+0x7fffffffdfcc:	0x00005555
+```
+
+查看name值
+
+```
+(gdb) x &name
+0x7fffffffdfc6:	0x51e00000
+```
+
+结合以上内容，总结程序栈内容如下
+
+```html
+--------4G---------0xFFFFFFFF  高地址
+|      -----      | 0xffffffffff601000  
+|       内核      |   
+|      -----      | 0xffffffffff600000  //内核系统调用 起始地址
+|                 |   
+========3G=========0xC0000000
+|                 |
+|-----------------| 0x7ffffffde000  //系统栈的起始地址: 栈是向下生长
+|    栈(stack)    |    
+|    --------     | 0x7fffffffdff0  //main函数的栈底
+|   0x00000001    |   //argc=1   调用main函数时入栈 
+|   0x00000000    |   //字节对齐  
+|   0x00007fff    |   //argv=0x7fffffffe0e8  指针数组首地址(8字节，64位机，小端)
+|   0xffffe0e8    |
+|    -------      |   //当main函数栈进完后，会把下一地址存入rbp中，作为新栈的栈底
+|   0x00005555    |  //返回地址(0x00005555555551d0)： 调用func后，返回到main的地址
+|   0x555551d0    |
+|   0x00007fff    | 0x7fffffffdfd0 //func函数的栈底：存储的上一栈的栈底(main函数的栈底 8字节)
+|   0xffffdff0    |  
+|   0x00005555    |  //sum 局部变量入栈   ->  顺序是从下到上，从右至左，反向进栈
+|   0x51e00000    |  //name[6]
+|   0x00007fff    |
+|   0xf7fb72e8    |  //补全
+|   0x00000003    |  //实参拷贝到形参 b=4 a=3; 
+|   0x00000004	  |                
+|-----------------| 0x7ffffffff000 
+|                 |
+|      .....      |          
+|                 |
+|-----------------|
+|    堆(heap)     |   
+-------------------
+|    DATA数据段   | 
+-------------------
+|                 |
+|      -----      | 0x555555558000 
+|   代码区(只读)   | 
+|      -----      | 0x555555554000  //a.out 程序的 起始地址
+|                 | 
+-------------------0x00000000 低地址		
+```
+
+------
+
+##### 4、大小端
+
+这部分关注内容为：数据在内存中存储时，它的地址高低问题；比如对于一个`int`型数据，按照从右到左的顺序，内存地址是增加还是减少？
+
+- 小端（较多采用）：将低序字节存储在起始地址，这称为小端(little-endian)字节序
+- 大端：将高序字节存储在起始地址，这称为大端(big-endian)字节序
+
+假如现有一32位`int`型数`0x12345678`，那么其MSB(Most Significant Byte，最高有效字节)为`0x12`，其LSB (Least Significant Byte，最低有效字节)为`0x78`，在CPU内存中有两种存放方式：（假设从地址`0x4000`开始存放），则大小端区别如下：
+
+![](大小端.png)
+
+```c
+#include <stdio.h>
+
+int main () {
+    int a = 0x12345678;
+    char* b = (unsigned char *)&a;
+    printf("%x\n", *(b+1));
+    return 0;
+}
+out: 56
+```
+
+------
+
+##### 5、指针偏移
+
+==指针偏移多少是由它指向的数据类型决定==
+
+```c
+#include <stdio.h>
+int main () {
+    int a[5] = {1,2,3,4,5};
+    int *ptr = (int *)(&a+1);
+    printf("%d, %d\n", *(a+1), *(ptr-1));
+    return 0;
+}
+
+out:2, 5
+```
+
+注意：上面代码中的`&a+1`，这里加一其实地址增加了20个字节，也即偏移了整个数组的大小。
+
+（**这里不要和数组名也是地址搞混淆，记住`&a`表示取整个数组的地址，而`a`只是数组第一个元素的地址**）
+
+当去掉上述代码中的第4行的指针类型强转，也即
+
+```c
+#include <stdio.h>
+int main () {
+    int a[5] = {1,2,3,4,5};
+    int *ptr = (&a+1);
+    printf("%d, %d\n", *(a+1), *(ptr-1));
+    return 0;
+}
+```
+
+运行出现warning（指针类型不匹配）:
+
+**warning: initialization of ‘int \*’ from incompatible pointer type ‘int (*)[5]’ [-Wincompatible-pointer-types]**
+
+```html
+//例:指针偏移 + 类型转换
+//问：下题输出信息是？
+int a[5]={1,2,3,4,5}; 
+int *ptr=(int *)(&a+1); 
+	//&a:取数组的地址。    
+	//&a+1:下一个对象的地址(对象是 数组类型，长度单位 是 4*5,偏移1个数组的大小),
+	//指针的偏移: 是以它指向的对象的数据类型的长度为偏移的单位
+	//          指针的类型就像人的身份，你是以个人，还是老板的身份
+	//          不同的身份，你的贷款额度不一样
+	//(int *): 把指向数组类型的地址，强转为指向int型的地址	                        
+	//int 型是4 ，double型是8  数组型是数组长度。	                        
+printf("%d,%d",*(a+1),*(ptr-1)); 
+	//a: 数组名，是数组首个元素的地址，指向的数据类型是元素的类型 int
+	//a+1:  下一元素的地址，即a[1]  (对象是 int类型，长度单位是 4)    
+	//*(a+1): a地址偏移1个单位(int 是4)，再取里面内容(int型), 是2
+	//ptr: 是指向int型的指针
+	//ptr-1: 地址减1个单位(int型是4)
+	//*(ptr-1): 取里面内容(int型)   是5
+```
+
+##### 6、

@@ -1,4 +1,4 @@
-[史上最全Vim快捷键键位图（入门到进阶） | 菜鸟教程 (runoob.com)](https://www.runoob.com/w3cnote/all-vim-cheatsheat.html)
+[l史上最全Vim快捷键键位图（入门到进阶） | 菜鸟教程 (runoob.com)](https://www.runoob.com/w3cnote/all-vim-cheatsheat.html)
 
 [Linux vi/vim | 菜鸟教程 (runoob.com)](https://www.runoob.com/linux/linux-vim.html)
 
@@ -10,7 +10,7 @@
 
 以下是普通模式常用的几个命令：
 
-- **i** -- 切换到输入模式，在光标当前位置开始输入文本。
+- **i** -- 切换到输入模式，在光标J当前位置开始输入文本。
 - **x** -- 删除当前光标所在处的字符。
 - **:** -- 切换到底线命令模式，以在最底一行输入命令。
 - **a** -- 进入插入模式，在光标下一个位置开始输入文本。
@@ -58,3 +58,52 @@
 按 **ESC** 键可随时退出底线命令模式。
 
 ![](vim工作模式.png)
+
+#### [**Vim 删除命令的常用方法包括**](https://blog.csdn.net/jiesa/article/details/53319755)[1](https://blog.csdn.net/jiesa/article/details/53319755)[2](https://zhuanlan.zhihu.com/p/358292858)[3](https://blog.csdn.net/guotianqing/article/details/106722407)[4](https://zhuanlan.zhihu.com/p/159458128)[5](https://www.cnblogs.com/zknublx/p/8795789.html):
+
+1. 删除光标所在行：dd
+2. 删除从光标所在行开始的n行：dnd，例如：d2d 删除光标所在行及其后1行，共删除2行
+3. 删除从光标所在行到文件尾：dG
+4. 删除从光标行到文件头：dgg
+5. 删除从光标位置到行尾：d$
+6. 进入普通可视模式，$选择到行尾，操作符d执行删除
+7. 进入行可视模式，j/k/up/down进行上下选择，操作符d执行删除
+8. 进入列可视模式，h/l进行列选择，j/k/up/down/linenumG进行行选择，操作符d执行删除
+
+
+
+在vim中有3中方法可以==跳转到指定行==（首先进入命令行模式）：
+
+1、ngg/nG （跳转到文件第n行，无需回车）
+
+==2、:n （跳转到文件第n行，需要回车）==
+
+3、vim +n filename （在打开文件后，跳转到文件的第n行
+
+
+
+==结合ctag用法==
+
+``` 
+vim . //进入目录
+Ctrl + ]  //调到定义处
+Ctrl + o  //返回上一次位置
+          //Ctrl + i  再返回
+g f	  //跳到光标停留的include的头文件里	
+d w  //删除个字符串
+u   //可无限撤销
+:cs f f driver.c   //搜索 driver.c 文件
+g d   //选中当前光标处的字符串
+      //再 n  查找下一个	
+ctrl shift  -  s  //查找光标处的字符串
+                  // j:下一条  k:上一条  f:下一页  b：上一页  shift+g: 到末尾
+:cs f s attach //全局 搜索字符串 attach        
+Ctrl+w v   //  垂直分割窗口
+           //  Ctrl+w w 可在窗口间切换
+           //  Ctrl+w o  只保留当前窗口
+ctrl +  变大字体
+:e  .    //编辑当前目录
+shift + g //跳转到文件末尾
+:noh    // 取消选中
+```
+

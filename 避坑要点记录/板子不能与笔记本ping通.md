@@ -8,7 +8,7 @@
 
 于是需要在板子上执行命令：
 
-`sudo ifconfig eth0 192.168.9.110 up`
+`sudo ifconfig eth0 192.168.137.13 up`
 
 在此之后，在笔记本后者虚拟机上均可ping通板子
 

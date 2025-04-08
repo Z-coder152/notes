@@ -618,7 +618,6 @@ F10 //单步执行(成功看到，调试光标有移动，和调试窗口的cpu�
 关于u-boot启动的总结，启动流程并非统一，根据配置文件的不同而不同，但包括的几个基本操作
 
 - 首先，保存重要的启动参数
-
 - 系统控制寄存器初始化，根据当前异常级 (EL) 初始化相应的控制寄存器，并设置相关的参数，如启用FP/SIMD指令集
 - 应用ARM核心特定的错误修复，调用 `apply_core_errata` 函数，针对特定的ARM处理器（如Cortex-A53、Cortex-A57）应用已知的硬件错误修复
 - 低级初始化，调用 `lowlevel_init`，进行处理器特定的初始化，例如GIC（通用中断控制器）的配置
@@ -626,17 +625,13 @@ F10 //单步执行(成功看到，调试光标有移动，和调试窗口的cpu�
 - 栈和全局数据重定位，在某些情况下，系统需要对栈和全局数据进行重定位，以确保在新的内存地址中正确使用
 - C运行时环境设置，最后，调用 `c_runtime_cpu_setup`，完成C运行时环境的设置，包括调整向量表位置，确保C代码可以正确运行
 
-```assembly
+[uboot启动流程详解(5)-_main_uboot main函数位置-CSDN博客](https://blog.csdn.net/silent123go/article/details/53198125)
 
+```assembly
 #include <config.h>
 #include <asm-offsets.h>
 #include <asm/macro.h>
 #include <linux/linkage.h>
-
-/*
-
-
-/*
 
 ENTRY(_main)
 
@@ -735,7 +730,7 @@ ENDPROC(_main)
 
 ```
 
-这个代码文件是AArch64架构的U-Boot启动代码，负责设置C运行时环境，并调用板级初始化函数。下面结合前面的代码继续详细分析其启动过程。
+
 
 1. **入口点 `_main`**：
    - `_main` 是从 `start.S` 文件中通过分支跳转进入的函数，它负责执行系统启动时的核心初始化步骤。

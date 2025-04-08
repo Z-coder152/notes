@@ -117,11 +117,12 @@ MSR : Move to Special Register
 ##### 4）跳转指令
 
 ```assembly
-b main  @跳转到main标号处执行（只能短跳转32M）
+b main  @跳转到main标号处执行（只能短跳转32M），不记录返回地址
 
 bl break @跳转到标号break处执行，同时将当前地址保存在LR寄存器中,当跳转代码结束后，用mov pc,lr跳回来
 
 beq addr @相等(指的是CPSR寄存器中的Z条件码为1)时，跳转到地址addr处
+b.ne 也不记录返回地址
 
 bne addr @不等时，跳转到地址addr,注意：这里地址通常是函数名
 

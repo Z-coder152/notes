@@ -1,0 +1,7 @@
+&i2c1 {
+    mpu6050@68 {
+        compatible = "invensense,mpu6050";
+        reg = <0x68>;
+        status = "okay";
+    };
+};

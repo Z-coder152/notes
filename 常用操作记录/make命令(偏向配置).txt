@@ -1,0 +1,18 @@
+//载入配置
+$ make ARCH=arm64 tegra_defconfig  //导入官方配置， 【指定CPU体系结构后，才能找到该配置文件】
+				//若在Makefile中已经设置了ARCH=arm64，则这里只需要敲"make tegra_defconfig"
+          				//会从arch/arm64/configs下 查找tegra_defconfig，导入到当前目录，重命名为.config)
+$ make menuconfig //在官方配置基础上进行配置，配置保存后自动写入到.config
+	
+	
+//从零配置
+$ mv  .config .config.ago //清除当前配置(.config)
+$ make  menuconfig ARCH=arm64 /*生成最初始配置界面（如不指定ARCH，默认的是x86的）
+    当前目录有.config则导入,如无则用默认x86配置生成.config
+   */
+
+//保存配置（应该不怎用）
+$ make savedefconfig //生成defconfig  (对make menuconfig后生成的.config文件在体积上进行简化
+		//删掉没用的代码行，相比make  menuconfig 后直接Save保存的配置，去掉几千行无用代码)
+$ cp defconfig arch/arm64/configs/****_defconfig //发布配置(原厂发布配置到内核就是该方式)
+$make ARCH=arm64 ****_defconfig    //导入该配置

@@ -1,0 +1,16 @@
+
+mmc启动：
+setenv mmc_bootcmd  setenv boot_syslinux_conf extlinux/extlinux.conf \; run mmc_boot
+
+u盘启动：
+setenv usb_bootcmd  setenv boot_syslinux_conf extlinux/usb_extlinux.conf \; run usb_boot
+setenv bootcmd run usb_bootcmd
+
+u-boot NFS启动：
+setenv bootargs  root=/dev/nfs rw nfsroot=192.168.137.118:/nfs/rootfs,v3 console=ttyS0,115200 init=/linuxrc ip=192.168.137.9
+
+setenv bootcmd pci enum \; pci \; ext4load mmc 0:1 0x84000000 /boot/Image \; ext4load mmc 0:1 83100000 /boot/tegra210-p3448-0002-p3449-0000-b00.dtb \; booti 0x84000000 - 83100000
+
+环境变量删除：（以删除bootargs 为例子）
+setenv bootargs  
+(也即给环境变量赋空值

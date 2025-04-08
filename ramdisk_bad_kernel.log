@@ -1,0 +1,714 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2025.01.06 11:46:56 =~=~=~=~=~=~=~=~=~=~=~=
+run ramdisk_bootcmd 
+12003336 bytes read in 303 ms (37.8 MiB/s)
+237113 bytes read in 23 ms (9.8 MiB/s)
+3434108 bytes read in 97 ms (33.8 MiB/s)
+## Flattened Device Tree blob at 83100000
+   Booting using the fdt blob at 0x83100000
+ERROR: reserving fdt memory region failed (addr=0 size=0)
+ERROR: reserving fdt memory region failed (addr=0 size=0)
+   Using Device Tree in place at 0000000083100000, end 000000008313ce38
+Can't find Ethernet MAC address in cboot DTB
+copying carveout for /host1x@50000000/dc@54200000...
+copying carveout for /host1x@50000000/dc@54240000...
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.9.307 (zhan@localhost.localdomain) (gcc version 7.5.0 (Ubuntu/Linaro 7.5.0-3ubuntu1~18.04) ) #5 SMP PREEMPT Mon Jan 6 10:42:26 CST 2025
+[    0.000000] Boot CPU: AArch64 Processor [411fd071]
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb0_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb0_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb1_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb1_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] cma: Reserved 64 MiB at 0x00000000fac00000
+[    0.000000] psci: probing for conduit method from DT.
+[    0.000000] psci: PSCIv1.0 detected in firmware.
+[    0.000000] psci: Using standard PSCI v0.2 function IDs
+[    0.000000] psci: MIGRATE_INFO_TYPE not supported.
+[    0.000000] psci: SMC Calling Convention v1.1
+[    0.000000] percpu: Embedded 19 pages/cpu s48024 r0 d29800 u77824
+[    0.000000] Detected PIPT I-cache on CPU0
+[    0.000000] CPU features: enabling workaround for ARM erratum 832075
+[    0.000000] Speculative Store Bypass Disable mitigation not required
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 1023544
+[    0.000000] Kernel command line: initrd=0xa0000000,0x800000 root=/dev/ram0 rw rootwait rootfstype=ext2 console=ttyS0,115200 init=/linuxrc ip=192.168.9.9
+[    0.000000] log_buf_len individual max cpu contribution: 32768 bytes
+[    0.000000] log_buf_len total cpu_extra contributions: 98304 bytes
+[    0.000000] log_buf_len min size: 32768 bytes
+[    0.000000] log_buf_len: 131072 bytes
+[    0.000000] early log buf free: 30488(93%)
+[    0.000000] PID hash table entries: 4096 (order: 3, 32768 bytes)
+[    0.000000] Dentry cache hash table entries: 524288 (order: 10, 4194304 bytes)
+[    0.000000] Inode-cache hash table entries: 262144 (order: 9, 2097152 bytes)
+[    0.000000] software IO TLB: mapped [mem 0xf6c00000-0xfac00000] (64MB)
+[    0.000000] Memory: 3524556K/4159488K available (5886K kernel code, 714K rwdata, 1660K rodata, 3392K init, 372K bss, 569396K reserved, 65536K cma-reserved)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     modules : 0xffffff8000000000 - 0xffffff8008000000   (   128 MB)
+[    0.000000]     vmalloc : 0xffffff8008000000 - 0xffffffbebfff0000   (   250 GB)
+[    0.000000]       .text : 0xffffff8008080000 - 0xffffff8008640000   (  5888 KB)
+[    0.000000]     .rodata : 0xffffff8008640000 - 0xffffff80087f0000   (  1728 KB)
+[    0.000000]       .init : 0xffffff80087f0000 - 0xffffff8008b40000   (  3392 KB)
+[    0.000000]       .data : 0xffffff8008b40000 - 0xffffff8008bf2808   (   715 KB)
+[    0.000000]        .bss : 0xffffff8008bf2808 - 0xffffff8008c4fa8c   (   373 KB)
+[    0.000000]     fixed   : 0xffffffbefe7fd000 - 0xffffffbefec00000   (  4108 KB)
+[    0.000000]     PCI I/O : 0xffffffbefee00000 - 0xffffffbeffe00000   (    16 MB)
+[    0.000000]     vmemmap : 0xffffffbf00000000 - 0xffffffc000000000   (     4 GB maximum)
+[    0.000000]               0xffffffbf00000000 - 0xffffffbf03fc8000   (    63 MB actual)
+[    0.000000]     memory  : 0xffffffc000000000 - 0xffffffc0ff200000   (  4082 MB)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+[    0.000000] Preemptible hierarchical RCU implementation.
+[    0.000000] Build-time adjustment of leaf fanout to 64.
+[    0.000000] RCU restricting CPUs from NR_CPUS=64 to nr_cpu_ids=4.
+[    0.000000] RCU: Adjusting geometry for rcu_fanout_leaf=64, nr_cpu_ids=4
+[    0.000000] NR_IRQS:64 nr_irqs:64 0
+[    0.000000] /interrupt-controller@60004000: 192 interrupts forwarded to /interrupt-controller
+[    0.000000] PLL_U already enabled. Postponing set full defaults
+[    0.000000] PLL_P already enabled. Postponing set full defaults
+[    0.000000] PLL_X already enabled. Postponing set full defaults
+[    0.000000] arm_arch_timer: Architected cp15 timer(s) running at 19.20MHz (phys).
+[    0.000000] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+[    0.000007] sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 4398046511078ns
+[    0.001013] Console: colour dummy device 80x25
+[    0.001034] kmemleak: Kernel memory leak detector disabled
+[    0.001057] Calibrating delay loop (skipped), value calculated using timer frequency.. 38.40 BogoMIPS (lpj=76800)
+[    0.001069] pid_max: default: 32768 minimum: 301
+[    0.001321] Mount-cache hash table entries: 8192 (order: 4, 65536 bytes)
+[    0.001329] Mountpoint-cache hash table entries: 8192 (order: 4, 65536 bytes)
+[    0.002200] ftrace: allocating 20499 entries in 81 pages
+[    0.047462] ASID allocator initialised with 65536 entries
+[    0.083143] Speedo Revision 4
+[    0.083236] Tegra210: unknown SKU 0x8f
+[    0.083258] Tegra Revision: A02 SKU: 143 CPU Process: 1 SoC Process: 1
+[    0.131544] Detected PIPT I-cache on CPU1
+[    0.131613] CPU1: Booted secondary processor [411fd071]
+[    0.163555] Detected PIPT I-cache on CPU2
+[    0.163585] CPU2: Booted secondary processor [411fd071]
+[    0.195618] Detected PIPT I-cache on CPU3
+[    0.195647] CPU3: Booted secondary processor [411fd071]
+[    0.195707] Brought up 4 CPUs
+[    0.195727] SMP: Total of 4 processors activated.
+[    0.195736] CPU features: detected feature: 32-bit EL0 Support
+[    0.195937] CPU: All CPU(s) started at EL2
+[    0.195957] alternatives: patching kernel code
+[    0.198257] devtmpfs: initialized
+[    0.229460] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns
+[    0.229495] futex hash table entries: 1024 (order: 5, 131072 bytes)
+[    0.231135] pinctrl core: initialized pinctrl subsystem
+[    0.231769] NET: Registered protocol family 16
+[    0.251725] cpuidle: using governor menu
+[    0.251785] vdso: 2 pages (1 code @ ffffff8008647000, 1 data @ ffffff8008b44000)
+[    0.251807] hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+[    0.252632] DMA: preallocated 256 KiB pool for atomic allocations
+[    0.253660] Serial: AMBA PL011 UART driver
+[    0.296506] HugeTLB registered 2 MB page size, pre-allocated 0 pages
+[    0.297733] gpiochip_add_data: GPIOs 0..255 (tegra-gpio) failed to register
+[    0.298611] vgaarb: loaded
+[    0.302174] clocksource: Switched to clocksource arch_sys_counter
+[    0.329731] NET: Registered protocol family 2
+[    0.329869] IP idents hash table entries: 65536 (order: 7, 524288 bytes)
+[    0.331776] TCP established hash table entries: 32768 (order: 6, 262144 bytes)
+[    0.331992] TCP bind hash table entries: 32768 (order: 7, 524288 bytes)
+[    0.332516] TCP: Hash tables configured (established 32768 bind 32768)
+[    0.332660] UDP hash table entries: 2048 (order: 4, 65536 bytes)
+[    0.332742] UDP-Lite hash table entries: 2048 (order: 4, 65536 bytes)
+[    0.333037] NET: Registered protocol family 1
+[    0.333502] RPC: Registered named UNIX socket transport module.
+[    0.333510] RPC: Registered udp transport module.
+[    0.333514] RPC: Registered tcp transport module.
+[    0.333518] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.333744] Trying to unpack rootfs image as initramfs...
+[    0.334241] rootfs image is not initramfs (no cpio magic); looks like an initrd
+[    0.358324] Freeing initrd memory: 8192K
+[    0.358962] hw perfevents: enabled with armv8_pmuv3 PMU driver, 7 counters available
+[    0.361623] workingset: timestamp_bits=46 max_order=20 bucket_order=0
+[    0.372616] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 253)
+[    0.372644] io scheduler noop registered
+[    0.372650] io scheduler deadline registered
+[    0.372716] io scheduler cfq registered (default)
+[    0.374578]  pcie: invalid function "xusb" for lane "pcie-5"
+[    0.374921] tegra-xusb-padctl 7009f000.xusb_padctl: failed to create pad pcie: -22
+[    0.374929] tegra-xusb-padctl 7009f000.xusb_padctl: failed to create pad pcie: -22
+[    0.375120] tegra-xusb-padctl 7009f000.xusb_padctl: failed to setup pads: -22
+[    0.375151] tegra-xusb-padctl: probe of 7009f000.xusb_padctl failed with error -22
+[    0.383341] tegra-pmc 7000e400.pmc: i2c-thermtrip node not found, emergency thermal reset disabled.
+[    0.387189] Serial: 8250/16550 driver, 4 ports, IRQ sharing disabled
+[    0.389135] console [ttyS0] disabled
+[    0.389239] 70006000.serial: ttyS0 at MMIO 0x70006000 (irq = 59, base_baud = 25500000) is a Tegra
+[    1.150344] console [ttyS0] enabled
+[    1.163586] brd: module loaded
+[    1.167883] max77620 4-003c: PMIC Version OTP:0x35 and ES:0x8
+[    1.184057] random: fast init done
+[    1.739015] random: crng init done
+[    1.902572] GPIO line 505 (spmic-default-output-high) hogged as output/high
+[    1.956412] mousedev: PS/2 mouse device common for all mice
+[    1.968490] NET: Registered protocol family 10
+[    1.974208] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    1.980835] NET: Registered protocol family 17
+[    1.985536] Registered cp15_barrier emulation handler
+[    1.990716] Registered setend emulation handler
+[    2.004554] gpio gpiochip1: gpio-line-names specifies 240 line names but there are 256 lines on the chip
+[    2.015132] GPIO line 6 (system-suspend-gpio) hogged as output/high
+[    2.021397] GPIO line 151 (camera-control-output-low) hogged as output/low
+[    2.035954] input: gpio-keys as /devices/platform/gpio-keys/input/input0
+[  125.633876] irq 94: nobody cared (try booting with the "irqpoll" option)
+[  125.640577] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 4.9.307 #5
+[  125.646570] Hardware name: NVIDIA Jetson Nano Developer Kit (DT)
+[  125.652563] Call trace:
+[  125.655026] [<ffffff8008089990>] dump_backtrace+0x0/0x1e8
+[  125.660415] [<ffffff8008089b9c>] show_stack+0x24/0x30
+[  125.665464] [<ffffff800862b588>] dump_stack+0x8c/0xac
+[  125.670507] [<ffffff80080f936c>] __report_bad_irq+0x3c/0xf8
+[  125.676066] [<ffffff80080f97c0>] note_interrupt+0x2c0/0x310
+[  125.681628] [<ffffff80080f65e8>] handle_irq_event_percpu+0x50/0x60
+[  125.687793] [<ffffff80080f6648>] handle_irq_event+0x50/0x80
+[  125.693353] [<ffffff80080fa724>] handle_fasteoi_irq+0xd4/0x1c0
+[  125.699170] [<ffffff80080f58f0>] generic_handle_irq+0x38/0x50
+[  125.704903] [<ffffff80080f5970>] __handle_domain_irq+0x68/0xc0
+[  125.710721] [<ffffff8008080f4c>] gic_handle_irq+0x5c/0xb0
+[  125.716107] Exception stack(0xffffff8008b43d30 to 0xffffff8008b43e60)
+[  125.722532] 3d20:                                   ffffffc0ff0bb700 00000040f6704000
+[  125.730344] 3d40: 0000000000000004 00000000000d895f 0000000000000015 00ffffffffffffff
+[  125.738156] 3d60: 000000005dc43e50 0000000000000049 ffffffc0ff0ba89c 0000000000000045
+[  125.745968] 3d80: ffffffc0ff0ba87c 00000000f8a177fa 0000000000366352 071c71c71c71c71c
+[  125.753778] 3da0: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+[  125.761590] 3dc0: 0000000000000000 0000001d405ca3cd 0000000000000000 ffffffc0f941e400
+[  125.769400] 3de0: 0000000000000000 ffffff8008bbb180 0000001d405c962c 0000000000000000
+[  125.777212] 3e00: ffffff80089b66c0 ffffff8008b47000 0000000000000001 ffffff8008b43e60
+[  125.785024] 3e20: ffffff80084dd8a8 ffffff8008b43e60 ffffff80084dd8c0 0000000060000045
+[  125.792837] 3e40: ffffff8008b43e60 ffffff80084dd8a8 ffffffffffffffff 0000001d405c962c
+[  125.800649] [<ffffff80080828ac>] el1_irq+0xac/0x120
+[  125.805524] [<ffffff80084dd8c0>] cpuidle_enter_state+0xb0/0x360
+[  125.811429] [<ffffff80084ddbe4>] cpuidle_enter+0x34/0x48
+[  125.816731] [<ffffff80080e8a6c>] call_cpuidle+0x44/0x70
+[  125.821943] [<ffffff80080e8dc8>] cpu_startup_entry+0x1a8/0x1f8
+[  125.827760] [<ffffff800862cf90>] rest_init+0x88/0x98
+[  125.832721] [<ffffff80087f0bec>] start_kernel+0x360/0x378
+[  125.838108] [<ffffff80087f01f8>] __primary_switched+0x74/0x88
+[  125.843838] handlers:
+[  125.846105] [<ffffff80080f66e8>] irq_default_primary_handler threaded [<ffffff800847cb00>] regmap_irq_thread
+[  125.855936] Disabling IRQ #94
+[0000.230] [L4T TegraBoot] (version 00.00.2018.01-l4t-8728f3cb)
+[0000.236] Processing in cold boot mode Bootloader 2
+[0000.240] A02 Bootrom Patch rev = 1023
+[0000.244] Power-up reason: pmc por
+[0000.247] No Battery Present
+[0000.250] pmic max77620 reset reason
+[0000.253] pmic max77620 NVERC : 0xff
+[0000.256] RamCode = 0
+[0000.259] Platform has DDR4 type RAM
+[0000.262] max77620 disabling SD1 Remote Sense
+[0000.266] Setting DDR voltage to 1125mv
+[0000.270] Serial Number of Pmic Max77663: 0x241869
+[0000.278] Entering ramdump check
+[0000.281] Get RamDumpCarveOut = 0x0
+[0000.284] RamDumpCarveOut=0x0,  RamDumperFlag=0xe59ff3f8
+[0000.289] Last reboot was clean, booting normally!
+[0000.294] Sdram initialization is successful 
+[0000.298] SecureOs Carveout Base=0x00000000ff800000 Size=0x00800000
+[0000.304] Lp0 Carveout Base=0x00000000ff780000 Size=0x00001000
+[0000.310] BpmpFw Carveout Base=0x00000000ff700000 Size=0x00080000
+[0000.316] GSC1 Carveout Base=0x00000000ff600000 Size=0x00100000
+[0000.322] GSC2 Carveout Base=0x00000000ff500000 Size=0x00100000
+[0000.327] GSC4 Carveout Base=0x00000000ff400000 Size=0x00100000
+[0000.333] GSC5 Carveout Base=0x00000000ff300000 Size=0x00100000
+[0000.339] GSC3 Carveout Base=0x000000017f300000 Size=0x00d00000
+[0000.355] RamDump Carveout Base=0x00000000ff280000 Size=0x00080000
+[0000.361] Platform-DebugCarveout: 0
+[0000.365] Nck Carveout Base=0x00000000ff080000 Size=0x00200000
+[0000.370] Non secure mode, and RB not enabled.
+[0000.374] *** Booting BFS0.
+[0000.377] Initialize FailControl
+[0000.380] Read PT from (0:3)
+[0000.395] Csd NumOfBlocks=0
+[0000.434] PT crc32 and magic check passed.
+[0000.438] Using BFS PT to query partitions 
+[0000.442] PT: Partition LNX NOT found ! 
+[0000.446] *** Booting KFS0.
+[0000.449] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.455] BoardID = 3448, SKU = 0x2
+[0000.458] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.464] Read GPT from (0:3)
+[0000.472] Using GPT Primary to query partitions
+[0000.477] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.483] Loading Tboot-CPU binary
+[0000.489] Verifying TBC in OdmNonSecureSBK mode
+[0000.499] Bootloader load address is 0xa0000000, entry address is 0xa0000258
+[0000.506] Bootloader downloaded successfully.
+[0000.510] Downloaded Tboot-CPU binary to 0xa0000258
+[0000.515] MAX77620_GPIO5 configured
+[0000.518] CPU power rail is up
+[0000.521] CPU clock enabled
+[0000.525] Performing RAM repair
+[0000.528] Updating A64 Warmreset Address to 0xa00002e9
+[0000.533] BoardID = 3448, SKU = 0x2
+[0000.536] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.542] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.548] Loading NvTbootBootloaderDTB
+[0000.565] Verifying NvTbootBootloaderDTB in OdmNonSecureSBK mode
+[0000.637] Bootloader DTB Load Address: 0x83000000
+[0000.641] BoardID = 3448, SKU = 0x2
+[0000.645] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.650] Loading NvTbootKernelDTB
+[0000.667] Verifying NvTbootKernelDTB in OdmNonSecureSBK mode
+[0000.738] Kernel DTB Load Address: 0x83100000
+[0000.743] BoardID = 3448, SKU = 0x2
+[0000.746] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.752] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.759] Loading cboot binary
+[0000.770] Verifying EBT in OdmNonSecureSBK mode
+[0000.812] Bootloader load address is 0x92c00000, entry address is 0x92c00258
+[0000.819] Bootloader downloaded successfully.
+[0000.823] BoardID = 3448, SKU = 0x2
+[0000.826] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.832] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.839] PT: Partition NCT NOT found ! 
+[0000.842] Warning: Find Partition via PT Failed
+[0000.847] Next binary entry address: 0x92c00258 
+[0000.851] BoardId: 3448
+[0000.856] Overriding pmu board id with proc board id
+[0000.861] Display board id is not available 
+[0000.865] BoardID = 3448, SKU = 0x2
+[0000.868] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.874] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.887] Verifying SC7EntryFw in OdmNonSecureSBK mode
+[0000.943] /bpmp deleted
+[0000.946] SC7EntryFw header found loaded at 0xff700000
+[0001.133] OVR2 PMIC
+[0001.135] Bpmp FW successfully loaded
+[0001.139] BoardID = 3448, SKU = 0x2
+[0001.142] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0001.148] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0001.155] WB0 init successfully at 0xff780000
+[0001.159] Verifying NvTbootWb0 in OdmNonSecureSBK mode
+[0001.164] Set NvDecSticky Bits
+[0001.168] GSC2 address ff53fffc value c0edbbcc
+[0001.174] GSC MC Settings done
+[0001.177] BoardID = 3448, SKU = 0x2
+[0001.181] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0001.187] TOS Image length 53680
+[0001.190]  Monitor size 53680
+[0001.193]  OS size 0
+[0001.198] Secure Os AES-CMAC Verification Success!
+[0001.203] TOS image cipher info: plaintext
+[0001.207] Loading and Validation of Secure OS Successful
+[0001.223] SC7 Entry Firmware - 0xff700000, 0x4000
+[0001.227] NvTbootPackSdramParams: start. 
+[0001.232] NvTbootPackSdramParams: done. 
+[0001.236] Tegraboot started after 159863 us
+[0001.240] Basic modules init took 741945 us
+[0001.244] Sec Bootdevice Read Time = 55 ms, Read Size = 3682 KB
+[0001.250] Sec Bootdevice Write Time = 0 ms, Write Size = 0 KB
+[0001.256] Next stage binary read took 7390 us
+[0001.260] Carveout took -34784 us
+[0001.263] CPU initialization took 391933 us
+[0001.267] Total time taken by TegraBoot 1106484 us
+
+[0001.272] Starting CPU & Halting co-processor 
+
+64NOTICE:  BL31: v1.3(release):b5eeb33f7
+NOTICE:  BL31: Built : 12:09:37, Jul 26 2021
+ERROR:   Error initializing runtime service trusty_fast
+[0001.394] RamCode = 0
+[0001.398] LPDDR4 Training: Read DT: Number of tables = 2
+[0001.403] EMC Training (SRC-freq: 204000; DST-freq: 1600000)
+[0001.416] EMC Training Successful
+[0001.419] 408000 not found in DVFS table
+[0001.426] RamCode = 0
+[0001.429] DT Write: emc-table@204000 succeeded
+[0001.434] DT Write: emc-table@1600000 succeeded
+[0001.439] LPDDR4 Training: Write DT: Number of tables = 2
+[0001.482] 
+[0001.483] Debug Init done
+[0001.486] Marked DTB cacheable
+[0001.489] Bootloader DTB loaded at 0x83000000
+[0001.493] Marked DTB cacheable
+[0001.496] Kernel DTB loaded at 0x83100000
+[0001.500] DeviceTree Init done
+[0001.513] Pinmux applied successfully
+[0001.518] gicd_base: 0x50041000
+[0001.521] gicc_base: 0x50042000
+[0001.524] Interrupts Init done
+[0001.528] Using base:0x60005090 & irq:208 for tick-timer
+[0001.533] Using base:0x60005098 for delay-timer
+[0001.538] platform_init_timer: DONE
+[0001.541] Timer(tick) Init done
+[0001.545] osc freq = 38400 khz
+[0001.549] 
+[0001.550] Welcome to L4T Cboot
+[0001.553] 
+[0001.554] Cboot Version: 00.00.2018.01-t210-c952b4e6
+[0001.559] calling constructors
+[0001.562] initializing heap
+[0001.565] initializing threads
+[0001.568] initializing timers
+[0001.571] creating bootstrap completion thread
+[0001.575] top of bootstrap2()
+[0001.578] CPU: ARM Cortex A57
+[0001.581] CPU: MIDR: 0x411FD071, MPIDR: 0x80000000
+[0001.585] initializing platform
+[0001.639] Config for emmc ddr50 mode completed
+[0001.643] sdmmc bdev is already initialized
+[0001.647] Enable APE clock
+[0001.650] Un-powergate APE partition
+[0001.653] of_register: registering tegra_udc to of_hal
+[0001.659] of_register: registering inv20628-driver to of_hal
+[0001.664] of_register: registering ads1015-driver to of_hal
+[0001.670] of_register: registering lp8557-bl-driver to of_hal
+[0001.676] of_register: registering bq2419x_charger to of_hal
+[0001.681] of_register: registering bq27441_fuel_gauge to of_hal
+[0001.692] gpio framework initialized
+[0001.696] of_register: registering tca9539_gpio to of_hal
+[0001.701] of_register: registering tca9539_gpio to of_hal
+[0001.707] of_register: registering i2c_bus_driver to of_hal
+[0001.712] of_register: registering i2c_bus_driver to of_hal
+[0001.718] of_register: registering i2c_bus_driver to of_hal
+[0001.723] pmic framework initialized
+[0001.727] of_register: registering max77620_pmic to of_hal
+[0001.732] regulator framework initialized
+[0001.736] of_register: registering tps65132_bl_driver to of_hal
+[0001.742] initializing target
+[0001.748] gpio_driver_register: register 'tegra_gpio_driver' driver
+[0001.758] fixed regulator driver initialized
+[0001.776] initializing OF layer
+[0001.779] NCK carveout not present
+[0001.782] Skipping dts_overrides
+[0001.786] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.803] I2C Bus Init done
+[0001.805] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.815] I2C Bus Init done
+[0001.818] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.828] I2C Bus Init done
+[0001.831] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.841] I2C Bus Init done
+[0001.844] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.854] I2C Bus Init done
+[0001.857] of_children_init: Ops found for compatible string maxim,max77620
+[0001.867] max77620_init using irq 118
+[0001.872] register 'maxim,max77620' pmic
+[0001.876] gpio_driver_register: register 'max77620-gpio' driver
+[0001.882] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.893] I2C Bus Init done
+[0001.896] NCK carveout not present
+[0001.905] Find /i2c@7000c000's alias i2c0
+[0001.909] get eeprom at 1-a0, size 256, type 0
+[0001.918] Find /i2c@7000c500's alias i2c2
+[0001.922] get eeprom at 3-a0, size 256, type 0
+[0001.926] get eeprom at 3-ae, size 256, type 0
+[0001.931] pm_ids_update: Updating 1,a0, size 256, type 0
+[0001.936] I2C slave not started
+[0001.939] I2C write failed
+[0001.942] Writing offset failed
+[0001.945] eeprom_init: EEPROM read failed
+[0001.948] pm_ids_update: eeprom init failed
+[0001.953] pm_ids_update: Updating 3,a0, size 256, type 0
+[0001.983] pm_ids_update: The pm board id is 3448-0002-401
+[0001.989] Adding plugin-manager/ids/3448-0002-401=/i2c@7000c500:module@0x50
+[0001.998] pm_ids_update: pm id update successful
+[0002.002] pm_ids_update: Updating 3,ae, size 256, type 0
+[0002.033] eeprom_init: EEPROM incompatible version found
+[0002.038] pm_ids_update: eeprom init failed
+[0002.068] eeprom_get_mac: EEPROM invalid MAC address (all 0xff)
+[0002.073] shim_eeprom_update_mac:267: Failed to update 0 MAC address in DTB
+[0002.081] eeprom_get_mac: EEPROM invalid MAC address (all 0xff)
+[0002.087] shim_eeprom_update_mac:267: Failed to update 1 MAC address in DTB
+[0002.095] updating /chosen/nvidia,ethernet-mac node 48:b0:2d:3e:43:f0
+[0002.102] Plugin Manager: Parse ODM data 0x000a4000
+[0002.114] shim_cmdline_install: /chosen/bootargs: earlycon=uart8250,mmio32,0x70006000 
+[0002.128] Find /i2c@7000c000's alias i2c0
+[0002.132] get eeprom at 1-a0, size 256, type 0
+[0002.141] Find /i2c@7000c500's alias i2c2
+[0002.145] get eeprom at 3-a0, size 256, type 0
+[0002.149] get eeprom at 3-ae, size 256, type 0
+[0002.154] pm_ids_update: Updating 1,a0, size 256, type 0
+[0002.159] I2C slave not started
+[0002.162] I2C write failed
+[0002.165] Writing offset failed
+[0002.168] eeprom_init: EEPROM read failed
+[0002.172] pm_ids_update: eeprom init failed
+[0002.176] pm_ids_update: Updating 3,a0, size 256, type 0
+[0002.206] pm_ids_update: The pm board id is 3448-0002-401
+[0002.212] Adding plugin-manager/ids/3448-0002-401=/i2c@7000c500:module@0x50
+[0002.219] pm_ids_update: pm id update successful
+[0002.224] pm_ids_update: Updating 3,ae, size 256, type 0
+[0002.254] eeprom_init: EEPROM incompatible version found
+[0002.259] pm_ids_update: eeprom init failed
+[0002.289] Add serial number:1423321097676 as DT property
+[0002.296] Applying platform configs
+[0002.303] platform-init is not present. Skipping
+[0002.307] calling apps_init()
+[0002.329] Found 17 GPT partitions in "sdmmc3_user"
+[0002.333] Proceeding to Cold Boot
+[0002.336] starting app android_boot_app
+[0002.340] Device state: unlocked
+[0002.343] display console init
+[0002.352] could not find regulator
+[0002.375] hdmi cable not connected
+[0002.378] is_hdmi_needed:DT entry for leds-pwm not found
+ [0002.387] HDMI not connected, returning false
+[0002.391] hdmi is not connected
+[0002.394] sor0 is not supported
+[0002.397] display_console_init: no valid display out_type
+[0002.405] subnode volume_up is not found !
+[0002.409] subnode back is not found !
+[0002.412] subnode volume_down is not found !
+[0002.417] subnode menu is not found !
+[0002.420] Gpio keyboard init success
+[0002.467] found decompressor handler: lz4-legacy
+[0002.482] decompressing blob (type 1)...
+[0002.548] display_resolution: No display init
+[0002.552] Failed to retrieve display resolution
+[0002.557] Could not load/initialize BMP blob...ignoring
+[0002.606] decompressor handler not found
+[0002.610] load_firmware_blob: Firmware blob loaded, entries=2
+[0002.616] XUSB blob version 0 size 126464 @ 0x92cb328c
+[0002.622] -------> se_aes_verify_sbk_clear: 747
+[0002.626] se_aes_verify_sbk_clear: Error
+[0002.630] SE operation failed
+[0002.633] bl_battery_charging: connected to external power supply
+[0002.642] display_console_ioctl: No display init
+[0002.647] switch_backlight failed
+[0002.656] device_query_partition_size: failed to open partition sdmmc3_user:MSC !
+[0002.664] MSC Partition not found
+[0002.673] device_query_partition_size: failed to open partition sdmmc3_user:USP !
+[0002.681] USP partition read failed!
+[0002.684] blob_init: blob-partition USP header read failed
+[0002.690] android_boot Unable to update recovery partition
+[0002.695] kfs_getpartname: name = LNX
+[0002.699] Loading kernel from LNX
+[0002.793] load kernel from storage
+[0002.803] decompressor handler not found
+[0002.837] Successfully loaded kernel and ramdisk images
+[0002.842] board ID = D78, board SKU = 2
+[0002.846] display_resolution: No display init
+[0002.851] Failed to retrieve display resolution
+[0002.855] bmp blob is not loaded and initialized
+[0002.860] Failed to display boot-logo
+[0002.863] NCK carveout not present
+[0002.867] Skipping dts_overrides
+[0002.870] NCK carveout not present
+[0002.879] Find /i2c@7000c000's alias i2c0
+[0002.883] get eeprom at 1-a0, size 256, type 0
+[0002.892] Find /i2c@7000c500's alias i2c2
+[0002.896] get eeprom at 3-a0, size 256, type 0
+[0002.900] get eeprom at 3-ae, size 256, type 0
+[0002.904] pm_ids_update: Updating 1,a0, size 256, type 0
+[0002.910] I2C slave not started
+[0002.913] I2C write failed
+[0002.915] Writing offset failed
+[0002.918] eeprom_init: EEPROM read failed
+[0002.922] pm_ids_update: eeprom init failed
+[0002.926] pm_ids_update: Updating 3,a0, size 256, type 0
+[0002.956] pm_ids_update: The pm board id is 3448-0002-401
+[0002.963] Adding plugin-manager/ids/3448-0002-401=/i2c@7000c500:module@0x50
+[0002.972] pm_ids_update: pm id update successful
+[0002.976] pm_ids_update: Updating 3,ae, size 256, type 0
+[0003.006] eeprom_init: EEPROM incompatible version found
+[0003.011] pm_ids_update: eeprom init failed
+[0003.041] eeprom_get_mac: EEPROM invalid MAC address (all 0xff)
+[0003.047] shim_eeprom_update_mac:267: Failed to update 0 MAC address in DTB
+[0003.055] eeprom_get_mac: EEPROM invalid MAC address (all 0xff)
+[0003.061] shim_eeprom_update_mac:267: Failed to update 1 MAC address in DTB
+[0003.069] updating /chosen/nvidia,ethernet-mac node 48:b0:2d:3e:43:f0
+[0003.076] Plugin Manager: Parse ODM data 0x000a4000
+[0003.088] shim_cmdline_install: /chosen/bootargs: earlycon=uart8250,mmio32,0x70006000 
+[0003.096] Add serial number:1423321097676 as DT property
+[0003.105] "bpmp" doesn't exist, creating 
+[0003.111] Updated bpmp info to DTB
+[0003.115] Updated initrd info to DTB
+[0003.119] "proc-board" doesn't exist, creating 
+[0003.125] Updated board info to DTB
+[0003.128] "pmu-board" doesn't exist, creating 
+[0003.134] Updated board info to DTB
+[0003.138] "display-board" doesn't exist, creating 
+[0003.143] Updated board info to DTB
+[0003.147] "reset" doesn't exist, creating 
+[0003.151] Updated reset info to DTB
+[0003.155] display_console_ioctl: No display init
+[0003.159] display_console_ioctl: No display init
+[0003.164] display_console_ioctl: No display init
+[0003.169] Cmdline: tegraid=21.1.2.0.0 ddr_die=4096M@2048M section=512M memtype=0 vpr_resize usb_port_owner_info=0 lane_owner_info=0 emc_max_dvfs=0 touch_id=0@63 video=tegrafb no_console_suspend=1 console=ttyS0,115200n8 debug_uartport=lsport,4 earlyprintk=uart8250-32bit,0x70006000 maxcpus=4 usbcore.old_scheme_first=1 lp0_vec=0x1000@0xff780000 core_edp_mv=1075 core_edp_ma=4000 gpt 
+[0003.203] DTB cmdline: earlycon=uart8250,mmio32,0x70006000 
+[0003.209] boot image cmdline: root=/dev/mmcblk0p1 rw rootwait rootfstype=ext4 console=ttyS0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0 sdhci_tegra.en_boot_part_access=1 
+[0003.225] Updated bootarg info to DTB
+[0003.229] Adding uuid 00000001643174400800000001058180 to DT
+[0003.235] Adding eks info 0 to DT
+[0003.240] WARNING: Failed to pass NS DRAM ranges to TOS, err: -7
+[0003.246] Updated memory info to DTB
+[0003.254] set vdd_core voltage to 1075 mv
+[0003.257] setting 'vdd-core' regulator to 1075000 micro volts
+[0003.263] Found secure-pmc; disable BPMP
+
+
+U-Boot 2020.04-g46e4604c78 (Jul 26 2021 - 12:09:42 -0700)
+
+SoC: tegra210
+Model: NVIDIA Jetson Nano Developer Kit
+Board: NVIDIA P3450-0000
+DRAM:  4 GiB
+MMC:   sdhci@700b0000: 1, sdhci@700b0600: 0
+Loading Environment from MMC... OK
+In:    serial
+Out:   serial
+Err:   serial
+Net:   No ethernet found.
+Hit any key to stop autoboot:  2  1  0 
+switch to partitions #0, OK
+mmc0(part 0) is current device
+Scanning mmc 0:1...
+Found /boot/extlinux/extlinux.conf
+Retrieving file: /boot/extlinux/extlinux.conf
+879 bytes read in 31 ms (27.3 KiB/s)
+1:primary kernel
+Retrieving file: /boot/initrd
+7160133 bytes read in 183 ms (37.3 MiB/s)
+Retrieving file: /boot/Image
+34418696 bytes read in 779 ms (42.1 MiB/s)
+append: tegraid=21.1.2.0.0 ddr_die=4096M@2048M section=512M memtype=0 vpr_resize usb_port_owner_info=0 lane_owner_info=0 emc_max_dvfs=0 touch_id=0@63 video=tegrafb no_console_suspend=1 console=ttyS0,115200n8 debug_uartport=lsport,4 earlyprintk=uart8250-32bit,0x70006000 maxcpus=4 usbcore.old_scheme_first=1 lp0_vec=0x1000@0xff780000 core_edp_mv=1075 core_edp_ma=4000 gpt  earlycon=uart8250,mmio32,0x70006000  root=/dev/mmcblk0p1 rw rootwait rootfstype=ext4 console=ttyS0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0 sdhci_tegra.en_boot_part_access=1 quiet root=/dev/mmcblk0p1 rw rootwait rootfstype=ext4 console=ttyS0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0 sdhci_tegra.en_boot_part_access=1 
+## Flattened Device Tree blob at 83100000
+   Booting using the fdt blob at 0x83100000
+ERROR: reserving fdt memory region failed (addr=0 size=0)
+ERROR: reserving fdt memory region failed (addr=0 size=0)
+   Using Device Tree in place at 0000000083100000, end 000000008317ce50
+copying carveout for /host1x@50000000/dc@54200000...
+copying carveout for /host1x@50000000/dc@54240000...
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.9.253-tegra (yhai@yhai) (gcc version 7.3.1 20180425 [linaro-7.3-2018.05 revision d29120a424ecfbc167ef90065c0eeb7f91977701] (Linaro GCC 7.3-2018.05) ) #1 SMP PREEMPT Wed Nov 13 17:32:56 CST 2024
+[    0.000000] Boot CPU: AArch64 Processor [411fd071]
+[    0.000000] OF: fdt:memory scan node memory@80000000, reg size 32,
+[    0.000000] OF: fdt: - 80000000 ,  7ee00000
+[    0.000000] OF: fdt: - 100000000 ,  7f200000
+[    0.000000] earlycon: uart8250 at MMIO32 0x0000000070006000 (options '')
+[    0.000000] bootconsole [uart8250] enabled
+[    1.074768] tegradc tegradc.1: dpd enable lookup fail:-19
+[    1.580611] Host read timeout at address 545c00c4
+[    1.865925] imx219 8-0010: imx219_board_setup: error during i2c read probe (-121)
+[    1.873555] imx219 8-0010: board setup failed
+[    2.206907] cgroup: cgroup2: unknown option "nsdelegate"
+[    3.512470] using random self ethernet address
+[    3.516956] using random host ethernet address
+[    3.903103] random: crng init done
+[    3.906507] random: 7 urandom warning(s) missed due to ratelimiting
+[    4.136009] using random self ethernet address
+[    4.168678] using random host ethernet address
+[    4.423139] iwlwifi 0000:01:00.0: Direct firmware load for iwlwifi-8265-26.ucode failed with error -2
+[    4.432805] iwlwifi 0000:01:00.0: Falling back to user helper
+[    5.554805] Bridge firewalling registered
+[    7.070626] iwlwifi 0000:01:00.0: Direct firmware load for iwlwifi-8265-25.ucode failed with error -2
+[    7.080478] iwlwifi 0000:01:00.0: Falling back to user helper
+[    7.448219] iwlwifi 0000:01:00.0: Direct firmware load for iwlwifi-8265-24.ucode failed with error -2
+[    7.462170] iwlwifi 0000:01:00.0: Falling back to user helper
+[    7.555340] iwlwifi 0000:01:00.0: Direct firmware load for iwlwifi-8265-23.ucode failed with error -2
+[    7.565976] iwlwifi 0000:01:00.0: Falling back to user helper
+[    7.757964] thermal thermal_zone6: failed to read out thermal zone (-5)
+
+Ubuntu 18.04.5 LTS localhost.localdomain ttyS0
+
+localhost login: zhan
+Password: 
+Last login:  1  4 22:36:44 CST 2025 on ttyS0
+Welcome to Ubuntu 18.04.5 LTS (GNU/Linux 4.9.253-tegra aarch64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+This system has been minimized by removing packages and content that are
+not required on a system that users do not log into.
+
+To restore this content, you can run the 'unminimize' command.
+
+394 updates can be applied immediately.
+330 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+[sudo] password for zhan: 
+zhan@localhost:~$ [  174.648008] pcieport 0000:00:01.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, id=0008(Receiver ID)
+[  174.658322] pcieport 0000:00:01.0:   device [10de:0fae] error status/mask=00000001/00002000
+[  174.666701] pcieport 0000:00:01.0:    [ 0] Receiver Error         (First)
+
+zhan@localhost:~$ [ 3307.935026] pcieport 0000:00:01.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, id=0008(Receiver ID)
+[ 3307.945332] pcieport 0000:00:01.0:   device [10de:0fae] error status/mask=00000001/00002000
+[ 3307.953851] pcieport 0000:00:01.0:    [ 0] Receiver Error         (First)
+
+zhan@localhost:~$ [ 3828.173601] pcieport 0000:00:01.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, id=0008(Receiver ID)
+[ 3828.188718] pcieport 0000:00:01.0:   device [10de:0fae] error status/mask=00000001/00002000
+[ 3828.197373] pcieport 0000:00:01.0:    [ 0] Receiver Error         (First)
+[ 7551.246835] pcieport 0000:00:01.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, id=0008(Receiver ID)
+[ 7551.257775] pcieport 0000:00:01.0:   device [10de:0fae] error status/mask=00000001/00002000
+[ 7551.266744] pcieport 0000:00:01.0:    [ 0] Receiver Error         (First)
+
+zhan@localhost:~$ lsblk
+NAME         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+loop0          7:0    0    16M  1 loop 
+mmcblk0      179:0    0  14.7G  0 disk 
+mmcblk0p1  179:1    0    14G  0 part /
+mmcblk0p2  179:2    0     1M  0 part 
+mmcblk0p3  179:3    0     6M  0 part 
+mmcblk0p4  179:4    0    80K  0 part 
+mmcblk0p5  179:5    0    64M  0 part 
+mmcblk0p6  179:6    0     1M  0 part 
+mmcblk0p7  179:7    0     6M  0 part 
+mmcblk0p8  179:8    0    80K  0 part 
+mmcblk0p9  179:9    0    64M  0 part 
+mmcblk0p10 179:10   0   192K  0 part 
+mmcblk0p11 179:11   0   256K  0 part 
+mmcblk0p12 179:12   0    63M  0 part 
+mmcblk0p13 179:13   0   512K  0 part 
+mmcblk0p14 179:14   0   256K  0 part 
+mmcblk0p15 179:15   0   256K  0 part 
+mmcblk0p16 179:16   0   300M  0 part 
+mmcblk0p17 179:17   0 185.4M  0 part 
+mmcblk0boot0 179:32   0     4M  1 disk 
+mmcblk0boot1 179:64   0     4M  1 disk 
+mmcblk0rpmb  179:96   0     4M  0 disk 
+mmcblk1      179:128  0  59.5G  0 disk 
+mmcblk1p1  179:129  0  59.5G  0 part /home/zhan/sd
+zram0        252:0    0 495.5M  0 disk [SWAP]
+zram1        252:1    0 495.5M  0 disk [SWAP]
+zram2        252:2    0 495.5M  0 disk [SWAP]
+zram3        252:3    0 495.5M  0 disk [SWAP]
+zhan@localhost:~$ sudo umount sd
+[sudo] password for zhan: 
+zhan@localhost:~$ sudo umount sdlsblk
+NAME         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+loop0          7:0    0    16M  1 loop 
+mmcblk0      179:0    0  14.7G  0 disk 
+mmcblk0p1  179:1    0    14G  0 part /
+mmcblk0p2  179:2    0     1M  0 part 
+mmcblk0p3  179:3    0     6M  0 part 
+mmcblk0p4  179:4    0    80K  0 part 
+mmcblk0p5  179:5    0    64M  0 part 
+mmcblk0p6  179:6    0     1M  0 part 
+mmcblk0p7  179:7    0     6M  0 part 
+mmcblk0p8  179:8    0    80K  0 part 
+mmcblk0p9  179:9    0    64M  0 part 
+mmcblk0p10 179:10   0   192K  0 part 
+mmcblk0p11 179:11   0   256K  0 part 
+mmcblk0p12 179:12   0    63M  0 part 
+mmcblk0p13 179:13   0   512K  0 part 
+mmcblk0p14 179:14   0   256K  0 part 
+mmcblk0p15 179:15   0   256K  0 part 
+mmcblk0p16 179:16   0   300M  0 part 
+mmcblk0p17 179:17   0 185.4M  0 part 
+mmcblk0boot0 179:32   0     4M  1 disk 
+mmcblk0boot1 179:64   0     4M  1 disk 
+mmcblk0rpmb  179:96   0     4M  0 disk 
+mmcblk1      179:128  0  59.5G  0 disk 
+mmcblk1p1  179:129  0  59.5G  0 part 
+zram0        252:0    0 495.5M  0 disk [SWAP]
+zram1        252:1    0 495.5M  0 disk [SWAP]
+zram2        252:2    0 495.5M  0 disk [SWAP]
+zram3        252:3    0 495.5M  0 disk [SWAP]
+zhan@localhost:~$ sudo shutdown now
+[ 8288.747615] systemd-shutdow: 39 output lines suppressed due to ratelimiting
+[ 8289.007835] IRQ10 no longer affine to CPU1
+[ 8289.012114] CPU1: shutdown
+[ 8289.039864] IRQ11 no longer affine to CPU2
+[ 8289.044132] CPU2: shutdown
+[ 8289.067828] IRQ12 no longer affine to CPU3
+[ 8289.072089] CPU3: shutdown
+[ 8289.076649] reboot: Power down
+[ 8289.083373] max77620-power max77620-power: SoC specific power off 

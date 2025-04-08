@@ -1,0 +1,36 @@
+$ sudo fdisk -l /*查看设备信息，
+  Device     Start       End   Sectors   Size Type
+  /dev/sda1     40 249735207 249735168 119.1G Microsoft basic data
+ */
+$ mkdir udisk
+$ sudo mount /dev/sda1 udisk  //把u盘挂载到目录udisk
+$ sync //如果有修改 文件同步一下数据异常
+$ df -h /*查看设备空间分配情况
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/mmcblk0p1   14G  4.7G  8.4G  36% /
+none            1.8G     0  1.8G   0% /dev
+tmpfs           2.0G  4.0K  2.0G   1% /dev/shm
+tmpfs           2.0G   20M  2.0G   2% /run
+tmpfs           5.0M  4.0K  5.0M   1% /run/lock
+tmpfs           2.0G     0  2.0G   0% /sys/fs/cgroup
+tmpfs           397M   12K  397M   1% /run/user/120
+tmpfs           397M     0  397M   0% /run/user/1000
+/dev/sda1        24G   22G  1.5G  94% /home/yhbd/udisk
+*/
+$ sudo umount /mnt  //不用了，可取消挂载
+
+
+
+更改启动脚本，使其自动挂载U盘
+$ cd ~
+$ vim run.sh /*设置启动脚本让启动时，自动挂载sd卡和u盘
+#!/bin/sh
+sudo mount /dev/sda1 ~/udisk
+sudo mount /dev/mmcblk1  ~/sd 
+*/
+$ vim ~/.bashrc /*在末尾追加
+./run.sh
+*/
+重启板子 //udisk sd 里有内容表示成功
+
+【注意⚠️：考虑设置了自动挂载，关机之前最好先umount卸载掉设备】

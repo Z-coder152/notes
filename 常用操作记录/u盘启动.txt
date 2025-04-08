@@ -1,0 +1,47 @@
+sd卡烧录镜像后，用读卡器，插入到第一个usb口 //靠近网卡，上面的哪个usb口、
+板子上电
+$ run usb_boot //u盘启动  （发现内核是启动u盘里的的，但rootfs用的是emmc里的ubuntu）
+
+//使启动rootfs(ubuntu)指向u盘
+板子启动登录进入ubuntu后
+插入带sd卡的读卡器 /*成功会看到下面的信息 表示usb设备有识别到
+   scsi 0:0:0:0: Direct-Access     Mass     Storage Device   1.00 PQ: 0 ANSI: 0 CCS
+  [  321.118409] sd 0:0:0:0: [sda] 249737216 512-byte logical blocks: (128 GB/119 GiB)
+  [  321.127809] sd 0:0:0:0: [sda] Write Protect is off
+  [  321.133840] sd 0:0:0:0: [sda] No Caching mode page found
+  [  321.139334] sd 0:0:0:0: [sda] Assuming drive cache: write through
+  [  321.157227] sd 0:0:0:0: [sda] Attached SCSI removable disk
+ */
+
+$ sudo fdisk -l /*查看设备信息
+  Device     Start       End   Sectors   Size Type
+  /dev/sda1     40 249735207 249735168 119.1G Microsoft basic data
+ */
+$ sudo mount /dev/sda1 /mnt  
+$ cd /mnt/boot/extlinux/
+$ sudo cp extlinux.conf usb_extlinux.conf   //重新拷贝
+$ sudo vim usb_extlinux.conf /*更改启动分区（使得启动的rootfs（Ubuntu），指向u盘）
+   把 root=/dev/mmcblk0p1 改为 root=/dev/sda1后退出
+$sync
+$cd ~
+$ sudo umount /mnt  （取消挂载）
+
+完整的usb_extlinux.conf内容见下面
+TIMEOUT 30
+DEFAULT primary
+
+MENU TITLE L4T boot options
+
+LABEL primary
+      MENU LABEL primary kernel
+      LINUX /boot/Image
+      INITRD /boot/initrd
+      APPEND ${cbootargs} quiet root=/dev/sda1 rw rootwait rootfstype=ext4 console=ttyS0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0   
+ */
+$ sudo reboot //重启板子后，快速按enter键，停在uboot阶段
+
+//设置uboot环境变量 ,指定从u盘启动
+# setenv usb_bootcmd  setenv boot_syslinux_conf extlinux/usb_extlinux.conf \; run usb_boot
+# setenv bootcmd run usb_bootcmd //设置自动启动从u盘启动
+# saveenv
+# reset  //复位后 发现能成功从U盘启动了

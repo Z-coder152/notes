@@ -1,0 +1,26 @@
+//wifi设置（注意 ChinaNet-xqqe_EXT2.4G 是SSID  lzvjryud是无线密码根据你的情况调整）
+$ sudo nmcli device wifi connect 'ChinaNet-xqqe_EXT2.4G' password 'lzvjryud'
+$ ifconfig //查看当前ip 如 
+    192.168.10.237
+//远程登录
+打开虚拟机
+$ mv .ssh .ssh.bak2
+$ ssh yhbd@192.168.10.237 //输入密钥即可登录
+
+
+//虚拟机端	
+$ ssh-keygen -t rsa  //生成Key私钥和公钥
+$ ls ~/.ssh //发现有生成文件 私钥id_rsa 和 公钥id_rsa.pub
+$ cd ~/.ssh
+$ scp id_rsa.pub yhbd@192.168.10.237:/home/yhbd/   //上传公钥到板子
+
+//板子端
+$ mkdir .ssh
+$ cp id_rsa.pub  .ssh/authorized_keys  //拷贝文件到.ssh下并重命名为 authorized_keys 
+
+//测试免密登录：  
+$ ssh yhbd@192.168.10.237 //不用输密码，表示成功。	关键是，不卡了(因密钥登录检测比较多，会比较卡)
+
+//win10下免密登录
+用虚拟机里 .ssh 替换 win10 当前用户目录下的 .ssh
+> ssh yhbd@192.168.10.237   //发现能和Ubuntu里一样免密登录了

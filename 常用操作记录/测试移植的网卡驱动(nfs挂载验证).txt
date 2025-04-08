@@ -1,0 +1,9 @@
+$ setenv bootargs  root=/dev/nfs rw nfsroot=192.168.137.118:/nfs/rootfs,v3 console=ttyS0,115200 init=/linuxrc ip=192.168.137.9 
+$ setenv zhan_nfs  pci enum \; pci \; ext4load mmc 0:1 0x84000000 /boot/Image \; ext4load mmc 0:1 83100000 /boot/tegra210-p3448-0002-p3449-0000-b00.dtb \; booti 0x84000000 - 83100000
+$ saveenv
+$ run  zhan_nfs	//启动后，验证，保证用移植好的内核，设备树，是能nfs挂载成功的
+
+//重启改为我们自己移植的内核，来进行验证（只是内核不确定，其它的都是OK的）
+$ setenv zhan_nfs  pci enum \; pci \; ext4load mmc 0:1 0x84000000 /home/zhan/Image \; ext4load mmc 0:1 83100000 /boot/tegra210-p3448-0002-p3449-0000-b00.dtb \; booti 0x84000000 - 83100000
+$ saveenv
+$ run  zhan_nfs //发现异常报错

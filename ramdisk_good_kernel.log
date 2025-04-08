@@ -1,0 +1,229 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2025.01.04 22:39:03 =~=~=~=~=~=~=~=~=~=~=~=
+
+9080840 bytes read in 229 ms (37.8 MiB/s)
+237113 bytes read in 22 ms (10.3 MiB/s)
+3434108 bytes read in 97 ms (33.8 MiB/s)
+## Flattened Device Tree blob at 83100000
+   Booting using the fdt blob at 0x83100000
+ERROR: reserving fdt memory region failed (addr=0 size=0)
+ERROR: reserving fdt memory region failed (addr=0 size=0)
+   Using Device Tree in place at 0000000083100000, end 000000008313ce38
+Can't find Ethernet MAC address in cboot DTB
+copying carveout for /host1x@50000000/dc@54200000...
+copying carveout for /host1x@50000000/dc@54240000...
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.9.307 (zhan@localhost.localdomain) (gcc version 7.5.0 (Ubuntu/Linaro 7.5.0-3ubuntu1~18.04) ) #4 SMP PREEMPT Sat Jan 4 22:33:49 CST 2025
+[    0.000000] Boot CPU: AArch64 Processor [411fd071]
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb0_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb0_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb1_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb1_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] cma: Reserved 64 MiB at 0x00000000fac00000
+[    0.000000] psci: probing for conduit method from DT.
+[    0.000000] psci: PSCIv1.0 detected in firmware.
+[    0.000000] psci: Using standard PSCI v0.2 function IDs
+[    0.000000] psci: MIGRATE_INFO_TYPE not supported.
+[    0.000000] psci: SMC Calling Convention v1.1
+[    0.000000] percpu: Embedded 19 pages/cpu s45728 r0 d32096 u77824
+[    0.000000] Detected PIPT I-cache on CPU0
+[    0.000000] CPU features: enabling workaround for ARM erratum 832075
+[    0.000000] Speculative Store Bypass Disable mitigation not required
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 1023544
+[    0.000000] Kernel command line: initrd=0xa0000000,0x800000 root=/dev/ram0 rw rootwait rootfstype=ext2 console=ttyS0,115200 init=/linuxrc ip=192.168.9.9
+[    0.000000] log_buf_len individual max cpu contribution: 32768 bytes
+[    0.000000] log_buf_len total cpu_extra contributions: 98304 bytes
+[    0.000000] log_buf_len min size: 32768 bytes
+[    0.000000] log_buf_len: 131072 bytes
+[    0.000000] early log buf free: 30488(93%)
+[    0.000000] PID hash table entries: 4096 (order: 3, 32768 bytes)
+[    0.000000] Dentry cache hash table entries: 524288 (order: 10, 4194304 bytes)
+[    0.000000] Inode-cache hash table entries: 262144 (order: 9, 2097152 bytes)
+[    0.000000] software IO TLB: mapped [mem 0xf6c00000-0xfac00000] (64MB)
+[    0.000000] Memory: 3527452K/4159488K available (4158K kernel code, 548K rwdata, 1268K rodata, 2880K init, 335K bss, 566500K reserved, 65536K cma-reserved)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     modules : 0xffffff8000000000 - 0xffffff8008000000   (   128 MB)
+[    0.000000]     vmalloc : 0xffffff8008000000 - 0xffffffbebfff0000   (   250 GB)
+[    0.000000]       .text : 0xffffff8008080000 - 0xffffff8008490000   (  4160 KB)
+[    0.000000]     .rodata : 0xffffff8008490000 - 0xffffff80085d0000   (  1280 KB)
+[    0.000000]       .init : 0xffffff80085d0000 - 0xffffff80088a0000   (  2880 KB)
+[    0.000000]       .data : 0xffffff80088a0000 - 0xffffff8008929008   (   549 KB)
+[    0.000000]        .bss : 0xffffff8008929008 - 0xffffff800897cd2c   (   336 KB)
+[    0.000000]     fixed   : 0xffffffbefe7fd000 - 0xffffffbefec00000   (  4108 KB)
+[    0.000000]     PCI I/O : 0xffffffbefee00000 - 0xffffffbeffe00000   (    16 MB)
+[    0.000000]     vmemmap : 0xffffffbf00000000 - 0xffffffc000000000   (     4 GB maximum)
+[    0.000000]               0xffffffbf00000000 - 0xffffffbf03fc8000   (    63 MB actual)
+[    0.000000]     memory  : 0xffffffc000000000 - 0xffffffc0ff200000   (  4082 MB)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+[    0.000000] Preemptible hierarchical RCU implementation.
+[    0.000000] Build-time adjustment of leaf fanout to 64.
+[    0.000000] RCU restricting CPUs from NR_CPUS=64 to nr_cpu_ids=4.
+[    0.000000] RCU: Adjusting geometry for rcu_fanout_leaf=64, nr_cpu_ids=4
+[    0.000000] NR_IRQS:64 nr_irqs:64 0
+[    0.000000] /interrupt-controller@60004000: 192 interrupts forwarded to /interrupt-controller
+[    0.000000] PLL_U already enabled. Postponing set full defaults
+[    0.000000] PLL_P already enabled. Postponing set full defaults
+[    0.000000] PLL_X already enabled. Postponing set full defaults
+[    0.000000] arm_arch_timer: Architected cp15 timer(s) running at 19.20MHz (phys).
+[    0.000000] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+[    0.000005] sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 4398046511078ns
+[    0.001059] Console: colour dummy device 80x25
+[    0.001083] kmemleak: Kernel memory leak detector disabled
+[    0.001101] Calibrating delay loop (skipped), value calculated using timer frequency.. 38.40 BogoMIPS (lpj=76800)
+[    0.001112] pid_max: default: 32768 minimum: 301
+[    0.001368] Mount-cache hash table entries: 8192 (order: 4, 65536 bytes)
+[    0.001376] Mountpoint-cache hash table entries: 8192 (order: 4, 65536 bytes)
+[    0.002230] ftrace: allocating 14373 entries in 57 pages
+[    0.033111] ASID allocator initialised with 65536 entries
+[    0.067098] Speedo Revision 4
+[    0.067110] Tegra210: unknown SKU 0x8f
+[    0.067131] Tegra Revision: A02 SKU: 143 CPU Process: 1 SoC Process: 1
+[    0.113165] Detected PIPT I-cache on CPU1
+[    0.113234] CPU1: Booted secondary processor [411fd071]
+[    0.145191] Detected PIPT I-cache on CPU2
+[    0.145222] CPU2: Booted secondary processor [411fd071]
+[    0.177264] Detected PIPT I-cache on CPU3
+[    0.177297] CPU3: Booted secondary processor [411fd071]
+[    0.177359] Brought up 4 CPUs
+[    0.177379] SMP: Total of 4 processors activated.
+[    0.177387] CPU features: detected feature: 32-bit EL0 Support
+[    0.177584] CPU: All CPU(s) started at EL2
+[    0.177603] alternatives: patching kernel code
+[    0.179637] devtmpfs: initialized
+[    0.211351] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns
+[    0.211383] futex hash table entries: 1024 (order: 5, 131072 bytes)
+[    0.213030] pinctrl core: initialized pinctrl subsystem
+[    0.233375] cpuidle: using governor menu
+[    0.233426] vdso: 2 pages (1 code @ ffffff8008497000, 1 data @ ffffff80088a4000)
+[    0.233449] hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+[    0.234254] DMA: preallocated 256 KiB pool for atomic allocations
+[    0.235264] Serial: AMBA PL011 UART driver
+[    0.282157] HugeTLB registered 2 MB page size, pre-allocated 0 pages
+[    0.283343] gpiochip_add_data: GPIOs 0..255 (tegra-gpio) failed to register
+[    0.286868] clocksource: Switched to clocksource arch_sys_counter
+[    0.308751] Trying to unpack rootfs image as initramfs...
+[    0.309191] rootfs image is not initramfs (no cpio magic); looks like an initrd
+[    0.333884] Freeing initrd memory: 8192K
+[    0.334495] hw perfevents: enabled with armv8_pmuv3 PMU driver, 7 counters available
+[    0.337262] workingset: timestamp_bits=46 max_order=20 bucket_order=0
+[    0.345948] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 253)
+[    0.345968] io scheduler noop registered
+[    0.345975] io scheduler deadline registered
+[    0.346224] io scheduler cfq registered (default)
+[    0.348012]  pcie: invalid function "xusb" for lane "pcie-5"
+[    0.348352] tegra-xusb-padctl 7009f000.xusb_padctl: failed to create pad pcie: -22
+[    0.348359] tegra-xusb-padctl 7009f000.xusb_padctl: failed to create pad pcie: -22
+[    0.348541] tegra-xusb-padctl 7009f000.xusb_padctl: failed to setup pads: -22
+[    0.348570] tegra-xusb-padctl: probe of 7009f000.xusb_padctl failed with error -22
+[    0.356591] tegra-pmc 7000e400.pmc: i2c-thermtrip node not found, emergency thermal reset disabled.
+[    0.360167] Serial: 8250/16550 driver, 4 ports, IRQ sharing disabled
+[    0.361968] console [ttyS0] disabled
+[    0.362071] 70006000.serial: ttyS0 at MMIO 0x70006000 (irq = 59, base_baud = 25500000) is a Tegra
+[    1.046006] console [ttyS0] enabled
+[    1.058844] brd: module loaded
+[    1.063175] max77620 4-003c: PMIC Version OTP:0x35 and ES:0x8
+[    1.079537] random: fast init done
+[    1.085618] GPIO line 505 (spmic-default-output-high) hogged as output/high
+[    1.095315] mousedev: PS/2 mouse device common for all mice
+[    1.105212] Registered cp15_barrier emulation handler
+[    1.110293] Registered setend emulation handler
+[    1.123324] gpio gpiochip1: gpio-line-names specifies 240 line names but there are 256 lines on the chip
+[    1.133909] GPIO line 6 (system-suspend-gpio) hogged as output/high
+[    1.140182] GPIO line 151 (camera-control-output-low) hogged as output/low
+[    1.154597] input: gpio-keys as /devices/platform/gpio-keys/input/input0
+[    1.166324] RAMDISK: gzip image found at block 0
+[    1.355533] VFS: Mounted root (ext2 filesystem) on device 1:0.
+[    1.361514] devtmpfs: mounted
+[    1.367194] Freeing unused kernel memory: 2880K
+ifconfig: socket: Function not implemented
+
+Please press Enter to activate this console. [    1.640470] random: crng init done
+
+[root@Jetson ]# [   22.122859] INFO: rcu_preempt detected stalls on CPUs/tasks:
+[   22.128530] 1-...: (0 ticks this GP) idle=136/0/0 softirq=143/143 fqs=0 
+[   22.135302] (detected by 0, t=5252 jiffies, g=-272, c=-273, q=745)
+[   22.141570] Task dump for CPU 1:
+[   22.144788] swapper/1       R  running task        0     0      1 0x00000000
+[   22.151839] Call trace:
+[   22.154301] [<ffffff8008085498>] __switch_to+0x98/0xc0
+[   22.159439] [<ffffff8008468f18>] cpuidle_enter_state+0x80/0x360
+[   22.165345] [<ffffff800846926c>] cpuidle_enter+0x34/0x48
+[   22.170650] [<ffffff80080e88b4>] call_cpuidle+0x44/0x70
+[   22.175862] [<ffffff80080e8c10>] cpu_startup_entry+0x1a8/0x1f8
+[   22.181686] [<ffffff800808f3c4>] secondary_start_kernel+0x184/0x1f0
+[   22.187936] [<000000008448b1a8>] 0x8448b1a8
+[   22.192113] rcu_preempt kthread starved for 5252 jiffies! g18446744073709551344 c18446744073709551343 f0x0 RCU_GP_WAIT_FQS(3) ->state=0x1
+[   22.204433] rcu_preempt     S    0     7      2 0x00000000
+[   22.209913] Call trace:
+[   22.212352] [<ffffff8008085498>] __switch_to+0x98/0xc0
+[   22.217485] [<ffffff8008484ee0>] __schedule+0x208/0x6d0
+[   22.222697] [<ffffff8008485484>] schedule+0x44/0xa8
+[   22.227565] [<ffffff8008488600>] schedule_timeout+0x90/0x428
+[   22.233216] [<ffffff8008103ce4>] rcu_gp_kthread+0x4bc/0x800
+[   22.238781] [<ffffff80080c3774>] kthread+0xfc/0x100
+[   22.243649] [<ffffff8008083090>] ret_from_fork+0x10/0x40
+[   22.382853] INFO: rcu_sched detected stalls on CPUs/tasks:
+[   22.388338] 1-...: (1 GPs behind) idle=736/0/0 softirq=0/143 fqs=1 
+[   22.394674] (detected by 0, t=5252 jiffies, g=-299, c=-300, q=14)
+[   22.400849] Task dump for CPU 1:
+[   22.404067] swapper/1       R  running task        0     0      1 0x00000000
+[   22.411115] Call trace:
+[   22.413555] [<ffffff8008085498>] __switch_to+0x98/0xc0
+[   22.418680] [<ffffff8008468f18>] cpuidle_enter_state+0x80/0x360
+[   22.424586] [<ffffff800846926c>] cpuidle_enter+0x34/0x48
+[   22.429885] [<ffffff80080e88b4>] call_cpuidle+0x44/0x70
+[   22.435096] [<ffffff80080e8c10>] cpu_startup_entry+0x1a8/0x1f8
+[   22.440915] [<ffffff800808f3c4>] secondary_start_kernel+0x184/0x1f0
+[   22.447166] [<000000008448b1a8>] 0x8448b1a8
+[   22.451341] rcu_sched kthread starved for 5250 jiffies! g18446744073709551317 c18446744073709551316 f0x0 RCU_GP_WAIT_FQS(3) ->state=0x1
+[   22.463485] rcu_sched       S    0     8      2 0x00000000
+[   22.468966] Call trace:
+[   22.471405] [<ffffff8008085498>] __switch_to+0x98/0xc0
+[   22.476531] [<ffffff8008484ee0>] __schedule+0x208/0x6d0
+[   22.481742] [<ffffff8008485484>] schedule+0x44/0xa8
+[   22.486608] [<ffffff8008488600>] schedule_timeout+0x90/0x428
+[   22.492254] [<ffffff8008103ce4>] rcu_gp_kthread+0x4bc/0x800
+[   22.497815] [<ffffff80080c3774>] kthread+0xfc/0x100
+[   22.502682] [<ffffff8008083090>] ret_from_fork+0x10/0x40
+
+[root@Jetson ]# [   77.238854] irq 94: nobody cared (try booting with the "irqpoll" option)
+[   77.245547] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 4.9.307 #4
+[   77.251539] Hardware name: NVIDIA Jetson Nano Developer Kit (DT)
+[   77.257530] Call trace:
+[   77.259974] [<ffffff8008089990>] dump_backtrace+0x0/0x1e8
+[   77.265362] [<ffffff8008089b9c>] show_stack+0x24/0x30
+[   77.270402] [<ffffff80084823e4>] dump_stack+0x8c/0xac
+[   77.275447] [<ffffff80080f91b4>] __report_bad_irq+0x3c/0xf8
+[   77.281007] [<ffffff80080f9608>] note_interrupt+0x2c0/0x310
+[   77.286567] [<ffffff80080f6430>] handle_irq_event_percpu+0x50/0x60
+[   77.292733] [<ffffff80080f6490>] handle_irq_event+0x50/0x80
+[   77.298292] [<ffffff80080fa56c>] handle_fasteoi_irq+0xd4/0x1c0
+[   77.304114] [<ffffff80080f5738>] generic_handle_irq+0x38/0x50
+[   77.309846] [<ffffff80080f57b8>] __handle_domain_irq+0x68/0xc0
+[   77.315663] [<ffffff8008080f4c>] gic_handle_irq+0x5c/0xb0
+[   77.321051] Exception stack(0xffffff80088a3d30 to 0xffffff80088a3e60)
+[   77.327476] 3d20:                                   ffffffc0ff0bc180 00000040f693d000
+[   77.335288] 3d40: 0000000000000004 00000000000e414a 0000000000000015 00ffffffffffffff
+[   77.343099] 3d60: 00000000b2db36dc 000000000000002a ffffffc0ff0bb81c 0000000000000022
+[   77.350912] 3d80: ffffffc0ff0bb7fc 000000000000000b 0000000000000007 071c71c71c71c71c
+[   77.358724] 3da0: 0000000000000001 0000000000000007 0000000000000000 000000000ee00000
+[   77.366536] 3dc0: 00000000ffffffec 00000011fbcb3b89 0000000000000000 ffffffc0f92c2000
+[   77.374347] 3de0: 0000000000000000 ffffff800890a2b8 00000011fbcb2590 0000000000000000
+[   77.382160] 3e00: ffffff800877e640 ffffff80088a7000 0000000000000001 ffffff80088a3e60
+[   77.389971] 3e20: ffffff8008468f30 ffffff80088a3e60 ffffff8008468f48 0000000060000145
+[   77.397784] 3e40: ffffff80088a3e60 ffffff8008468f30 ffffffffffffffff 00000011fbcb2590
+[   77.405595] [<ffffff80080828ac>] el1_irq+0xac/0x120
+[   77.410462] [<ffffff8008468f48>] cpuidle_enter_state+0xb0/0x360
+[   77.416367] [<ffffff800846926c>] cpuidle_enter+0x34/0x48
+[   77.421665] [<ffffff80080e88b4>] call_cpuidle+0x44/0x70
+[   77.426877] [<ffffff80080e8c10>] cpu_startup_entry+0x1a8/0x1f8
+[   77.432696] [<ffffff8008483360>] rest_init+0x88/0x98
+[   77.437655] [<ffffff80085d0bec>] start_kernel+0x360/0x378
+[   77.443043] [<ffffff80085d01f8>] __primary_switched+0x74/0x88
+[   77.448774] handlers:
+[   77.451038] [<ffffff80080f6530>] irq_default_primary_handler threaded [<ffffff8008416f38>] regmap_irq_thread
+[   77.460868] Disabling IRQ #94
+
+[root@Jetson ]# 

@@ -1,0 +1,4 @@
+https://www.waveshare.net/wiki/JETSON-NANO-DEV-KIT#.E6.96.B9.E6.B3.95.E4.BA.8C.EF.BC.9ASD.E5.8D.A1.E5.8F.A6.E5.A4.96.E6.9C.89.E9.95.9C.E5.83.8F
+
+烧写后，可以识别mmcblk1（猜测之前是u-boot版本不行）
+

@@ -1,0 +1,340 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2025.01.04 15:01:13 =~=~=~=~=~=~=~=~=~=~=~=
+run ramdisk_bootcmd 
+22786056 bytes read in 540 ms (40.2 MiB/s)
+237113 bytes read in 21 ms (10.8 MiB/s)
+3434108 bytes read in 97 ms (33.8 MiB/s)
+## Flattened Device Tree blob at 83100000
+   Booting using the fdt blob at 0x83100000
+ERROR: reserving fdt memory region failed (addr=0 size=0)
+ERROR: reserving fdt memory region failed (addr=0 size=0)
+   Using Device Tree in place at 0000000083100000, end 000000008313ce38
+Can't find Ethernet MAC address in cboot DTB
+copying carveout for /host1x@50000000/dc@54200000...
+copying carveout for /host1x@50000000/dc@54240000...
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.9.253 (zhan@localhost.localdomain) (gcc version 7.5.0 (Ubuntu/Linaro 7.5.0-3ubuntu1~18.04) ) #3 SMP PREEMPT Sat Jan 4 14:51:53 CST 2025
+[    0.000000] Boot CPU: AArch64 Processor [411fd071]
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb0_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb0_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb1_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb1_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] cma: Reserved 64 MiB at 0x00000000fac00000
+[    0.000000] psci: probing for conduit method from DT.
+[    0.000000] psci: PSCIv1.0 detected in firmware.
+[    0.000000] psci: Using standard PSCI v0.2 function IDs
+[    0.000000] psci: MIGRATE_INFO_TYPE not supported.
+[    0.000000] psci: SMC Calling Convention v1.1
+[    0.000000] percpu: Embedded 21 pages/cpu s48152 r8192 d29672 u86016
+[    0.000000] Detected PIPT I-cache on CPU0
+[    0.000000] CPU features: enabling workaround for ARM erratum 832075
+[    0.000000] Speculative Store Bypass Disable mitigation not required
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 1023544
+[    0.000000] Kernel command line: initrd=0xa0000000,0x800000 root=/dev/ram0 rw rootwait rootfstype=ext2 console=ttyS0,115200 init=/linuxrc ip=192.168.9.9
+[    0.000000] log_buf_len individual max cpu contribution: 32768 bytes
+[    0.000000] log_buf_len total cpu_extra contributions: 98304 bytes
+[    0.000000] log_buf_len min size: 32768 bytes
+[    0.000000] log_buf_len: 131072 bytes
+[    0.000000] early log buf free: 30488(93%)
+[    0.000000] PID hash table entries: 4096 (order: 3, 32768 bytes)
+[    0.000000] Dentry cache hash table entries: 524288 (order: 10, 4194304 bytes)
+[    0.000000] Inode-cache hash table entries: 262144 (order: 9, 2097152 bytes)
+[    0.000000] software IO TLB: mapped [mem 0xf6c00000-0xfac00000] (64MB)
+[    0.000000] Memory: 3513948K/4159488K available (10814K kernel code, 1324K rwdata, 4228K rodata, 5824K init, 413K bss, 580004K reserved, 65536K cma-reserved)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     modules : 0xffffff8000000000 - 0xffffff8008000000   (   128 MB)
+[    0.000000]     vmalloc : 0xffffff8008000000 - 0xffffffbebfff0000   (   250 GB)
+[    0.000000]       .text : 0xffffff8008080000 - 0xffffff8008b10000   ( 10816 KB)
+[    0.000000]     .rodata : 0xffffff8008b10000 - 0xffffff8008f40000   (  4288 KB)
+[    0.000000]       .init : 0xffffff8008f40000 - 0xffffff80094f0000   (  5824 KB)
+[    0.000000]       .data : 0xffffff80094f0000 - 0xffffff800963b008   (  1325 KB)
+[    0.000000]        .bss : 0xffffff800963b008 - 0xffffff80096a2574   (   414 KB)
+[    0.000000]     fixed   : 0xffffffbefe7fd000 - 0xffffffbefec00000   (  4108 KB)
+[    0.000000]     PCI I/O : 0xffffffbefee00000 - 0xffffffbeffe00000   (    16 MB)
+[    0.000000]     vmemmap : 0xffffffbf00000000 - 0xffffffc000000000   (     4 GB maximum)
+[    0.000000]               0xffffffbf00000000 - 0xffffffbf03fc8000   (    63 MB actual)
+[    0.000000]     memory  : 0xffffffc000000000 - 0xffffffc0ff200000   (  4082 MB)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+[    0.000000] Preemptible hierarchical RCU implementation.
+[    0.000000] Build-time adjustment of leaf fanout to 64.
+[    0.000000] RCU restricting CPUs from NR_CPUS=64 to nr_cpu_ids=4.
+[    0.000000] RCU: Adjusting geometry for rcu_fanout_leaf=64, nr_cpu_ids=4
+[    0.000000] NR_IRQS:64 nr_irqs:64 0
+[    0.000000] /interrupt-controller@60004000: 192 interrupts forwarded to /interrupt-controller
+[    0.000000] PLL_U already enabled. Postponing set full defaults
+[    0.000000] PLL_P already enabled. Postponing set full defaults
+[    0.000000] PLL_X already enabled. Postponing set full defaults
+[    0.000000] arm_arch_timer: Architected cp15 timer(s) running at 19.20MHz (phys).
+[    0.000000] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+[    0.000006] sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 4398046511078ns
+[    0.001105] Console: colour dummy device 80x25
+[    0.001130] kmemleak: Kernel memory leak detector disabled
+[    0.001149] Calibrating delay loop (skipped), value calculated using timer frequency.. 38.40 BogoMIPS (lpj=76800)
+[    0.001162] pid_max: default: 32768 minimum: 301
+[    0.001377] Security Framework initialized
+[    0.001477] Mount-cache hash table entries: 8192 (order: 4, 65536 bytes)
+[    0.001484] Mountpoint-cache hash table entries: 8192 (order: 4, 65536 bytes)
+[    0.002476] ftrace: allocating 36598 entries in 143 pages
+[    0.085742] ASID allocator initialised with 65536 entries
+[    0.122950] Speedo Revision 4
+[    0.122964] Tegra210: unknown SKU 0x8f
+[    0.122986] Tegra Revision: A02 SKU: 143 CPU Process: 1 SoC Process: 1
+[    0.170455] Detected PIPT I-cache on CPU1
+[    0.170527] CPU1: Booted secondary processor [411fd071]
+[    0.202489] Detected PIPT I-cache on CPU2
+[    0.202520] CPU2: Booted secondary processor [411fd071]
+[    0.234531] Detected PIPT I-cache on CPU3
+[    0.234560] CPU3: Booted secondary processor [411fd071]
+[    0.234628] Brought up 4 CPUs
+[    0.234651] SMP: Total of 4 processors activated.
+[    0.234661] CPU features: detected feature: 32-bit EL0 Support
+[    0.234877] CPU: All CPU(s) started at EL2
+[    0.234897] alternatives: patching kernel code
+[    0.238760] devtmpfs: initialized
+[    0.270054] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns
+[    0.270091] futex hash table entries: 1024 (order: 5, 131072 bytes)
+[    0.271798] pinctrl core: initialized pinctrl subsystem
+[    0.272928] NET: Registered protocol family 16
+[    0.290657] cpuidle: using governor menu
+[    0.293269] vdso: 2 pages (1 code @ ffffff8008b17000, 1 data @ ffffff80094f4000)
+[    0.293298] hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+[    0.294277] DMA: preallocated 256 KiB pool for atomic allocations
+[    0.295467] Serial: AMBA PL011 UART driver
+[    0.309577] tegra-mc 70019000.memory-controller: no memory timings for RAM code 0 registered
+[    0.347663] HugeTLB registered 2 MB page size, pre-allocated 0 pages
+[    0.349092] gpiochip_add_data: GPIOs 0..255 (tegra-gpio) failed to register
+[    0.351025] vdd-5v0-hdmi: supplied by vdd-5v0-sys
+[    0.351700] vdd-fan: supplied by vdd-5v0-sys
+[    0.352029] vdd-usb-vbus: supplied by vdd-5v0-sys
+[    0.353275] SCSI subsystem initialized
+[    0.353794] usbcore: registered new interface driver usbfs
+[    0.353853] usbcore: registered new interface driver hub
+[    0.353898] usbcore: registered new device driver usb
+[    0.356457] media: Linux media interface: v0.10
+[    0.356511] Linux video capture interface: v2.00
+[    0.356555] pps_core: LinuxPPS API ver. 1 registered
+[    0.356561] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.356585] PTP clock support registered
+[    0.357061] Advanced Linux Sound Architecture Driver Initialized.
+[    0.357675] Bluetooth: Core ver 2.22
+[    0.357726] NET: Registered protocol family 31
+[    0.357732] Bluetooth: HCI device and connection manager initialized
+[    0.357747] Bluetooth: HCI socket layer initialized
+[    0.357756] Bluetooth: L2CAP socket layer initialized
+[    0.357812] Bluetooth: SCO socket layer initialized
+[    0.358251] clocksource: Switched to clocksource arch_sys_counter
+[    0.387678] VFS: Disk quotas dquot_6.6.0
+[    0.387781] VFS: Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+[    0.398576] NET: Registered protocol family 2
+[    0.399417] TCP established hash table entries: 32768 (order: 6, 262144 bytes)
+[    0.399637] TCP bind hash table entries: 32768 (order: 7, 524288 bytes)
+[    0.400155] TCP: Hash tables configured (established 32768 bind 32768)
+[    0.400289] UDP hash table entries: 2048 (order: 4, 65536 bytes)
+[    0.400371] UDP-Lite hash table entries: 2048 (order: 4, 65536 bytes)
+[    0.400699] NET: Registered protocol family 1
+[    0.401110] RPC: Registered named UNIX socket transport module.
+[    0.401117] RPC: Registered udp transport module.
+[    0.401121] RPC: Registered tcp transport module.
+[    0.401127] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.401390] Trying to unpack rootfs image as initramfs...
+[    0.401838] rootfs image is not initramfs (no cpio magic); looks like an initrd
+[    0.426061] Freeing initrd memory: 8192K
+[    0.426983] hw perfevents: enabled with armv8_pmuv3 PMU driver, 7 counters available
+[    0.430545] audit: initializing netlink subsys (disabled)
+[    0.430619] audit: type=2000 audit(0.359:1): initialized
+[    0.431320] workingset: timestamp_bits=46 max_order=20 bucket_order=0
+[    0.440404] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.441426] ntfs: driver 2.1.32 [Flags: R/W].
+[    0.442004] 9p: Installing v9fs 9p2000 file system support
+[    0.445010] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 248)
+[    0.445140] io scheduler noop registered
+[    0.445244] io scheduler cfq registered (default)
+[    0.447589]  pcie: invalid function "xusb" for lane "pcie-5"
+[    0.447947] tegra-xusb-padctl 7009f000.xusb_padctl: failed to create pad pcie: -22
+[    0.447957] tegra-xusb-padctl 7009f000.xusb_padctl: failed to create pad pcie: -22
+[    0.448148] tegra-xusb-padctl 7009f000.xusb_padctl: failed to setup pads: -22
+[    0.448182] tegra-xusb-padctl: probe of 7009f000.xusb_padctl failed with error -22
+[    0.459505] tegra-apbdma 60020000.dma: Tegra20 APB DMA driver register 32 channels
+[    0.460842] tegra-pmc 7000e400.pmc: i2c-thermtrip node not found, emergency thermal reset disabled.
+[    0.461762] pwm-regulator pwm_regulators:pwm-regulator@0: Failed to get PWM: -517
+[    0.461903] pwm-regulator pwm_regulators:pwm-regulator@1: Failed to get enable GPIO: -517
+[    0.465300] Serial: 8250/16550 driver, 4 ports, IRQ sharing disabled
+[    0.467441] console [ttyS0] disabled
+[    0.467516] 70006000.serial: ttyS0 at MMIO 0x70006000 (irq = 59, base_baud = 25500000) is a Tegra
+[    1.383627] console [ttyS0] enabled
+[    1.388228] [drm] Initialized
+[    1.400768] brd: module loaded
+[    1.409068] loop: module loaded
+[    1.413481] max77620 4-003c: PMIC Version OTP:0x35 and ES:0x8
+[    1.429731] random: fast init done
+[    1.433514] vdd-ddr-1v1: Bringing 1125000uV into 1150000-1150000uV
+[    1.469164] GPIO line 505 (spmic-default-output-high) hogged as output/high
+[    1.479240] hisi_sas: driver version v1.6
+[    1.486416] libphy: Fixed MDIO Bus: probed
+[    1.491255] tun: Universal TUN/TAP device driver, 1.6
+[    1.496316] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+[    1.503498] e1000e: Intel(R) PRO/1000 Network Driver - 3.2.6-k
+[    1.509336] e1000e: Copyright(c) 1999 - 2015 Intel Corporation.
+[    1.515310] igb: Intel(R) Gigabit Ethernet Network Driver - version 5.4.0-k
+[    1.522270] igb: Copyright (c) 2007-2014 Intel Corporation.
+[    1.527883] igbvf: Intel(R) Gigabit Virtual Function Network Driver - version 2.4.0-k
+[    1.535708] igbvf: Copyright (c) 2009 - 2012 Intel Corporation.
+[    1.541663] ixgbe: Intel(R) 10 Gigabit PCI Express Network Driver - version 4.4.0-k
+[    1.549312] ixgbe: Copyright (c) 1999-2016 Intel Corporation.
+[    1.555892] PPP generic driver version 2.4.2
+[    1.560369] PPP BSD Compression module registered
+[    1.565078] PPP Deflate Compression module registered
+[    1.570161] PPP MPPE Compression module registered
+[    1.575021] usbcore: registered new interface driver r8152
+[    1.580552] usbcore: registered new interface driver asix
+[    1.585991] usbcore: registered new interface driver ax88179_178a
+[    1.592111] usbcore: registered new interface driver cdc_ether
+[    1.597971] usbcore: registered new interface driver net1080
+[    1.603665] usbcore: registered new interface driver cdc_subset
+[    1.609615] usbcore: registered new interface driver zaurus
+[    1.615235] usbcore: registered new interface driver cdc_ncm
+[    1.621064] VFIO - User Level meta-driver version: 0.3
+[    1.627353] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    1.633945] ehci-pci: EHCI PCI platform driver
+[    1.638439] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+[    1.644644] ohci-pci: OHCI PCI platform driver
+[    1.649126] ohci-platform: OHCI generic platform driver
+[    1.655260] usbcore: registered new interface driver uas
+[    1.660635] usbcore: registered new interface driver usb-storage
+[    1.666796] usbcore: registered new interface driver usbserial
+[    1.674448] mousedev: PS/2 mouse device common for all mice
+[    1.680095] usbcore: registered new interface driver xpad
+[    1.820728] max77686-rtc max77620-rtc: rtc core: registered max77620-rtc as rtc0
+[    1.829177] i2c /dev entries driver
+[    1.837264] OF: ERROR: Bad of_node_put() on /soctherm@0x700E2000/throttle-cfgs/oc1
+[    1.844830] CPU: 2 PID: 1 Comm: swapper/0 Not tainted 4.9.253 #3
+[    1.850822] Hardware name: NVIDIA Jetson Nano Developer Kit (DT)
+[    1.856815] Call trace:
+[    1.859279] [<ffffff8008089dd0>] dump_backtrace+0x0/0x1e8
+[    1.864671] [<ffffff8008089fdc>] show_stack+0x24/0x30
+[    1.869723] [<ffffff8008af2794>] dump_stack+0x8c/0xac
+[    1.874775] [<ffffff800889ca74>] of_node_release+0xbc/0xc0
+[    1.880260] [<ffffff800840e83c>] kobject_put+0x94/0x1e8
+[    1.885471] [<ffffff800889bd94>] of_node_put+0x24/0x30
+[    1.890603] [<ffffff8008897878>] __of_get_next_child+0x50/0x70
+[    1.896421] [<ffffff80088978d8>] of_get_next_child+0x40/0x68
+[    1.902075] [<ffffff800880c59c>] tegra_soctherm_probe+0x38c/0x758
+[    1.908162] [<ffffff800855ebf8>] platform_drv_probe+0x60/0xc0
+[    1.913894] [<ffffff800855c808>] driver_probe_device+0x298/0x448
+[    1.919886] [<ffffff800855ca94>] __driver_attach+0xdc/0x128
+[    1.925453] [<ffffff800855a0c4>] bus_for_each_dev+0x5c/0xa8
+[    1.931010] [<ffffff800855be48>] driver_attach+0x30/0x40
+[    1.936309] [<ffffff800855b87c>] bus_add_driver+0x20c/0x2a8
+[    1.941867] [<ffffff800855d62c>] driver_register+0x6c/0x110
+[    1.947426] [<ffffff800855eb34>] __platform_driver_register+0x54/0x60
+[    1.953861] [<ffffff8008f7c7d0>] tegra_soctherm_driver_init+0x18/0x20
+[    1.960289] [<ffffff800808333c>] do_one_initcall+0x44/0x130
+[    1.965858] [<ffffff8008f40d18>] kernel_init_freeable+0x1a8/0x24c
+[    1.971940] [<ffffff8008af43f0>] kernel_init+0x18/0x108
+[    1.977151] [<ffffff8008083090>] ret_from_fork+0x10/0x40
+[    1.981264] random: crng init done
+[    1.985989] OF: ERROR: Bad of_node_put() on /soctherm@0x700E2000/throttle-cfgs/oc3
+[    1.993546] CPU: 2 PID: 1 Comm: swapper/0 Not tainted 4.9.253 #3
+[    1.999537] Hardware name: NVIDIA Jetson Nano Developer Kit (DT)
+[    2.005527] Call trace:
+[    2.007968] [<ffffff8008089dd0>] dump_backtrace+0x0/0x1e8
+[    2.013356] [<ffffff8008089fdc>] show_stack+0x24/0x30
+[    2.018398] [<ffffff8008af2794>] dump_stack+0x8c/0xac
+[    2.023437] [<ffffff800889ca74>] of_node_release+0xbc/0xc0
+[    2.028911] [<ffffff800840e83c>] kobject_put+0x94/0x1e8
+[    2.034123] [<ffffff800889bd94>] of_node_put+0x24/0x30
+[    2.039250] [<ffffff8008897878>] __of_get_next_child+0x50/0x70
+[    2.045068] [<ffffff80088978d8>] of_get_next_child+0x40/0x68
+[    2.050714] [<ffffff800880c59c>] tegra_soctherm_probe+0x38c/0x758
+[    2.056792] [<ffffff800855ebf8>] platform_drv_probe+0x60/0xc0
+[    2.062524] [<ffffff800855c808>] driver_probe_device+0x298/0x448
+[    2.068516] [<ffffff800855ca94>] __driver_attach+0xdc/0x128
+[    2.074076] [<ffffff800855a0c4>] bus_for_each_dev+0x5c/0xa8
+[    2.079634] [<ffffff800855be48>] driver_attach+0x30/0x40
+[    2.084933] [<ffffff800855b87c>] bus_add_driver+0x20c/0x2a8
+[    2.090492] [<ffffff800855d62c>] driver_register+0x6c/0x110
+[    2.096050] [<ffffff800855eb34>] __platform_driver_register+0x54/0x60
+[    2.102477] [<ffffff8008f7c7d0>] tegra_soctherm_driver_init+0x18/0x20
+[    2.108902] [<ffffff800808333c>] do_one_initcall+0x44/0x130
+[    2.114462] [<ffffff8008f40d18>] kernel_init_freeable+0x1a8/0x24c
+[    2.120541] [<ffffff8008af43f0>] kernel_init+0x18/0x108
+[    2.125753] [<ffffff8008083090>] ret_from_fork+0x10/0x40
+[    2.131291] tegra_soctherm 700e2000.soctherm: thermtrip: will shut down when cpu reaches 102000 mC
+[    2.140245] tegra_soctherm 700e2000.soctherm: throttrip: cpu: missing throttle cdev
+[    2.148008] tegra_soctherm 700e2000.soctherm: thermtrip: will shut down when gpu reaches 102500 mC
+[    2.156961] tegra_soctherm 700e2000.soctherm: throttrip: gpu: missing throttle cdev
+[    2.164746] tegra_soctherm 700e2000.soctherm: thermtrip: pll: missing critical temperature
+[    2.173002] tegra_soctherm 700e2000.soctherm: throttrip: pll: missing hot temperature
+[    2.180981] tegra_soctherm 700e2000.soctherm: failed to register sensor: -19
+[    2.189302] device-mapper: uevent: version 1.0.3
+[    2.194315] device-mapper: ioctl: 4.35.0-ioctl (2016-06-23) initialised: dm-devel@redhat.com
+[    2.203730] sdhci: Secure Digital Host Controller Interface driver
+[    2.209912] sdhci: Copyright(c) Pierre Ossman
+[    2.214267] sdhci-pltfm: SDHCI platform and OF driver helper
+[    2.221648] hidraw: raw HID events driver (C) Jiri Kosina
+[    2.229329] usbcore: registered new interface driver usbhid
+[    2.234920] usbhid: USB HID core driver
+[    2.241169] usbcore: registered new interface driver snd-usb-audio
+[    2.248331] u32 classifier
+[    2.251064]     Actions configured
+[    2.254761] Initializing XFRM netlink socket
+[    2.259799] NET: Registered protocol family 10
+[    2.265587] NET: Registered protocol family 17
+[    2.270058] NET: Registered protocol family 15
+[    2.274570] bridge: filtering via arp/ip/ip6tables is no longer available by default. Update your scripts to load br_netfilter if you need this.
+[    2.287940] Bluetooth: RFCOMM socket layer initialized
+[    2.293086] Bluetooth: RFCOMM ver 1.11
+[    2.296834] Bluetooth: HIDP (Human Interface Emulation) ver 1.2
+[    2.302746] Bluetooth: HIDP socket layer initialized
+[    2.307727] 9pnet: Installing 9P2000 support
+[    2.312064] Key type dns_resolver registered
+[    2.316611] Registered cp15_barrier emulation handler
+[    2.321770] Registered setend emulation handler
+[    2.327761] registered taskstats version 1
+[    2.339478] gpio gpiochip1: gpio-line-names specifies 240 line names but there are 256 lines on the chip
+[    2.350020] GPIO line 6 (system-suspend-gpio) hogged as output/high
+[    2.356283] GPIO line 151 (camera-control-output-low) hogged as output/low
+[    2.370113] pwm-regulator pwm_regulators:pwm-regulator@0: Failed to get PWM: -517
+[    2.381701] pwm-regulator pwm_regulators:pwm-regulator@0: Failed to get PWM: -517
+[    2.390354] input: gpio-keys as /devices/platform/gpio-keys/input/input0
+[    2.398557] pwm-regulator pwm_regulators:pwm-regulator@0: Failed to get PWM: -517
+[    2.406235] hctosys: unable to open rtc device (rtc1)
+[   39.841299] irq 94: nobody cared (try booting with the "irqpoll" option)
+[   39.847998] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 4.9.253 #3
+[   39.853992] Hardware name: NVIDIA Jetson Nano Developer Kit (DT)
+[   39.859985] Call trace:
+[   39.862448] [<ffffff8008089dd0>] dump_backtrace+0x0/0x1e8
+[   39.867838] [<ffffff8008089fdc>] show_stack+0x24/0x30
+[   39.872888] [<ffffff8008af2794>] dump_stack+0x8c/0xac
+[   39.877937] [<ffffff8008103ca4>] __report_bad_irq+0x3c/0xf8
+[   39.883499] [<ffffff80081040f8>] note_interrupt+0x2c0/0x310
+[   39.889059] [<ffffff8008100f10>] handle_irq_event_percpu+0x50/0x60
+[   39.895224] [<ffffff8008100f70>] handle_irq_event+0x50/0x80
+[   39.900783] [<ffffff8008104dfc>] handle_fasteoi_irq+0xd4/0x1c0
+[   39.906603] [<ffffff80080ffc6c>] generic_handle_irq+0x34/0x50
+[   39.912336] [<ffffff8008100358>] __handle_domain_irq+0x68/0xc0
+[   39.918156] [<ffffff8008080f4c>] gic_handle_irq+0x5c/0xb0
+[   39.923543] Exception stack(0xffffff80094f3d30 to 0xffffff80094f3e60)
+[   39.929970] 3d20:                                   ffffffc0ff0b2780 00000040f5f74000
+[   39.937783] 3d40: 0000000000000004 00000000000ef146 0000000000000015 00ffffffffffffff
+[   39.945596] 3d60: 00000000f4644569 000000000000002a ffffffc0ff0b191c 0000000000000023
+[   39.953408] 3d80: ffffffc0ff0b18fc 00000000000003b7 000000000000006e 071c71c71c71c71c
+[   39.961221] 3da0: 0000000000000001 0000000000000007 0000000000000000 0000000004400000
+[   39.969034] 3dc0: 00000000ffffffec 0000000946b9cefd 0000000000000000 ffffffc0f8d6cc00
+[   39.976846] 3de0: 0000000000000000 ffffff800959ca70 0000000946b9b7cb 0000000000000000
+[   39.984658] 3e00: ffffff800913d740 ffffff80094f7000 0000000000000001 ffffff80094f3e60
+[   39.992469] 3e20: ffffff80088292a0 ffffff80094f3e60 ffffff80088292b8 0000000060000145
+[   40.000282] 3e40: ffffff80094f3e60 ffffff80088292a0 ffffffffffffffff 0000000946b9b7cb
+[   40.008094] [<ffffff80080828ac>] el1_irq+0xac/0x120
+[   40.012969] [<ffffff80088292b8>] cpuidle_enter_state+0xb0/0x360
+[   40.018875] [<ffffff80088295dc>] cpuidle_enter+0x34/0x48
+[   40.024178] [<ffffff80080f342c>] call_cpuidle+0x44/0x70
+[   40.029390] [<ffffff80080f3788>] cpu_startup_entry+0x1a8/0x1f8
+[   40.035210] [<ffffff8008af43c8>] rest_init+0x88/0x98
+[   40.040171] [<ffffff8008f40b58>] start_kernel+0x370/0x388
+[   40.045558] [<ffffff8008f401f8>] __primary_switched+0x74/0x88
+[   40.051288] handlers:
+[   40.053554] [<ffffff8008101010>] irq_default_primary_handler threaded [<ffffff8008583cd8>] regmap_irq_thread
+[   40.063387] Disabling IRQ #94

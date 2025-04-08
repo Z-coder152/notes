@@ -1,0 +1,11 @@
+$ cd  /boot/extlinux/
+$ sudo cp usb_extlinux.conf  usb_extlinux_new.conf
+$ sudo chmod 777 usb_extlinux_new.conf
+$ vim usb_extlinux_new.conf/*指定从新内核启动
+ 改 LINUX /boot/Image 
+ 为 LINUX /home/zhan/kernel-4.9/arch/arm64/boot/Image 
+ */
+重启板子 快速停在u-boot阶段 
+# setenv boot_syslinux_conf extlinux/usb_extlinux_new.conf  //指定启动配置文件为我们自定义的
+                //原默认的是 boot_syslinux_conf=extlinux/usb_extlinux.conf
+# run usb_boot //从u盘启动

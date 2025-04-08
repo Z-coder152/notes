@@ -1,0 +1,2455 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2025.01.04 22:09:32 =~=~=~=~=~=~=~=~=~=~=~=
+pri ramdisk_bootcmd 
+ramdisk_bootcmd=ext4load mmc 0:1 0x84000000 /home/zhan/Image ; ext4load mmc 0:1 83100000 /boot/tegra210-p3448-0002-p3449-0000-b00.dtb ; ext4load mmc 0:1 0xa0000000 /home/zhan/ramdisk.img.gz ; booti 0x84000000 - 83100000
+Tegra210 (P3450-0000) # run ramdisk_bootcmd 
+21805064 bytes read in 513 ms (40.5 MiB/s)
+237113 bytes read in 21 ms (10.8 MiB/s)
+3434108 bytes read in 97 ms (33.8 MiB/s)
+## Flattened Device Tree blob at 83100000
+   Booting using the fdt blob at 0x83100000
+ERROR: reserving fdt memory region failed (addr=0 size=0)
+ERROR: reserving fdt memory region failed (addr=0 size=0)
+   Using Device Tree in place at 0000000083100000, end 000000008313ce38
+Can't find Ethernet MAC address in cboot DTB
+copying carveout for /host1x@50000000/dc@54200000...
+copying carveout for /host1x@50000000/dc@54240000...
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.9.307 (zhan@localhost.localdomain) (gcc version 7.5.0 (Ubuntu/Linaro 7.5.0-3ubuntu1~18.04) ) #3 SMP PREEMPT Sat Jan 4 22:02:39 CST 2025
+[    0.000000] Boot CPU: AArch64 Processor [411fd071]
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb0_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb0_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb1_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] OF: fdt:Reserved memory: failed to reserve memory for node 'fb1_carveout': base 0x0000000000000000, size 0 MiB
+[    0.000000] cma: Reserved 64 MiB at 0x00000000fac00000
+[    0.000000] psci: probing for conduit method from DT.
+[    0.000000] psci: PSCIv1.0 detected in firmware.
+[    0.000000] psci: Using standard PSCI v0.2 function IDs
+[    0.000000] psci: MIGRATE_INFO_TYPE not supported.
+[    0.000000] psci: SMC Calling Convention v1.1
+[    0.000000] percpu: Embedded 21 pages/cpu s48152 r8192 d29672 u86016
+[    0.000000] Detected PIPT I-cache on CPU0
+[    0.000000] CPU features: enabling workaround for ARM erratum 832075
+[    0.000000] Speculative Store Bypass Disable mitigation not required
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 1023544
+[    0.000000] Kernel command line: initrd=0xa0000000,0x800000 root=/dev/ram0 rw rootwait rootfstype=ext2 console=ttyS0,115200 init=/linuxrc ip=192.168.9.9
+[    0.000000] log_buf_len individual max cpu contribution: 32768 bytes
+[    0.000000] log_buf_len total cpu_extra contributions: 98304 bytes
+[    0.000000] log_buf_len min size: 32768 bytes
+[    0.000000] log_buf_len: 131072 bytes
+[    0.000000] early log buf free: 30488(93%)
+[    0.000000] PID hash table entries: 4096 (order: 3, 32768 bytes)
+[    0.000000] Dentry cache hash table entries: 524288 (order: 10, 4194304 bytes)
+[    0.000000] Inode-cache hash table entries: 262144 (order: 9, 2097152 bytes)
+[    0.000000] software IO TLB: mapped [mem 0xf6c00000-0xfac00000] (64MB)
+[    0.000000] Memory: 3514912K/4159488K available (10238K kernel code, 1262K rwdata, 4092K rodata, 5632K init, 410K bss, 579040K reserved, 65536K cma-reserved)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     modules : 0xffffff8000000000 - 0xffffff8008000000   (   128 MB)
+[    0.000000]     vmalloc : 0xffffff8008000000 - 0xffffffbebfff0000   (   250 GB)
+[    0.000000]       .text : 0xffffff8008080000 - 0xffffff8008a80000   ( 10240 KB)
+[    0.000000]     .rodata : 0xffffff8008a80000 - 0xffffff8008e90000   (  4160 KB)
+[    0.000000]       .init : 0xffffff8008e90000 - 0xffffff8009410000   (  5632 KB)
+[    0.000000]       .data : 0xffffff8009410000 - 0xffffff800954b808   (  1263 KB)
+[    0.000000]        .bss : 0xffffff800954b808 - 0xffffff80095b21ec   (   411 KB)
+[    0.000000]     fixed   : 0xffffffbefe7fd000 - 0xffffffbefec00000   (  4108 KB)
+[    0.000000]     PCI I/O : 0xffffffbefee00000 - 0xffffffbeffe00000   (    16 MB)
+[    0.000000]     vmemmap : 0xffffffbf00000000 - 0xffffffc000000000   (     4 GB maximum)
+[    0.000000]               0xffffffbf00000000 - 0xffffffbf03fc8000   (    63 MB actual)
+[    0.000000]     memory  : 0xffffffc000000000 - 0xffffffc0ff200000   (  4082 MB)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+[    0.000000] Preemptible hierarchical RCU implementation.
+[    0.000000] Build-time adjustment of leaf fanout to 64.
+[    0.000000] RCU restricting CPUs from NR_CPUS=64 to nr_cpu_ids=4.
+[    0.000000] RCU: Adjusting geometry for rcu_fanout_leaf=64, nr_cpu_ids=4
+[    0.000000] NR_IRQS:64 nr_irqs:64 0
+[    0.000000] /interrupt-controller@60004000: 192 interrupts forwarded to /interrupt-controller
+[    0.000000] PLL_U already enabled. Postponing set full defaults
+[    0.000000] PLL_P already enabled. Postponing set full defaults
+[    0.000000] PLL_X already enabled. Postponing set full defaults
+[    0.000000] arm_arch_timer: Architected cp15 timer(s) running at 19.20MHz (phys).
+[    0.000000] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+[    0.000005] sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 4398046511078ns
+[    0.001012] Console: colour dummy device 80x25
+[    0.001035] kmemleak: Kernel memory leak detector disabled
+[    0.001056] Calibrating delay loop (skipped), value calculated using timer frequency.. 38.40 BogoMIPS (lpj=76800)
+[    0.001068] pid_max: default: 32768 minimum: 301
+[    0.001283] Security Framework initialized
+[    0.001381] Mount-cache hash table entries: 8192 (order: 4, 65536 bytes)
+[    0.001388] Mountpoint-cache hash table entries: 8192 (order: 4, 65536 bytes)
+[    0.002374] ftrace: allocating 35000 entries in 137 pages
+[    0.083590] ASID allocator initialised with 65536 entries
+[    0.120538] Speedo Revision 4
+[    0.120555] Tegra210: unknown SKU 0x8f
+[    0.120578] Tegra Revision: A02 SKU: 143 CPU Process: 1 SoC Process: 1
+[    0.168076] Detected PIPT I-cache on CPU1
+[    0.168147] CPU1: Booted secondary processor [411fd071]
+[    0.200102] Detected PIPT I-cache on CPU2
+[    0.200133] CPU2: Booted secondary processor [411fd071]
+[    0.232152] Detected PIPT I-cache on CPU3
+[    0.232185] CPU3: Booted secondary processor [411fd071]
+[    0.232253] Brought up 4 CPUs
+[    0.232274] SMP: Total of 4 processors activated.
+[    0.232283] CPU features: detected feature: 32-bit EL0 Support
+[    0.232500] CPU: All CPU(s) started at EL2
+[    0.232521] alternatives: patching kernel code
+[    0.235776] devtmpfs: initialized
+[    0.267112] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns
+[    0.267145] futex hash table entries: 1024 (order: 5, 131072 bytes)
+[    0.268849] pinctrl core: initialized pinctrl subsystem
+[    0.269995] NET: Registered protocol family 16
+[    0.300283] cpuidle: using governor menu
+[    0.302748] vdso: 2 pages (1 code @ ffffff8008a87000, 1 data @ ffffff8009414000)
+[    0.302774] hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+[    0.303688] DMA: preallocated 256 KiB pool for atomic allocations
+[    0.304918] Serial: AMBA PL011 UART driver
+[    0.318942] tegra-mc 70019000.memory-controller: no memory timings for RAM code 0 registered
+[    0.353353] HugeTLB registered 2 MB page size, pre-allocated 0 pages
+[    0.354786] gpiochip_add_data: GPIOs 0..255 (tegra-gpio) failed to register
+[    0.356776] vdd-5v0-hdmi: supplied by vdd-5v0-sys
+[    0.357374] vdd-fan: supplied by vdd-5v0-sys
+[    0.357671] vdd-usb-vbus: supplied by vdd-5v0-sys
+[    0.358891] SCSI subsystem initialized
+[    0.359349] usbcore: registered new interface driver usbfs
+[    0.359403] usbcore: registered new interface driver hub
+[    0.359447] usbcore: registered new device driver usb
+[    0.361838] media: Linux media interface: v0.10
+[    0.361887] Linux video capture interface: v2.00
+[    0.361938] pps_core: LinuxPPS API ver. 1 registered
+[    0.361946] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.361975] PTP clock support registered
+[    0.362401] Advanced Linux Sound Architecture Driver Initialized.
+[    0.362978] Bluetooth: Core ver 2.22
+[    0.363023] NET: Registered protocol family 31
+[    0.363029] Bluetooth: HCI device and connection manager initialized
+[    0.363044] Bluetooth: HCI socket layer initialized
+[    0.363054] Bluetooth: L2CAP socket layer initialized
+[    0.363084] Bluetooth: SCO socket layer initialized
+[    0.363517] clocksource: Switched to clocksource arch_sys_counter
+[    0.392745] VFS: Disk quotas dquot_6.6.0
+[    0.392840] VFS: Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+[    0.403717] NET: Registered protocol family 2
+[    0.403864] IP idents hash table entries: 65536 (order: 7, 524288 bytes)
+[    0.405894] TCP established hash table entries: 32768 (order: 6, 262144 bytes)
+[    0.406110] TCP bind hash table entries: 32768 (order: 7, 524288 bytes)
+[    0.406635] TCP: Hash tables configured (established 32768 bind 32768)
+[    0.406782] UDP hash table entries: 2048 (order: 4, 65536 bytes)
+[    0.406864] UDP-Lite hash table entries: 2048 (order: 4, 65536 bytes)
+[    0.407162] NET: Registered protocol family 1
+[    0.407715] RPC: Registered named UNIX socket transport module.
+[    0.407725] RPC: Registered udp transport module.
+[    0.407730] RPC: Registered tcp transport module.
+[    0.407735] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.407976] Trying to unpack rootfs image as initramfs...
+[    0.408447] rootfs image is not initramfs (no cpio magic); looks like an initrd
+[    0.432322] Freeing initrd memory: 8192K
+[    0.433041] hw perfevents: enabled with armv8_pmuv3 PMU driver, 7 counters available
+[    0.436880] audit: initializing netlink subsys (disabled)
+[    0.436989] audit: type=2000 audit(0.367:1): initialized
+[    0.437721] workingset: timestamp_bits=46 max_order=20 bucket_order=0
+[    0.446844] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.447906] ntfs: driver 2.1.32 [Flags: R/W].
+[    0.448476] 9p: Installing v9fs 9p2000 file system support
+[    0.451385] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 249)
+[    0.451537] io scheduler noop registered
+[    0.451626] io scheduler cfq registered (default)
+[    0.453753]  pcie: invalid function "xusb" for lane "pcie-5"
+[    0.454108] tegra-xusb-padctl 7009f000.xusb_padctl: failed to create pad pcie: -22
+[    0.454117] tegra-xusb-padctl 7009f000.xusb_padctl: failed to create pad pcie: -22
+[    0.454298] tegra-xusb-padctl 7009f000.xusb_padctl: failed to setup pads: -22
+[    0.454336] tegra-xusb-padctl: probe of 7009f000.xusb_padctl failed with error -22
+[    0.465617] tegra-apbdma 60020000.dma: Tegra20 APB DMA driver register 32 channels
+[    0.466968] tegra-pmc 7000e400.pmc: i2c-thermtrip node not found, emergency thermal reset disabled.
+[    0.467956] pwm-regulator pwm_regulators:pwm-regulator@0: Failed to get PWM: -517
+[    0.468105] pwm-regulator pwm_regulators:pwm-regulator@1: Failed to get enable GPIO: -517
+[    0.471460] Serial: 8250/16550 driver, 4 ports, IRQ sharing disabled
+[    0.473775] console [ttyS0] disabled
+[    0.473855] 70006000.serial: ttyS0 at MMIO 0x70006000 (irq = 59, base_baud = 25500000) is a Tegra
+[    1.396695] console [ttyS0] enabled
+[    1.401291] [drm] Initialized
+[    1.413735] brd: module loaded
+[    1.422050] loop: module loaded
+[    1.426454] max77620 4-003c: PMIC Version OTP:0x35 and ES:0x8
+[    1.441765] vdd-ddr-1v1: Bringing 1125000uV into 1150000-1150000uV
+[    1.442876] random: fast init done
+[    1.474704] GPIO line 505 (spmic-default-output-high) hogged as output/high
+[    1.484396] hisi_sas: driver version v1.6
+[    1.492727] tun: Universal TUN/TAP device driver, 1.6
+[    1.497799] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+[    1.505107] PPP generic driver version 2.4.2
+[    1.509573] PPP BSD Compression module registered
+[    1.514285] PPP Deflate Compression module registered
+[    1.519371] PPP MPPE Compression module registered
+[    1.524236] usbcore: registered new interface driver r8152
+[    1.529771] usbcore: registered new interface driver asix
+[    1.535210] usbcore: registered new interface driver ax88179_178a
+[    1.541336] usbcore: registered new interface driver cdc_ether
+[    1.547198] usbcore: registered new interface driver net1080
+[    1.552889] usbcore: registered new interface driver cdc_subset
+[    1.558836] usbcore: registered new interface driver zaurus
+[    1.564457] usbcore: registered new interface driver cdc_ncm
+[    1.570295] VFIO - User Level meta-driver version: 0.3
+[    1.576871] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    1.583440] ehci-pci: EHCI PCI platform driver
+[    1.587948] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+[    1.594143] ohci-pci: OHCI PCI platform driver
+[    1.598655] ohci-platform: OHCI generic platform driver
+[    1.604992] usbcore: registered new interface driver uas
+[    1.610386] usbcore: registered new interface driver usb-storage
+[    1.616518] usbcore: registered new interface driver usbserial
+[    1.624621] mousedev: PS/2 mouse device common for all mice
+[    1.630282] usbcore: registered new interface driver xpad
+[    1.635805] i2c /dev entries driver
+[    1.645445] OF: ERROR: Bad of_node_put() on /soctherm@0x700E2000/throttle-cfgs/oc1
+[    1.653011] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 4.9.307 #3
+[    1.659004] Hardware name: NVIDIA Jetson Nano Developer Kit (DT)
+[    1.664998] Call trace:
+[    1.667462] [<ffffff8008089dd0>] dump_backtrace+0x0/0x1e8
+[    1.672852] [<ffffff8008089fdc>] show_stack+0x24/0x30
+[    1.677903] [<ffffff8008a6df8c>] dump_stack+0x8c/0xac
+[    1.682952] [<ffffff80088173cc>] of_node_release+0xbc/0xc0
+[    1.688435] [<ffffff800840f234>] kobject_put+0x94/0x1e8
+[    1.693647] [<ffffff80088166ec>] of_node_put+0x24/0x30
+[    1.698774] [<ffffff80088121d0>] __of_get_next_child+0x50/0x70
+[    1.704594] [<ffffff8008812230>] of_get_next_child+0x40/0x68
+[    1.710245] [<ffffff8008786c8c>] tegra_soctherm_probe+0x38c/0x758
+[    1.716330] [<ffffff800855fcf8>] platform_drv_probe+0x60/0xc0
+[    1.722062] [<ffffff800855d908>] driver_probe_device+0x298/0x448
+[    1.728053] [<ffffff800855db94>] __driver_attach+0xdc/0x128
+[    1.733618] [<ffffff800855b1c4>] bus_for_each_dev+0x5c/0xa8
+[    1.739176] [<ffffff800855cf48>] driver_attach+0x30/0x40
+[    1.744475] [<ffffff800855c97c>] bus_add_driver+0x20c/0x2a8
+[    1.750035] [<ffffff800855e72c>] driver_register+0x6c/0x110
+[    1.755595] [<ffffff800855fc34>] __platform_driver_register+0x54/0x60
+[    1.762031] [<ffffff8008ecc3f4>] tegra_soctherm_driver_init+0x18/0x20
+[    1.768459] [<ffffff800808333c>] do_one_initcall+0x44/0x130
+[    1.774025] [<ffffff8008e90d28>] kernel_init_freeable+0x1b8/0x25c
+[    1.780105] [<ffffff8008a6fb40>] kernel_init+0x18/0x108
+[    1.785317] [<ffffff8008083090>] ret_from_fork+0x10/0x40
+[    1.790903] OF: ERROR: Bad of_node_put() on /soctherm@0x700E2000/throttle-cfgs/oc3
+[    1.798461] CPU: 2 PID: 1 Comm: swapper/0 Not tainted 4.9.307 #3
+[    1.804453] Hardware name: NVIDIA Jetson Nano Developer Kit (DT)
+[    1.810444] Call trace:
+[    1.812888] [<ffffff8008089dd0>] dump_backtrace+0x0/0x1e8
+[    1.818275] [<ffffff8008089fdc>] show_stack+0x24/0x30
+[    1.823316] [<ffffff8008a6df8c>] dump_stack+0x8c/0xac
+[    1.828358] [<ffffff80088173cc>] of_node_release+0xbc/0xc0
+[    1.833833] [<ffffff800840f234>] kobject_put+0x94/0x1e8
+[    1.839045] [<ffffff80088166ec>] of_node_put+0x24/0x30
+[    1.844171] [<ffffff80088121d0>] __of_get_next_child+0x50/0x70
+[    1.849989] [<ffffff8008812230>] of_get_next_child+0x40/0x68
+[    1.855635] [<ffffff8008786c8c>] tegra_soctherm_probe+0x38c/0x758
+[    1.861714] [<ffffff800855fcf8>] platform_drv_probe+0x60/0xc0
+[    1.867446] [<ffffff800855d908>] driver_probe_device+0x298/0x448
+[    1.873438] [<ffffff800855db94>] __driver_attach+0xdc/0x128
+[    1.878997] [<ffffff800855b1c4>] bus_for_each_dev+0x5c/0xa8
+[    1.884555] [<ffffff800855cf48>] driver_attach+0x30/0x40
+[    1.889852] [<ffffff800855c97c>] bus_add_driver+0x20c/0x2a8
+[    1.895410] [<ffffff800855e72c>] driver_register+0x6c/0x110
+[    1.900968] [<ffffff800855fc34>] __platform_driver_register+0x54/0x60
+[    1.907396] [<ffffff8008ecc3f4>] tegra_soctherm_driver_init+0x18/0x20
+[    1.913822] [<ffffff800808333c>] do_one_initcall+0x44/0x130
+[    1.919385] [<ffffff8008e90d28>] kernel_init_freeable+0x1b8/0x25c
+[    1.925465] [<ffffff8008a6fb40>] kernel_init+0x18/0x108
+[    1.930678] [<ffffff8008083090>] ret_from_fork+0x10/0x40
+[    1.936245] tegra_soctherm 700e2000.soctherm: thermtrip: will shut down when cpu reaches 102000 mC
+[    1.945312] tegra_soctherm 700e2000.soctherm: throttrip: cpu: missing throttle cdev
+[    1.953088] tegra_soctherm 700e2000.soctherm: thermtrip: will shut down when gpu reaches 102500 mC
+[    1.962044] tegra_soctherm 700e2000.soctherm: throttrip: gpu: missing throttle cdev
+[    1.969833] tegra_soctherm 700e2000.soctherm: thermtrip: pll: missing critical temperature
+[    1.978098] tegra_soctherm 700e2000.soctherm: throttrip: pll: missing hot temperature
+[    1.986083] tegra_soctherm 700e2000.soctherm: failed to register sensor: -19
+[    1.993700] device-mapper: uevent: version 1.0.3
+[    1.998710] device-mapper: ioctl: 4.35.0-ioctl (2016-06-23) initialised: dm-devel@redhat.com
+[    2.008204] sdhci: Secure Digital Host Controller Interface driver
+[    2.014388] sdhci: Copyright(c) Pierre Ossman
+[    2.018741] sdhci-pltfm: SDHCI platform and OF driver helper
+[    2.026081] hidraw: raw HID events driver (C) Jiri Kosina
+[    2.033987] usbcore: registered new interface driver usbhid
+[    2.039576] usbhid: USB HID core driver
+[    2.045804] usbcore: registered new interface driver snd-usb-audio
+[    2.052961] u32 classifier
+[    2.055692]     Actions configured
+[    2.059362] Initializing XFRM netlink socket
+[    2.064351] NET: Registered protocol family 10
+[    2.070106] NET: Registered protocol family 17
+[    2.074579] NET: Registered protocol family 15
+[    2.079098] bridge: filtering via arp/ip/ip6tables is no longer available by default. Update your scripts to load br_netfilter if you need this.
+[    2.092283] Bluetooth: RFCOMM socket layer initialized
+[    2.097452] Bluetooth: RFCOMM ver 1.11
+[    2.101216] Bluetooth: HIDP (Human Interface Emulation) ver 1.2
+[    2.107148] Bluetooth: HIDP socket layer initialized
+[    2.112154] 9pnet: Installing 9P2000 support
+[    2.116509] Key type dns_resolver registered
+[    2.121082] Registered cp15_barrier emulation handler
+[    2.126269] Registered setend emulation handler
+[    2.131959] registered taskstats version 1
+[    2.145025] gpio gpiochip1: gpio-line-names specifies 240 line names but there are 256 lines on the chip
+[    2.155960] GPIO line 6 (system-suspend-gpio) hogged as output/high
+[    2.162251] GPIO line 151 (camera-control-output-low) hogged as output/low
+[    2.178101] pwm-regulator pwm_regulators:pwm-regulator@0: Failed to get PWM: -517
+[    2.188374] pwm-regulator pwm_regulators:pwm-regulator@0: Failed to get PWM: -517
+[    2.197040] input: gpio-keys as /devices/platform/gpio-keys/input/input0
+[    2.205230] pwm-regulator pwm_regulators:pwm-regulator@0: Failed to get PWM: -517
+[    2.438466] random: crng init done
+[   23.023509] INFO: rcu_preempt detected stalls on CPUs/tasks:
+[   23.029173] 1-...: (0 ticks this GP) idle=7ec/0/0 softirq=184/184 fqs=0 
+[   23.035944] (detected by 0, t=5252 jiffies, g=-242, c=-243, q=646)
+[   23.042211] Task dump for CPU 1:
+[   23.045430] swapper/1       R  running task        0     0      1 0x00000000
+[   23.052482] Call trace:
+[   23.054941] [<ffffff80080856b8>] __switch_to+0x98/0xc0
+[   23.060079] [<ffffff80087a3610>] cpuidle_enter_state+0x80/0x360
+[   23.065985] [<ffffff80087a3964>] cpuidle_enter+0x34/0x48
+[   23.071294] [<ffffff80080f357c>] call_cpuidle+0x44/0x70
+[   23.076507] [<ffffff80080f38d8>] cpu_startup_entry+0x1a8/0x1f8
+[   23.082330] [<ffffff800808f804>] secondary_start_kernel+0x184/0x1f0
+[   23.088583] [<0000000084a781a8>] 0x84a781a8
+[   23.092759] rcu_preempt kthread starved for 5252 jiffies! g18446744073709551374 c18446744073709551373 f0x0 RCU_GP_WAIT_FQS(3) ->state=0x1
+[   23.105078] rcu_preempt     S    0     7      2 0x00000000
+[   23.110562] Call trace:
+[   23.113003] [<ffffff80080856b8>] __switch_to+0x98/0xc0
+[   23.118139] [<ffffff8008a71850>] __schedule+0x208/0x6d0
+[   23.123351] [<ffffff8008a71d5c>] schedule+0x44/0xa8
+[   23.128220] [<ffffff8008a74f90>] schedule_timeout+0x90/0x420
+[   23.133871] [<ffffff800810fd3c>] rcu_gp_kthread+0x4bc/0x800
+[   23.139435] [<ffffff80080ce2e4>] kthread+0xfc/0x100
+[   23.144302] [<ffffff8008083090>] ret_from_fork+0x10/0x40
+[   78.039154] irq 94: nobody cared (try booting with the "irqpoll" option)
+[   78.045847] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 4.9.307 #3
+[   78.051839] Hardware name: NVIDIA Jetson Nano Developer Kit (DT)
+[   78.057830] Call trace:
+[   78.060273] [<ffffff8008089dd0>] dump_backtrace+0x0/0x1e8
+[   78.065659] [<ffffff8008089fdc>] show_stack+0x24/0x30
+[   78.070701] [<ffffff8008a6df8c>] dump_stack+0x8c/0xac
+[   78.075747] [<ffffff8008103eac>] __report_bad_irq+0x3c/0xf8
+[   78.081306] [<ffffff8008104300>] note_interrupt+0x2c0/0x310
+[   78.086866] [<ffffff8008101110>] handle_irq_event_percpu+0x50/0x60
+[   78.093033] [<ffffff8008101170>] handle_irq_event+0x50/0x80
+[   78.098594] [<ffffff8008105004>] handle_fasteoi_irq+0xd4/0x1c0
+[   78.104414] [<ffffff80080ffe6c>] generic_handle_irq+0x34/0x50
+[   78.110146] [<ffffff8008100558>] __handle_domain_irq+0x68/0xc0
+[   78.115966] [<ffffff8008080f4c>] gic_handle_irq+0x5c/0xb0
+[   78.121353] Exception stack(0xffffff8009413d30 to 0xffffff8009413e60)
+[   78.127780] 3d20:                                   ffffffc0ff0b3780 00000040f6028000
+[   78.135592] 3d40: 0000000000000004 00000000000d8756 0000000000000015 00ffffffffffffff
+[   78.143405] 3d60: 000000006bea795e 000000000000002a ffffffc0ff0b291c 0000000000000022
+[   78.151217] 3d80: ffffffc0ff0b28fc 000000000000016b 0000000000000019 071c71c71c71c71c
+[   78.159028] 3da0: 0000000000000001 0000000000000007 0000000000000000 0000000007a00000
+[   78.166841] 3dc0: 00000000ffffffec 000000122b7ed703 0000000000000000 ffffffc0f88b6e00
+[   78.174654] 3de0: 0000000000000000 ffffff80094baf30 000000122b7ec03a 0000000000000000
+[   78.182466] 3e00: ffffff800908a740 ffffff8009417000 0000000000000001 ffffff8009413e60
+[   78.190278] 3e20: ffffff80087a3628 ffffff8009413e60 ffffff80087a3640 0000000060000145
+[   78.198089] 3e40: ffffff8009413e60 ffffff80087a3628 ffffffffffffffff 000000122b7ec03a
+[   78.205901] [<ffffff80080828ac>] el1_irq+0xac/0x120
+[   78.210768] [<ffffff80087a3640>] cpuidle_enter_state+0xb0/0x360
+[   78.216674] [<ffffff80087a3964>] cpuidle_enter+0x34/0x48
+[   78.221972] [<ffffff80080f357c>] call_cpuidle+0x44/0x70
+[   78.227185] [<ffffff80080f38d8>] cpu_startup_entry+0x1a8/0x1f8
+[   78.233005] [<ffffff8008a6fb18>] rest_init+0x88/0x98
+[   78.237968] [<ffffff8008e90b58>] start_kernel+0x370/0x388
+[   78.243355] [<ffffff8008e901f8>] __primary_switched+0x74/0x88
+[   78.249085] handlers:
+[   78.251349] [<ffffff8008101210>] irq_default_primary_handler threaded [<ffffff8008584e18>] regmap_irq_thread
+[   78.261183] Disabling IRQ #94
+[0000.229] [L4T TegraBoot] (version 00.00.2018.01-l4t-8728f3cb)
+[0000.235] Processing in cold boot mode Bootloader 2
+[0000.240] A02 Bootrom Patch rev = 1023
+[0000.243] Power-up reason: pmc por
+[0000.246] No Battery Present
+[0000.249] pmic max77620 reset reason
+[0000.252] pmic max77620 NVERC : 0xff
+[0000.256] RamCode = 0
+[0000.258] Platform has DDR4 type RAM
+[0000.261] max77620 disabling SD1 Remote Sense
+[0000.266] Setting DDR voltage to 1125mv
+[0000.270] Serial Number of Pmic Max77663: 0x241869
+[0000.277] Entering ramdump check
+[0000.280] Get RamDumpCarveOut = 0x0
+[0000.283] RamDumpCarveOut=0x0,  RamDumperFlag=0xe59ff3f8
+[0000.289] Last reboot was clean, booting normally!
+[0000.293] Sdram initialization is successful 
+[0000.297] SecureOs Carveout Base=0x00000000ff800000 Size=0x00800000
+[0000.303] Lp0 Carveout Base=0x00000000ff780000 Size=0x00001000
+[0000.309] BpmpFw Carveout Base=0x00000000ff700000 Size=0x00080000
+[0000.315] GSC1 Carveout Base=0x00000000ff600000 Size=0x00100000
+[0000.321] GSC2 Carveout Base=0x00000000ff500000 Size=0x00100000
+[0000.327] GSC4 Carveout Base=0x00000000ff400000 Size=0x00100000
+[0000.333] GSC5 Carveout Base=0x00000000ff300000 Size=0x00100000
+[0000.338] GSC3 Carveout Base=0x000000017f300000 Size=0x00d00000
+[0000.355] RamDump Carveout Base=0x00000000ff280000 Size=0x00080000
+[0000.361] Platform-DebugCarveout: 0
+[0000.364] Nck Carveout Base=0x00000000ff080000 Size=0x00200000
+[0000.370] Non secure mode, and RB not enabled.
+[0000.374] *** Booting BFS0.
+[0000.377] Initialize FailControl
+[0000.380] Read PT from (0:3)
+[0000.395] Csd NumOfBlocks=0
+[0000.434] PT crc32 and magic check passed.
+[0000.438] Using BFS PT to query partitions 
+[0000.442] PT: Partition LNX NOT found ! 
+[0000.446] *** Booting KFS0.
+[0000.448] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.454] BoardID = 3448, SKU = 0x2
+[0000.458] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.463] Read GPT from (0:3)
+[0000.472] Using GPT Primary to query partitions
+[0000.476] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.483] Loading Tboot-CPU binary
+[0000.488] Verifying TBC in OdmNonSecureSBK mode
+[0000.498] Bootloader load address is 0xa0000000, entry address is 0xa0000258
+[0000.505] Bootloader downloaded successfully.
+[0000.510] Downloaded Tboot-CPU binary to 0xa0000258
+[0000.515] MAX77620_GPIO5 configured
+[0000.518] CPU power rail is up
+[0000.521] CPU clock enabled
+[0000.524] Performing RAM repair
+[0000.527] Updating A64 Warmreset Address to 0xa00002e9
+[0000.532] BoardID = 3448, SKU = 0x2
+[0000.536] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.542] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.548] Loading NvTbootBootloaderDTB
+[0000.565] Verifying NvTbootBootloaderDTB in OdmNonSecureSBK mode
+[0000.636] Bootloader DTB Load Address: 0x83000000
+[0000.641] BoardID = 3448, SKU = 0x2
+[0000.644] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.650] Loading NvTbootKernelDTB
+[0000.667] Verifying NvTbootKernelDTB in OdmNonSecureSBK mode
+[0000.738] Kernel DTB Load Address: 0x83100000
+[0000.742] BoardID = 3448, SKU = 0x2
+[0000.745] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.751] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.759] Loading cboot binary
+[0000.770] Verifying EBT in OdmNonSecureSBK mode
+[0000.811] Bootloader load address is 0x92c00000, entry address is 0x92c00258
+[0000.818] Bootloader downloaded successfully.
+[0000.823] BoardID = 3448, SKU = 0x2
+[0000.826] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.832] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.838] PT: Partition NCT NOT found ! 
+[0000.842] Warning: Find Partition via PT Failed
+[0000.846] Next binary entry address: 0x92c00258 
+[0000.851] BoardId: 3448
+[0000.855] Overriding pmu board id with proc board id
+[0000.860] Display board id is not available 
+[0000.864] BoardID = 3448, SKU = 0x2
+[0000.867] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.873] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.887] Verifying SC7EntryFw in OdmNonSecureSBK mode
+[0000.943] /bpmp deleted
+[0000.945] SC7EntryFw header found loaded at 0xff700000
+[0001.133] OVR2 PMIC
+[0001.135] Bpmp FW successfully loaded
+[0001.138] BoardID = 3448, SKU = 0x2
+[0001.141] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0001.147] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0001.155] WB0 init successfully at 0xff780000
+[0001.159] Verifying NvTbootWb0 in OdmNonSecureSBK mode
+[0001.164] Set NvDecSticky Bits
+[0001.167] GSC2 address ff53fffc value c0edbbcc
+[0001.174] GSC MC Settings done
+[0001.177] BoardID = 3448, SKU = 0x2
+[0001.180] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0001.187] TOS Image length 53680
+[0001.190]  Monitor size 53680
+[0001.192]  OS size 0
+[0001.198] Secure Os AES-CMAC Verification Success!
+[0001.202] TOS image cipher info: plaintext
+[0001.206] Loading and Validation of Secure OS Successful
+[0001.222] SC7 Entry Firmware - 0xff700000, 0x4000
+[0001.227] NvTbootPackSdramParams: start. 
+[0001.232] NvTbootPackSdramParams: done. 
+[0001.236] Tegraboot started after 159263 us
+[0001.240] Basic modules init took 741906 us
+[0001.244] Sec Bootdevice Read Time = 54 ms, Read Size = 3682 KB
+[0001.249] Sec Bootdevice Write Time = 0 ms, Write Size = 0 KB
+[0001.255] Next stage binary read took 7388 us
+[0001.259] Carveout took -34783 us
+[0001.262] CPU initialization took 391932 us
+[0001.266] Total time taken by TegraBoot 1106443 us
+
+[0001.271] Starting CPU & Halting co-processor 
+
+64NOTICE:  BL31: v1.3(release):b5eeb33f7
+NOTICE:  BL31: Built : 12:09:37, Jul 26 2021
+ERROR:   Error initializing runtime service trusty_fast
+[0001.393] RamCode = 0
+[0001.398] LPDDR4 Training: Read DT: Number of tables = 2
+[0001.403] EMC Training (SRC-freq: 204000; DST-freq: 1600000)
+[0001.415] EMC Training Successful
+[0001.419] 408000 not found in DVFS table
+[0001.425] RamCode = 0
+[0001.428] DT Write: emc-table@204000 succeeded
+[0001.434] DT Write: emc-table@1600000 succeeded
+[0001.438] LPDDR4 Training: Write DT: Number of tables = 2
+[0001.481] 
+[0001.483] Debug Init done
+[0001.485] Marked DTB cacheable
+[0001.488] Bootloader DTB loaded at 0x83000000
+[0001.493] Marked DTB cacheable
+[0001.496] Kernel DTB loaded at 0x83100000
+[0001.500] DeviceTree Init done
+[0001.513] Pinmux applied successfully
+[0001.517] gicd_base: 0x50041000
+[0001.520] gicc_base: 0x50042000
+[0001.523] Interrupts Init done
+[0001.528] Using base:0x60005090 & irq:208 for tick-timer
+[0001.533] Using base:0x60005098 for delay-timer
+[0001.537] platform_init_timer: DONE
+[0001.541] Timer(tick) Init done
+[0001.544] osc freq = 38400 khz
+[0001.548] 
+[0001.549] Welcome to L4T Cboot
+[0001.552] 
+[0001.554] Cboot Version: 00.00.2018.01-t210-c952b4e6
+[0001.558] calling constructors
+[0001.561] initializing heap
+[0001.564] initializing threads
+[0001.567] initializing timers
+[0001.570] creating bootstrap completion thread
+[0001.574] top of bootstrap2()
+[0001.577] CPU: ARM Cortex A57
+[0001.580] CPU: MIDR: 0x411FD071, MPIDR: 0x80000000
+[0001.585] initializing platform
+[0001.638] Config for emmc ddr50 mode completed
+[0001.643] sdmmc bdev is already initialized
+[0001.647] Enable APE clock
+[0001.649] Un-powergate APE partition
+[0001.653] of_register: registering tegra_udc to of_hal
+[0001.658] of_register: registering inv20628-driver to of_hal
+[0001.664] of_register: registering ads1015-driver to of_hal
+[0001.669] of_register: registering lp8557-bl-driver to of_hal
+[0001.675] of_register: registering bq2419x_charger to of_hal
+[0001.681] of_register: registering bq27441_fuel_gauge to of_hal
+[0001.692] gpio framework initialized
+[0001.695] of_register: registering tca9539_gpio to of_hal
+[0001.701] of_register: registering tca9539_gpio to of_hal
+[0001.706] of_register: registering i2c_bus_driver to of_hal
+[0001.712] of_register: registering i2c_bus_driver to of_hal
+[0001.717] of_register: registering i2c_bus_driver to of_hal
+[0001.723] pmic framework initialized
+[0001.726] of_register: registering max77620_pmic to of_hal
+[0001.732] regulator framework initialized
+[0001.736] of_register: registering tps65132_bl_driver to of_hal
+[0001.742] initializing target
+[0001.747] gpio_driver_register: register 'tegra_gpio_driver' driver
+[0001.758] fixed regulator driver initialized
+[0001.775] initializing OF layer
+[0001.778] NCK carveout not present
+[0001.782] Skipping dts_overrides
+[0001.786] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.802] I2C Bus Init done
+[0001.805] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.815] I2C Bus Init done
+[0001.818] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.828] I2C Bus Init done
+[0001.830] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.841] I2C Bus Init done
+[0001.843] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.853] I2C Bus Init done
+[0001.856] of_children_init: Ops found for compatible string maxim,max77620
+[0001.866] max77620_init using irq 118
+[0001.871] register 'maxim,max77620' pmic
+[0001.875] gpio_driver_register: register 'max77620-gpio' driver
+[0001.882] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.892] I2C Bus Init done
+[0001.896] NCK carveout not present
+[0001.905] Find /i2c@7000c000's alias i2c0
+[0001.909] get eeprom at 1-a0, size 256, type 0
+[0001.917] Find /i2c@7000c500's alias i2c2
+[0001.921] get eeprom at 3-a0, size 256, type 0
+[0001.926] get eeprom at 3-ae, size 256, type 0
+[0001.930] pm_ids_update: Updating 1,a0, size 256, type 0
+[0001.935] I2C slave not started
+[0001.938] I2C write failed
+[0001.941] Writing offset failed
+[0001.944] eeprom_init: EEPROM read failed
+[0001.948] pm_ids_update: eeprom init failed
+[0001.952] pm_ids_update: Updating 3,a0, size 256, type 0
+[0001.982] pm_ids_update: The pm board id is 3448-0002-401
+[0001.989] Adding plugin-manager/ids/3448-0002-401=/i2c@7000c500:module@0x50
+[0001.997] pm_ids_update: pm id update successful
+[0002.002] pm_ids_update: Updating 3,ae, size 256, type 0
+[0002.032] eeprom_init: EEPROM incompatible version found
+[0002.037] pm_ids_update: eeprom init failed
+[0002.067] eeprom_get_mac: EEPROM invalid MAC address (all 0xff)
+[0002.073] shim_eeprom_update_mac:267: Failed to update 0 MAC address in DTB
+[0002.081] eeprom_get_mac: EEPROM invalid MAC address (all 0xff)
+[0002.087] shim_eeprom_update_mac:267: Failed to update 1 MAC address in DTB
+[0002.095] updating /chosen/nvidia,ethernet-mac node 48:b0:2d:3e:43:f0
+[0002.101] Plugin Manager: Parse ODM data 0x000a4000
+[0002.114] shim_cmdline_install: /chosen/bootargs: earlycon=uart8250,mmio32,0x70006000 
+[0002.128] Find /i2c@7000c000's alias i2c0
+[0002.132] get eeprom at 1-a0, size 256, type 0
+[0002.141] Find /i2c@7000c500's alias i2c2
+[0002.144] get eeprom at 3-a0, size 256, type 0
+[0002.149] get eeprom at 3-ae, size 256, type 0
+[0002.153] pm_ids_update: Updating 1,a0, size 256, type 0
+[0002.159] I2C slave not started
+[0002.162] I2C write failed
+[0002.164] Writing offset failed
+[0002.167] eeprom_init: EEPROM read failed
+[0002.171] pm_ids_update: eeprom init failed
+[0002.175] pm_ids_update: Updating 3,a0, size 256, type 0
+[0002.205] pm_ids_update: The pm board id is 3448-0002-401
+[0002.212] Adding plugin-manager/ids/3448-0002-401=/i2c@7000c500:module@0x50
+[0002.219] pm_ids_update: pm id update successful
+[0002.223] pm_ids_update: Updating 3,ae, size 256, type 0
+[0002.253] eeprom_init: EEPROM incompatible version found
+[0002.258] pm_ids_update: eeprom init failed
+[0002.288] Add serial number:1423321097676 as DT property
+[0002.296] Applying platform configs
+[0002.302] platform-init is not present. Skipping
+[0002.307] calling apps_init()
+[0002.328] Found 17 GPT partitions in "sdmmc3_user"
+[0002.333] Proceeding to Cold Boot
+[0002.336] starting app android_boot_app
+[0002.340] Device state: unlocked
+[0002.343] display console init
+[0002.351] could not find regulator
+[0002.374] hdmi cable not connected
+[0002.378] is_hdmi_needeDT entry for leds-pwm not found
+d[0002.386] : HDMI not connected, returning false
+[0002.391] hdmi is not connected
+[0002.394] sor0 is not supported
+[0002.397] display_console_init: no valid display out_type
+[0002.404] subnode volume_up is not found !
+[0002.408] subnode back is not found !
+[0002.412] subnode volume_down is not found !
+[0002.416] subnode menu is not found !
+[0002.420] Gpio keyboard init success
+[0002.467] found decompressor handler: lz4-legacy
+[0002.481] decompressing blob (type 1)...
+[0002.548] display_resolution: No display init
+[0002.552] Failed to retrieve display resolution
+[0002.556] Could not load/initialize BMP blob...ignoring
+[0002.606] decompressor handler not found
+[0002.610] load_firmware_blob: Firmware blob loaded, entries=2
+[0002.616] XUSB blob version 0 size 126464 @ 0x92cb328c
+[0002.622] -------> se_aes_verify_sbk_clear: 747
+[0002.626] se_aes_verify_sbk_clear: Error
+[0002.630] SE operation failed
+[0002.633] bl_battery_charging: connected to external power supply
+[0002.642] display_console_ioctl: No display init
+[0002.647] switch_backlight failed
+[0002.656] device_query_partition_size: failed to open partition sdmmc3_user:MSC !
+[0002.664] MSC Partition not found
+[0002.673] device_query_partition_size: failed to open partition sdmmc3_user:USP !
+[0002.681] USP partition read failed!
+[0002.684] blob_init: blob-partition USP header read failed
+[0002.690] android_boot Unable to update recovery partition
+[0002.695] kfs_getpartname: name = LNX
+[0002.699] Loading kernel from LNX
+[0002.793] load kernel from storage
+[0002.802] decompressor handler not found
+[0002.836] Successfully loaded kernel and ramdisk images
+[0002.841] board ID = D78, board SKU = 2
+[0002.846] display_resolution: No display init
+[0002.850] Failed to retrieve display resolution
+[0002.855] bmp blob is not loaded and initialized
+[0002.859] Failed to display boot-logo
+[0002.863] NCK carveout not present
+[0002.866] Skipping dts_overrides
+[0002.869] NCK carveout not present
+[0002.879] Find /i2c@7000c000's alias i2c0
+[0002.882] get eeprom at 1-a0, size 256, type 0
+[0002.891] Find /i2c@7000c500's alias i2c2
+[0002.895] get eeprom at 3-a0, size 256, type 0
+[0002.900] get eeprom at 3-ae, size 256, type 0
+[0002.904] pm_ids_update: Updating 1,a0, size 256, type 0
+[0002.909] I2C slave not started
+[0002.912] I2C write failed
+[0002.915] Writing offset failed
+[0002.918] eeprom_init: EEPROM read failed
+[0002.922] pm_ids_update: eeprom init failed
+[0002.926] pm_ids_update: Updating 3,a0, size 256, type 0
+[0002.956] pm_ids_update: The pm board id is 3448-0002-401
+[0002.963] Adding plugin-manager/ids/3448-0002-401=/i2c@7000c500:module@0x50
+[0002.971] pm_ids_update: pm id update successful
+[0002.976] pm_ids_update: Updating 3,ae, size 256, type 0
+[0003.006] eeprom_init: EEPROM incompatible version found
+[0003.011] pm_ids_update: eeprom init failed
+[0003.041] eeprom_get_mac: EEPROM invalid MAC address (all 0xff)
+[0003.047] shim_eeprom_update_mac:267: Failed to update 0 MAC address in DTB
+[0003.055] eeprom_get_mac: EEPROM invalid MAC address (all 0xff)
+[0003.061] shim_eeprom_update_mac:267: Failed to update 1 MAC address in DTB
+[0003.069] updating /chosen/nvidia,ethernet-mac node 48:b0:2d:3e:43:f0
+[0003.075] Plugin Manager: Parse ODM data 0x000a4000
+[0003.088] shim_cmdline_install: /chosen/bootargs: earlycon=uart8250,mmio32,0x70006000 
+[0003.096] Add serial number:1423321097676 as DT property
+[0003.105] "bpmp" doesn't exist, creating 
+[0003.110] Updated bpmp info to DTB
+[0003.115] Updated initrd info to DTB
+[0003.118] "proc-board" doesn't exist, creating 
+[0003.125] Updated board info to DTB
+[0003.128] "pmu-board" doesn't exist, creating 
+[0003.134] Updated board info to DTB
+[0003.137] "display-board" doesn't exist, creating 
+[0003.143] Updated board info to DTB
+[0003.146] "reset" doesn't exist, creating 
+[0003.151] Updated reset info to DTB
+[0003.155] display_console_ioctl: No display init
+[0003.159] display_console_ioctl: No display init
+[0003.164] display_console_ioctl: No display init
+[0003.168] Cmdline: tegraid=21.1.2.0.0 ddr_die=4096M@2048M section=512M memtype=0 vpr_resize usb_port_owner_info=0 lane_owner_info=0 emc_max_dvfs=0 touch_id=0@63 video=tegrafb no_console_suspend=1 console=ttyS0,115200n8 debug_uartport=lsport,4 earlyprintk=uart8250-32bit,0x70006000 maxcpus=4 usbcore.old_scheme_first=1 lp0_vec=0x1000@0xff780000 core_edp_mv=1075 core_edp_ma=4000 gpt 
+[0003.203] DTB cmdline: earlycon=uart8250,mmio32,0x70006000 
+[0003.208] boot image cmdline: root=/dev/mmcblk0p1 rw rootwait rootfstype=ext4 console=ttyS0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0 sdhci_tegra.en_boot_part_access=1 
+[0003.225] Updated bootarg info to DTB
+[0003.228] Adding uuid 00000001643174400800000001058180 to DT
+[0003.234] Adding eks info 0 to DT
+[0003.240] WARNING: Failed to pass NS DRAM ranges to TOS, err: -7
+[0003.246] Updated memory info to DTB
+[0003.253] set vdd_core voltage to 1075 mv
+[0003.257] setting 'vdd-core' regulator to 1075000 micro volts
+[0003.263] Found secure-pmc; disable BPMP
+
+
+U-Boot 2020.04-g46e4604c78 (Jul 26 2021 - 12:09:42 -0700)
+
+SoC: tegra210
+Model: NVIDIA Jetson Nano Developer Kit
+Board: NVIDIA P3450-0000
+DRAM:  4 GiB
+MMC:   sdhci@700b0000: 1, sdhci@700b0600: 0
+Loading Environment from MMC... OK
+In:    serial
+Out:   serial
+Err:   serial
+Net:   No ethernet found.
+Hit any key to stop autoboot:  2  1  0 
+switch to partitions #0, OK
+mmc0(part 0) is current device
+Scanning mmc 0:1...
+Found /boot/extlinux/extlinux.conf
+Retrieving file: /boot/extlinux/extlinux.conf
+879 bytes read in 31 ms (27.3 KiB/s)
+1:primary kernel
+Retrieving file: /boot/initrd
+7160133 bytes read in 183 ms (37.3 MiB/s)
+Retrieving file: /boot/Image
+34418696 bytes read in 779 ms (42.1 MiB/s)
+append: tegraid=21.1.2.0.0 ddr_die=4096M@2048M section=512M memtype=0 vpr_resize usb_port_owner_info=0 lane_owner_info=0 emc_max_dvfs=0 touch_id=0@63 video=tegrafb no_console_suspend=1 console=ttyS0,115200n8 debug_uartport=lsport,4 earlyprintk=uart8250-32bit,0x70006000 maxcpus=4 usbcore.old_scheme_first=1 lp0_vec=0x1000@0xff780000 core_edp_mv=1075 core_edp_ma=4000 gpt  earlycon=uart8250,mmio32,0x70006000  root=/dev/mmcblk0p1 rw rootwait rootfstype=ext4 console=ttyS0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0 sdhci_tegra.en_boot_part_access=1 quiet root=/dev/mmcblk0p1 rw rootwait rootfstype=ext4 console=ttyS0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0 sdhci_tegra.en_boot_part_access=1 
+## Flattened Device Tree blob at 83100000
+   Booting using the fdt blob at 0x83100000
+ERROR: reserving fdt memory region failed (addr=0 size=0)
+ERROR: reserving fdt memory region failed (addr=0 size=0)
+   Using Device Tree in place at 0000000083100000, end 000000008317ce50
+copying carveout for /host1x@50000000/dc@54200000...
+copying carveout for /host1x@50000000/dc@54240000...
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.9.253-tegra (yhai@yhai) (gcc version 7.3.1 20180425 [linaro-7.3-2018.05 revision d29120a424ecfbc167ef90065c0eeb7f91977701] (Linaro GCC 7.3-2018.05) ) #1 SMP PREEMPT Wed Nov 13 17:32:56 CST 2024
+[    0.000000] Boot CPU: AArch64 Processor [411fd071]
+[    0.000000] OF: fdt:memory scan node memory@80000000, reg size 32,
+[    0.000000] OF: fdt: - 80000000 ,  7ee00000
+[    0.000000] OF: fdt: - 100000000 ,  7f200000
+[    0.000000] earlycon: uart8250 at MMIO32 0x0000000070006000 (options '')
+[    0.000000] bootconsole [uart8250] enabled
+[    1.074172] tegradc tegradc.1: dpd enable lookup fail:-19
+[    1.579942] Host read timeout at address 545c00c4
+[    1.862570] imx219 8-0010: imx219_board_setup: error during i2c read probe (-121)
+[    1.870218] imx219 8-0010: board setup failed
+[    2.223845] cgroup: cgroup2: unknown option "nsdelegate"
+[    3.536707] using random self ethernet address
+[    3.563046] using random host ethernet address
+[    3.937426] random: crng init done
+[    3.940832] random: 7 urandom warning(s) missed due to ratelimiting
+[    4.222210] using random self ethernet address
+[    4.228028] using random host ethernet address
+[    4.571257] iwlwifi 0000:01:00.0: Direct firmware load for iwlwifi-8265-26.ucode failed with error -2
+[    4.580870] iwlwifi 0000:01:00.0: Falling back to user helper
+[    5.361429] Bridge firewalling registered
+[    7.013066] iwlwifi 0000:01:00.0: Direct firmware load for iwlwifi-8265-25.ucode failed with error -2
+[    7.022842] iwlwifi 0000:01:00.0: Falling back to user helper
+[    7.315069] iwlwifi 0000:01:00.0: Direct firmware load for iwlwifi-8265-24.ucode failed with error -2
+[    7.324313] iwlwifi 0000:01:00.0: Falling back to user helper
+[    7.357892] iwlwifi 0000:01:00.0: Direct firmware load for iwlwifi-8265-23.ucode failed with error -2
+[    7.369263] iwlwifi 0000:01:00.0: Falling back to user helper
+[    7.574047] thermal thermal_zone6: failed to read out thermal zone (-5)
+
+Ubuntu 18.04.5 LTS localhost.localdomain ttyS0
+
+localhost login: zhan
+Password: 
+Last login:  1  4 21:23:37 CST 2025 on ttyS0
+Welcome to Ubuntu 18.04.5 LTS (GNU/Linux 4.9.253-tegra aarch64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+This system has been minimized by removing packages and content that are
+not required on a system that users do not log into.
+
+To restore this content, you can run the 'unminimize' command.
+
+394 updates can be applied immediately.
+330 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+[sudo] password for zhan: 
+zhan@localhost:~$ ifconfig
+docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        ether 02:42:32:88:97:3a  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether 48:b0:2d:3e:43:f0  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 150  base 0xd000  
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1  (Local Loopback)
+        RX packets 722  bytes 1325868 (1.3 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 722  bytes 1325868 (1.3 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+rndis0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether 92:a4:05:83:cf:71  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+usb0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether 92:a4:05:83:cf:73  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.177.184  netmask 255.255.255.0  broadcast 192.168.177.255
+        inet6 240a:42ae:c00:2158:216d:16a8:ba:6920  prefixlen 64  scopeid 0x0<global>
+        inet6 240a:42ae:c00:2158:8e17:59ff:fef3:f6d3  prefixlen 64  scopeid 0x0<global>
+        inet6 fe80::8e17:59ff:fef3:f6d3  prefixlen 64  scopeid 0x20<link>
+        ether 8c:17:59:f3:f6:d3  txqueuelen 1000  (Ethernet)
+        RX packets 564  bytes 360404 (360.4 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1184  bytes 1191557 (1.1 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+zhan@localhost:~$ cd sd
+zhan@localhost:~/sd$ ls
+linux-4.9.253         linux-4.9.307         lost+found
+linux-4.9.253.tar.gz  linux-4.9.307.tar.xz
+zhan@localhost:~/sd$ cdcd linux-4.9.307/
+zhan@localhost:~/sd/linux-4.9.307$ ls
+arch     Documentation  ipc          Makefile        samples     usr
+block    drivers        Kbuild       mm              scripts     virt
+certs    firmware       Kconfig      Module.symvers  security    vmlinux
+COPYING  fs             kernel       net             sound       vmlinux.o
+CREDITS  include        lib          README          System.map
+crypto   init           MAINTAINERS  REPORTING-BUGS  tools
+zhan@localhost:~/sd/linux-4.9.307$ mv .config .config .ago
+zhan@localhost:~/sd/linux-4.9.307$ ls -a
+.              fs                      .missing-syscalls.d  .tmp_kallsyms2.S
+..             .get_maintainer.ignore  mm                   .tmp_System.map
+arch           .gitattributes          Module.symvers       .tmp_versions
+block          .gitignore              net                  .tmp_vmlinux1
+certs          include                 README               .tmp_vmlinux2
+.cocciconfig   init                    REPORTING-BUGS       tools
+.config.ago    ipc                     samples              usr
+.config.old    Kbuild                  scripts              .version
+COPYING        Kconfig                 security             virt
+CREDITS        kernel                  sound                vmlinux
+crypto         lib                     System.map           .vmlinux.cmd
+Documentation  .mailmap                .tmp_kallsyms1.o     vmlinux.o
+drivers        MAINTAINERS             .tmp_kallsyms1.S
+firmware       Makefile                .tmp_kallsyms2.o
+zhan@localhost:~/sd/linux-4.9.307$ mv ../.config.ramdisk.ok .
+zhan@localhost:~/sd/linux-4.9.307$ ls -a
+.                       include              sound
+..                      init                 System.map
+arch                    ipc                  .tmp_kallsyms1.o
+block                   Kbuild               .tmp_kallsyms1.S
+certs                   Kconfig              .tmp_kallsyms2.o
+.cocciconfig            kernel               .tmp_kallsyms2.S
+.config.ago             lib                  .tmp_System.map
+.config.old             .mailmap             .tmp_versions
+.config.ramdisk.ok      MAINTAINERS          .tmp_vmlinux1
+COPYING                 Makefile             .tmp_vmlinux2
+CREDITS                 .missing-syscalls.d  tools
+crypto                  mm                   usr
+Documentation           Module.symvers       .version
+drivers                 net                  virt
+firmware                README               vmlinux
+fs                      REPORTING-BUGS       .vmlinux.cmd
+.get_maintainer.ignore  samples              vmlinux.o
+.gitattributes          scripts
+.gitignore              security
+zhan@localhost:~/sd/linux-4.9.307$ mv .config.ramdisk.ok  .config
+zhan@localhost:~/sd/linux-4.9.307$ ls -a
+.              firmware                Makefile             .tmp_kallsyms2.o
+..             fs                      .missing-syscalls.d  .tmp_kallsyms2.S
+arch           .get_maintainer.ignore  mm                   .tmp_System.map
+block          .gitattributes          Module.symvers       .tmp_versions
+certs          .gitignore              net                  .tmp_vmlinux1
+.cocciconfig   include                 README               .tmp_vmlinux2
+.config        init                    REPORTING-BUGS       tools
+.config.ago    ipc                     samples              usr
+.config.old    Kbuild                  scripts              .version
+COPYING        Kconfig                 security             virt
+CREDITS        kernel                  sound                vmlinux
+crypto         lib                     System.map           .vmlinux.cmd
+Documentation  .mailmap                .tmp_kallsyms1.o     vmlinux.o
+drivers        MAINTAINERS             .tmp_kallsyms1.S
+zhan@localhost:~/sd/linux-4.9.307$ make Image -j5
+scripts/kconfig/conf  --silentoldconfig Kconfig
+  CHK     include/config/kernel.release
+  CHK     include/generated/uapi/linux/version.h
+  CHK     include/generated/utsrelease.h
+  CC      scripts/mod/empty.o
+  CHK     scripts/mod/devicetable-offsets.h
+  MKELF   scripts/mod/elfconfig.h
+  HOSTCC  scripts/mod/modpost.o
+  HOSTCC  scripts/mod/sumversion.o
+  HOSTCC  scripts/mod/file2alias.o
+  CHK     include/generated/timeconst.h
+  CC      kernel/bounds.s
+  CHK     include/generated/bounds.h
+  CC      arch/arm64/kernel/asm-offsets.s
+  CHK     include/generated/asm-offsets.h
+  UPD     include/generated/asm-offsets.h
+  CALL    scripts/checksyscalls.sh
+  HOSTLD  scripts/mod/modpost
+  VDSOA   arch/arm64/kernel/vdso/gettimeofday.o
+  VDSOA   arch/arm64/kernel/vdso/sigreturn.o
+  VDSOL   arch/arm64/kernel/vdso/vdso.so.dbg
+  VDSOSYM include/generated/vdso-offsets.h
+  AS      usr/initramfs_data.o
+  LD      arch/arm64/crypto/built-in.o
+  LD      usr/built-in.o
+  CC      init/main.o
+  CHK     include/generated/compile.h
+  CC      arch/arm64/mm/dma-mapping.o
+  CC      arch/arm64/mm/extable.o
+  CC      arch/arm64/kernel/debug-monitors.o
+  AS      arch/arm64/kernel/entry.o
+  CC      kernel/fork.o
+  CC      kernel/exec_domain.o
+  CC      arch/arm64/mm/fault.o
+  CC      arch/arm64/kernel/irq.o
+  CC      arch/arm64/mm/init.o
+  CC      init/do_mounts.o
+  CC      arch/arm64/kernel/fpsimd.o
+  AS      arch/arm64/mm/cache.o
+  CC      arch/arm64/mm/copypage.o
+  CC      arch/arm64/mm/flush.o
+  CC      arch/arm64/mm/ioremap.o
+  AS      arch/arm64/kernel/entry-fpsimd.o
+  CC      arch/arm64/kernel/process.o
+  CC      arch/arm64/kernel/ptrace.o
+  CC      arch/arm64/mm/mmap.o
+  CC      init/do_mounts_rd.o
+  CC      kernel/panic.o
+  CC      init/do_mounts_initrd.o
+  CC      arch/arm64/mm/pgd.o
+  CC      init/initramfs.o
+  CC      arch/arm64/mm/mmu.o
+  CC      kernel/cpu.o
+  CC      kernel/exit.o
+  CC      arch/arm64/kernel/setup.o
+  CC      init/calibrate.o
+  CC      arch/arm64/mm/context.o
+  CC      arch/arm64/kernel/signal.o
+  CC      init/init_task.o
+  AS      arch/arm64/mm/proc.o
+  CC      arch/arm64/kernel/sys.o
+  CC      arch/arm64/mm/pageattr.o
+  CC      kernel/softirq.o
+  CC      init/version.o
+  CC      arch/arm64/mm/hugetlbpage.o
+  CC      kernel/resource.o
+  CC      arch/arm64/kernel/stacktrace.o
+  LD      init/mounts.o
+  LD      init/built-in.o
+  CC      kernel/sysctl.o
+  CC      arch/arm64/kernel/time.o
+  LD      arch/arm64/mm/built-in.o
+  CC      kernel/sysctl_binary.o
+  CC      arch/arm64/kernel/traps.o
+  CC      kernel/capability.o
+  CC      mm/filemap.o
+  CC      mm/mempool.o
+  CC      mm/oom_kill.o
+  CC      kernel/ptrace.o
+  CC      arch/arm64/kernel/io.o
+  CC      arch/arm64/kernel/vdso.o
+  CC      kernel/user.o
+  CC      kernel/signal.o
+  AS      arch/arm64/kernel/hyp-stub.o
+  CC      arch/arm64/kernel/psci.o
+  CC      kernel/sys.o
+  CC      arch/arm64/kernel/cpu_ops.o
+  CC      arch/arm64/kernel/insn.o
+  CC      mm/maccess.o
+  CC      arch/arm64/kernel/return_address.o
+  CC      mm/page_alloc.o
+  CC      arch/arm64/kernel/cpuinfo.o
+  CC      arch/arm64/kernel/cpu_errata.o
+  CC      arch/arm64/kernel/cpufeature.o
+  CC      kernel/kmod.o
+  CC      arch/arm64/kernel/alternative.o
+  CC      arch/arm64/kernel/cacheinfo.o
+  CC      kernel/workqueue.o
+  CC      kernel/pid.o
+  CC      kernel/task_work.o
+  CC      arch/arm64/kernel/smp.o
+  CC      kernel/extable.o
+  CC      kernel/params.o
+  CC      kernel/kthread.o
+  CC      arch/arm64/kernel/smp_spin_table.o
+  CC      kernel/sys_ni.o
+  CC      arch/arm64/kernel/topology.o
+  CC      kernel/nsproxy.o
+  CC      mm/page-writeback.o
+  CC      kernel/notifier.o
+  AS      arch/arm64/kernel/smccc-call.o
+  CC      arch/arm64/kernel/sys32.o
+  CC      kernel/ksysfs.o
+  CC      kernel/cred.o
+  CC      mm/readahead.o
+  AS      arch/arm64/kernel/kuser32.o
+  CC      arch/arm64/kernel/signal32.o
+  CC      arch/arm64/kernel/sys_compat.o
+  CC      kernel/reboot.o
+  CC      kernel/async.o
+  CC      mm/swap.o
+  AS      arch/arm64/kernel/entry32.o
+  CC      arch/arm64/kernel/ftrace.o
+  AS      arch/arm64/kernel/entry-ftrace.o
+  CC      kernel/range.o
+  CC      kernel/smpboot.o
+  CC      arch/arm64/kernel/perf_regs.o
+  CC      kernel/ucount.o
+  CC      arch/arm64/kernel/perf_callchain.o
+  CC      arch/arm64/kernel/perf_event.o
+  CC      kernel/groups.o
+  CC      kernel/events/core.o
+  CC      kernel/events/ring_buffer.o
+  CC      mm/truncate.o
+  CC      kernel/irq/irqdesc.o
+  CC      arch/arm64/kernel/hw_breakpoint.o
+  AS      arch/arm64/kernel/sleep.o
+  CC      arch/arm64/kernel/suspend.o
+  CC      mm/vmscan.o
+  CC      kernel/irq/handle.o
+  CC      arch/arm64/kernel/cpuidle.o
+  CC      arch/arm64/kernel/jump_label.o
+  CC      kernel/irq/manage.o
+  CC      arch/arm64/kernel/armv8_deprecated.o
+  CC      kernel/irq/spurious.o
+  CC      kernel/irq/resend.o
+  CC      arch/arm64/kernel/kaslr.o
+  CC      kernel/irq/chip.o
+  CC      kernel/irq/dummychip.o
+  CC      arch/arm64/kernel/machine_kexec.o
+  CC      kernel/irq/devres.o
+  AS      arch/arm64/kernel/relocate_kernel.o
+  CC      kernel/irq/autoprobe.o
+  AS      arch/arm64/kernel/cpu-reset.o
+  CC      kernel/irq/irqdomain.o
+  CC      arch/arm64/kernel/ssbd.o
+  CC      kernel/irq/proc.o
+  OBJCOPY arch/arm64/kernel/vdso/vdso.so
+  CC      mm/shmem.o
+  AS      arch/arm64/kernel/vdso/vdso.o
+  LD      arch/arm64/kernel/vdso/built-in.o
+  AS      arch/arm64/kernel/head.o
+  LDS     arch/arm64/kernel/vmlinux.lds
+  CC      kernel/events/callchain.o
+  LD      arch/arm64/kernel/built-in.o
+  CC      ipc/compat.o
+  CC      kernel/irq/cpuhotplug.o
+  CC      fs/open.o
+  CC      kernel/irq/pm.o
+  CC      kernel/events/hw_breakpoint.o
+  CC      kernel/irq/affinity.o
+  LD      kernel/events/built-in.o
+  CC      fs/read_write.o
+  CC      ipc/util.o
+  CC      security/commoncap.o
+  LD      kernel/irq/built-in.o
+  CC      kernel/locking/mutex.o
+  CC      ipc/msgutil.o
+  CC      mm/util.o
+  CC      security/min_addr.o
+  CC      kernel/locking/semaphore.o
+  CC      ipc/msg.o
+  CC      fs/file_table.o
+  CC      security/device_cgroup.o
+  CC      kernel/locking/rwsem.o
+  CC      mm/mmzone.o
+  CC      fs/super.o
+  CC      ipc/sem.o
+  CC      mm/vmstat.o
+  CC      kernel/locking/percpu-rwsem.o
+  LD      security/built-in.o
+  CC      kernel/locking/spinlock.o
+  CC      crypto/api.o
+  CC      kernel/locking/osq_lock.o
+  CC      fs/char_dev.o
+  CC      kernel/locking/rtmutex.o
+  CC      mm/backing-dev.o
+  CC      ipc/shm.o
+  CC      crypto/cipher.o
+  CC      fs/stat.o
+  CC      kernel/locking/rwsem-xadd.o
+  CC      crypto/compress.o
+  CC      mm/mm_init.o
+  CC      ipc/syscall.o
+  CC      fs/exec.o
+  CC      ipc/ipc_sysctl.o
+  LD      kernel/locking/built-in.o
+  CC      kernel/power/qos.o
+  CC      crypto/memneq.o
+  CC      ipc/namespace.o
+  CC      mm/mmu_context.o
+  CC      crypto/crypto_wq.o
+  LD      ipc/built-in.o
+  CC      crypto/algapi.o
+  CC      mm/percpu.o
+  CC      kernel/power/main.o
+  CC      kernel/power/console.o
+  CC      fs/pipe.o
+  CC      kernel/power/process.o
+  CC      kernel/power/suspend.o
+  CC      crypto/scatterwalk.o
+  CC      crypto/proc.o
+  CC      mm/slab_common.o
+  CC      fs/namei.o
+  CC      crypto/aead.o
+  CC      kernel/power/poweroff.o
+  CC      crypto/ablkcipher.o
+  LD      kernel/power/built-in.o
+  CC      kernel/printk/printk.o
+  CC      mm/compaction.o
+  CC      crypto/blkcipher.o
+  CC      crypto/skcipher.o
+  CC      crypto/echainiv.o
+  CC      crypto/ahash.o
+  LD      kernel/printk/built-in.o
+  CC      kernel/rcu/update.o
+  CC      fs/fcntl.o
+  CC      kernel/rcu/sync.o
+  CC      crypto/shash.o
+  CC      mm/vmacache.o
+  CC      crypto/akcipher.o
+  CC      kernel/rcu/srcu.o
+  CC      fs/ioctl.o
+  CC      mm/interval_tree.o
+  CC      kernel/rcu/tree.o
+  CC      crypto/kpp.o
+  CC      crypto/algboss.o
+  CC      mm/list_lru.o
+  CC      fs/readdir.o
+  CC      crypto/testmgr.o
+  CC      crypto/hmac.o
+  CC      crypto/crypto_null.o
+  CC      mm/workingset.o
+  CC      fs/select.o
+  CC      crypto/sha256_generic.o
+  CC      crypto/crc32c_generic.o
+  CC      mm/debug.o
+  CC      mm/gup.o
+  CC      crypto/rng.o
+  CC      fs/dcache.o
+  CC      crypto/drbg.o
+  LD      kernel/rcu/built-in.o
+  CC      kernel/sched/core.o
+  CC      kernel/sched/loadavg.o
+  CC      mm/highmem.o
+  CC      crypto/jitterentropy.o
+  CC      crypto/jitterentropy-kcapi.o
+  LD      crypto/crypto.o
+  LD      crypto/crypto_algapi.o
+  LD      crypto/crypto_blkcipher.o
+  LD      crypto/crypto_hash.o
+  CC      mm/memory.o
+  LD      crypto/cryptomgr.o
+  CC      kernel/sched/clock.o
+  LD      crypto/jitterentropy_rng.o
+  LD      crypto/built-in.o
+  CC      kernel/sched/cputime.o
+  CC      fs/inode.o
+  CC      block/bio.o
+  CC      kernel/sched/idle_task.o
+  CC      kernel/sched/fair.o
+  CC      block/elevator.o
+  CC      fs/attr.o
+  CC      mm/mincore.o
+  CC      fs/bad_inode.o
+  CC      block/blk-core.o
+  CC      mm/mlock.o
+  CC      fs/file.o
+  CC      mm/mmap.o
+  CC      mm/mprotect.o
+  CC      fs/filesystems.o
+  CC      fs/namespace.o
+  CC      fs/seq_file.o
+  CC      block/blk-tag.o
+  CC      mm/mremap.o
+  CC      fs/xattr.o
+  CC      block/blk-sysfs.o
+  CC      kernel/sched/rt.o
+  CC      kernel/sched/deadline.o
+  CC      mm/msync.o
+  CC      fs/libfs.o
+  CC      block/blk-flush.o
+  CC      mm/rmap.o
+  CC      kernel/sched/stop_task.o
+  CC      kernel/sched/wait.o
+  CC      block/blk-settings.o
+  CC      fs/fs-writeback.o
+  CC      fs/pnode.o
+  CC      kernel/sched/swait.o
+  CC      block/blk-ioc.o
+  CC      mm/vmalloc.o
+  CC      kernel/sched/completion.o
+  CC      kernel/sched/idle.o
+  CC      kernel/sched/cpupri.o
+  CC      block/blk-map.o
+  CC      kernel/sched/cpudeadline.o
+  CC      kernel/sched/stats.o
+  CC      block/blk-exec.o
+  CC      kernel/sched/cpuacct.o
+  CC      mm/pagewalk.o
+  CC      kernel/time/time.o
+  CC      fs/splice.o
+  CC      block/blk-merge.o
+  CC      kernel/sched/cpufreq.o
+  CC      mm/pgtable-generic.o
+  CC      kernel/time/timer.o
+  CC      kernel/sched/cpufreq_schedutil.o
+  CC      mm/process_vm_access.o
+  CC      block/blk-softirq.o
+  CC      fs/sync.o
+  CC      mm/init-mm.o
+  CC      block/blk-timeout.o
+  LD      kernel/sched/built-in.o
+  CC      block/blk-lib.o
+  CC      mm/nobootmem.o
+  CC      fs/utimes.o
+  CC      fs/stack.o
+  CC      block/blk-mq.o
+  CC      kernel/time/hrtimer.o
+  CC      mm/fadvise.o
+  CC      mm/madvise.o
+  CC      fs/fs_struct.o
+  CC      fs/statfs.o
+  CC      mm/memblock.o
+  CC      mm/page_io.o
+  CC      kernel/time/itimer.o
+  CC      fs/fs_pin.o
+  CC      kernel/time/posix-timers.o
+  CC      block/blk-mq-tag.o
+  CC      mm/swap_state.o
+  CC      fs/nsfs.o
+  CC      mm/swapfile.o
+  CC      block/blk-mq-sysfs.o
+  CC      fs/buffer.o
+  CC      mm/dmapool.o
+  CC      kernel/time/posix-cpu-timers.o
+  CC      block/blk-mq-cpumap.o
+  CC      mm/hugetlb.o
+  CC      block/ioctl.o
+  CC      kernel/time/timekeeping.o
+  CC      mm/sparse.o
+  CC      block/genhd.o
+  CC      fs/block_dev.o
+  CC      fs/direct-io.o
+  CC      kernel/time/ntp.o
+  CC      kernel/time/clocksource.o
+  CC      block/scsi_ioctl.o
+  CC      fs/mpage.o
+  CC      mm/sparse-vmemmap.o
+  CC      kernel/time/jiffies.o
+  CC      mm/ksm.o
+  CC      fs/proc_namespace.o
+  CC      block/partition-generic.o
+  CC      kernel/time/timer_list.o
+  CC      fs/configfs/inode.o
+  CC      kernel/time/timeconv.o
+  CC      fs/debugfs/inode.o
+  CC      fs/configfs/file.o
+  CC      block/ioprio.o
+  CC      kernel/time/timecounter.o
+  CC      kernel/time/posix-clock.o
+  CC      mm/slub.o
+  CC      fs/configfs/dir.o
+  CC      fs/debugfs/file.o
+  CC      block/badblocks.o
+  CC      kernel/time/alarmtimer.o
+  CC      kernel/time/clockevents.o
+  CC      block/partitions/check.o
+  LD      fs/debugfs/debugfs.o
+  LD      fs/debugfs/built-in.o
+  CC      block/partitions/msdos.o
+  CC      fs/configfs/symlink.o
+  CC      block/partitions/efi.o
+  CC      kernel/time/tick-common.o
+  CC      fs/configfs/mount.o
+  CC      kernel/time/tick-broadcast.o
+  CC      fs/configfs/item.o
+  CC      kernel/time/tick-broadcast-hrtimer.o
+  LD      block/partitions/built-in.o
+  CC      block/bounce.o
+  CC      kernel/time/sched_clock.o
+  LD      fs/configfs/configfs.o
+  LD      fs/configfs/built-in.o
+  CC      fs/devpts/inode.o
+  CC      kernel/time/tick-oneshot.o
+  CC      kernel/time/tick-sched.o
+  CC      block/bsg.o
+  CC      mm/memtest.o
+  CC      kernel/time/timer_stats.o
+  LD      fs/devpts/devpts.o
+  LD      fs/devpts/built-in.o
+  CC      fs/exportfs/expfs.o
+  CC      mm/migrate.o
+  CC      kernel/time/timekeeping_debug.o
+  CC      mm/huge_memory.o
+  LD      fs/exportfs/exportfs.o
+  LD      fs/exportfs/built-in.o
+  CC      fs/ext2/balloc.o
+  LD      kernel/time/built-in.o
+  CC      block/noop-iosched.o
+  CC      kernel/trace/trace_clock.o
+  CC      block/deadline-iosched.o
+  CC      kernel/trace/ftrace.o
+  CC      fs/ext2/dir.o
+  CC      block/cfq-iosched.o
+  CC      mm/khugepaged.o
+  CC      fs/ext2/file.o
+  CC      mm/page_counter.o
+  CC      fs/ext2/ialloc.o
+  CC      fs/ext2/inode.o
+  CC      kernel/trace/ring_buffer.o
+  CC      block/compat_ioctl.o
+  CC      mm/memcontrol.o
+  CC      fs/ext2/ioctl.o
+  CC      mm/vmpressure.o
+  LD      block/built-in.o
+  CC      drivers/amba/bus.o
+  CC      fs/ext2/namei.o
+  CC      mm/hugetlb_cgroup.o
+  CC      fs/ext2/super.o
+  CC      kernel/trace/trace.o
+  CC      drivers/amba/tegra-ahb.o
+  CC      mm/kmemleak.o
+  LD      drivers/amba/built-in.o
+  CC      drivers/base/component.o
+  CC      fs/ext2/symlink.o
+  LD      fs/ext2/ext2.o
+  LD      fs/ext2/built-in.o
+  CC      mm/page_isolation.o
+  CC      drivers/base/core.o
+  CC      fs/ext4/balloc.o
+  CC      fs/ext4/bitmap.o
+  CC      mm/zsmalloc.o
+  CC      fs/ext4/dir.o
+  CC      fs/ext4/file.o
+  CC      kernel/trace/trace_output.o
+  CC      kernel/trace/trace_seq.o
+  CC      drivers/base/bus.o
+  CC      mm/early_ioremap.o
+  CC      mm/cma.o
+  CC      fs/ext4/fsync.o
+  CC      kernel/trace/trace_stat.o
+  CC      mm/balloon_compaction.o
+  CC      drivers/base/dd.o
+  CC      drivers/base/syscore.o
+  LD      mm/built-in.o
+  CC      fs/ext4/ialloc.o
+  CC      kernel/trace/trace_printk.o
+  CC      drivers/base/driver.o
+  LD      sound/built-in.o
+  LD      firmware/built-in.o
+  LD      net/built-in.o
+  CC      drivers/base/class.o
+  CC      arch/arm64/lib/atomic_ll_sc.o
+  CC      kernel/trace/trace_sched_switch.o
+  CC      lib/lockref.o
+  CC      drivers/base/platform.o
+  CC      kernel/trace/trace_functions.o
+  AS      arch/arm64/lib/bitops.o
+  AS      arch/arm64/lib/clear_page.o
+  CC      lib/bcd.o
+  AS      arch/arm64/lib/clear_user.o
+  AS      arch/arm64/lib/copy_from_user.o
+  CC      lib/div64.o
+  AS      arch/arm64/lib/copy_in_user.o
+  CC      lib/sort.o
+  AS      arch/arm64/lib/copy_page.o
+  CC      fs/ext4/inode.o
+  AS      arch/arm64/lib/copy_to_user.o
+  CC      lib/parser.o
+  CC      arch/arm64/lib/delay.o
+  CC      kernel/trace/trace_nop.o
+  AS      arch/arm64/lib/memchr.o
+  CC      lib/halfmd4.o
+  AS      arch/arm64/lib/memcmp.o
+  AS      arch/arm64/lib/memcpy.o
+  CC      lib/debug_locks.o
+  AS      arch/arm64/lib/memmove.o
+  AS      arch/arm64/lib/memset.o
+  CC      drivers/base/cpu.o
+  AS      arch/arm64/lib/strchr.o
+  CC      lib/random32.o
+  AS      arch/arm64/lib/strcmp.o
+  CC      kernel/trace/blktrace.o
+  AS      arch/arm64/lib/strlen.o
+  AS      arch/arm64/lib/strncmp.o
+  AS      arch/arm64/lib/strnlen.o
+  CC      lib/bust_spinlocks.o
+  AS      arch/arm64/lib/strrchr.o
+  AR      arch/arm64/lib/lib.a
+  EXPORTS arch/arm64/lib/lib-ksyms.o
+  CC      drivers/base/firmware.o
+  LD      arch/arm64/lib/built-in.o
+  LD      virt/lib/built-in.o
+  LD      virt/built-in.o
+  CC      kernel/trace/trace_events.o
+  CC      kernel/freezer.o
+  CC      lib/kasprintf.o
+  CC      drivers/base/init.o
+  CC      lib/bitmap.o
+  CC      lib/scatterlist.o
+  CC      drivers/base/map.o
+  CC      drivers/base/devres.o
+  CC      lib/gcd.o
+  CC      lib/lcm.o
+  CC      lib/list_sort.o
+  CC      lib/uuid.o
+  CC      kernel/profile.o
+  CC      lib/flex_array.o
+  CC      kernel/trace/trace_export.o
+  CC      drivers/base/attribute_container.o
+  CC      lib/iov_iter.o
+  CC      drivers/base/transport_class.o
+  CC      kernel/trace/trace_event_perf.o
+  CC      fs/ext4/page-io.o
+  CC      lib/clz_ctz.o
+  CC      drivers/base/topology.o
+  CC      fs/ext4/ioctl.o
+  CC      kernel/trace/trace_events_filter.o
+  CC      kernel/trace/trace_events_trigger.o
+  CC      drivers/base/container.o
+  CC      drivers/base/property.o
+  CC      lib/bsearch.o
+  CC      fs/ext4/namei.o
+  CC      fs/ext4/super.o
+  CC      lib/find_bit.o
+  CC      lib/llist.o
+  CC      kernel/trace/power-traces.o
+  CC      lib/memweight.o
+  CC      lib/kfifo.o
+  CC      drivers/base/cacheinfo.o
+  CC      drivers/base/devtmpfs.o
+  CC      lib/percpu-refcount.o
+  CC      kernel/trace/rpm-traces.o
+  CC      lib/percpu_ida.o
+  CC      drivers/base/dma-contiguous.o
+  CC      kernel/stacktrace.o
+  LD      kernel/trace/libftrace.o
+  LD      kernel/trace/built-in.o
+  CC      kernel/futex.o
+  CC      lib/rhashtable.o
+  CC      lib/reciprocal_div.o
+  CC      drivers/base/power/sysfs.o
+  CC      drivers/base/regmap/regmap.o
+  CC      drivers/base/power/generic_ops.o
+  CC      lib/once.o
+  CC      drivers/base/power/common.o
+  CC      lib/string_helpers.o
+  CC      kernel/smp.o
+  CC      drivers/base/power/qos.o
+  CC      lib/hexdump.o
+  CC      lib/kstrtox.o
+  CC      kernel/uid16.o
+  CC      drivers/base/regmap/regcache.o
+  CC      lib/pci_iomap.o
+  CC      drivers/base/power/runtime.o
+  CC      kernel/kallsyms.o
+  CC      lib/iomap_copy.o
+  CC      drivers/base/regmap/regcache-rbtree.o
+  CC      lib/devres.o
+  CC      kernel/acct.o
+  CC      drivers/base/power/wakeirq.o
+  CC      drivers/base/regmap/regcache-lzo.o
+  CC      fs/ext4/symlink.o
+  CC      lib/hweight.o
+  CC      lib/bitrev.o
+  CC      lib/rational.o
+  CC      lib/crc16.o
+  CC      drivers/base/power/main.o
+  CC      drivers/base/regmap/regcache-flat.o
+  CC      fs/ext4/hash.o
+  CC      kernel/kexec_core.o
+  CC      lib/crc-itu-t.o
+  CC      drivers/base/regmap/regmap-debugfs.o
+  CC      lib/crc32.o
+  CC      fs/ext4/resize.o
+  CC      drivers/base/regmap/regmap-i2c.o
+  CC      lib/genalloc.o
+  CC      kernel/kexec.o
+  CC      drivers/base/power/wakeup.o
+  CC      drivers/base/regmap/regmap-mmio.o
+  CC      lib/fonts/fonts.o
+  CC      kernel/compat.o
+  CC      lib/fonts/font_8x8.o
+  CC      drivers/base/regmap/regmap-irq.o
+  CC      lib/fonts/font_8x16.o
+  CC      fs/ext4/extents.o
+  CC      drivers/base/power/domain.o
+  LD      lib/fonts/font.o
+  LD      lib/fonts/built-in.o
+  CC      lib/lz4/lz4_decompress.o
+  LD      lib/lz4/built-in.o
+  LD      drivers/base/regmap/built-in.o
+  CC      drivers/base/power/domain_governor.o
+  CC      lib/lzo/lzo1x_compress.o
+  CC      kernel/cgroup.o
+  CC      lib/lzo/lzo1x_decompress_safe.o
+  CC      drivers/base/power/clock_ops.o
+  LD      lib/lzo/lzo_compress.o
+  CC      kernel/cgroup_freezer.o
+  LD      lib/lzo/lzo_decompress.o
+  LD      lib/lzo/built-in.o
+  CC      lib/xz/xz_dec_syms.o
+  LD      drivers/base/power/built-in.o
+  CC      drivers/base/dma-mapping.o
+  CC      drivers/base/dma-coherent.o
+  CC      lib/xz/xz_dec_stream.o
+  CC      fs/ext4/ext4_jbd2.o
+  CC      drivers/base/firmware_class.o
+  CC      lib/xz/xz_dec_lzma2.o
+  CC      drivers/base/pinctrl.o
+  LD      lib/xz/xz_dec.o
+  LD      lib/xz/built-in.o
+  CC      lib/zlib_inflate/inffast.o
+  CC      lib/zlib_inflate/inflate.o
+  CC      fs/ext4/migrate.o
+  CC      fs/ext4/mballoc.o
+  LD      drivers/base/built-in.o
+  CC      drivers/bcma/main.o
+  CC      lib/zlib_inflate/infutil.o
+  CC      fs/ext4/block_validity.o
+  CC      lib/zlib_inflate/inftrees.o
+  CC      drivers/bcma/scan.o
+  CC      kernel/cgroup_pids.o
+  CC      lib/zlib_inflate/inflate_syms.o
+  CC      fs/ext4/move_extent.o
+  LD      lib/zlib_inflate/zlib_inflate.o
+  LD      lib/zlib_inflate/built-in.o
+  CC      lib/percpu_counter.o
+  CC      drivers/bcma/core.o
+  CC      kernel/cpuset.o
+  CC      lib/swiotlb.o
+  CC      drivers/bcma/sprom.o
+  CC      fs/ext4/mmp.o
+  CC      lib/iommu-helper.o
+  CC      drivers/bcma/driver_chipcommon.o
+  CC      kernel/utsname.o
+  CC      lib/iommu-common.o
+  CC      fs/ext4/indirect.o
+  CC      kernel/user_namespace.o
+  CC      lib/fault-inject.o
+  CC      fs/ext4/extents_status.o
+  CC      drivers/bcma/driver_chipcommon_pmu.o
+  CC      lib/syscall.o
+  CC      kernel/pid_namespace.o
+  CC      lib/dynamic_debug.o
+  CC      lib/checksum.o
+  CC      drivers/bcma/driver_chipcommon_b.o
+  CC      lib/strncpy_from_user.o
+  CC      fs/ext4/xattr.o
+  GZIP    kernel/config_data.gz
+  CC      kernel/stop_machine.o
+  CC      kernel/hung_task.o
+  LD      drivers/bcma/bcma.o
+  LD      drivers/bcma/built-in.o
+  CC      drivers/block/brd.o
+  CC      lib/strnlen_user.o
+  CC      kernel/watchdog.o
+  CC      kernel/seccomp.o
+  CC      lib/sbitmap.o
+  LD      drivers/block/built-in.o
+  CC      drivers/bus/tegra-aconnect.o
+  CC      fs/ext4/xattr_user.o
+  CC      lib/argv_split.o
+  CC      kernel/relay.o
+  CC      fs/ext4/xattr_trusted.o
+  CC      lib/bug.o
+  LD      drivers/bus/built-in.o
+  CC      drivers/char/mem.o
+  CC      drivers/char/random.o
+  CC      lib/chacha20.o
+  CC      fs/ext4/inline.o
+  CC      lib/cmdline.o
+  CC      kernel/utsname_sysctl.o
+  CC      lib/cpumask.o
+  CC      kernel/tracepoint.o
+  CC      kernel/irq_work.o
+  CC      lib/ctype.o
+  CC      lib/dec_and_lock.o
+  CC      kernel/cpu_pm.o
+  CC      kernel/jump_label.o
+  CC      lib/decompress.o
+  CC      lib/decompress_bunzip2.o
+  CC      kernel/membarrier.o
+  CC      drivers/char/misc.o
+  CC      fs/ext4/readpage.o
+  CC      kernel/memremap.o
+  CC      lib/decompress_inflate.o
+  CC      lib/decompress_unlz4.o
+  CC      drivers/char/virtio_console.o
+  CHK     kernel/config_data.h
+  UPD     kernel/config_data.h
+  CC      kernel/configs.o
+  CC      lib/decompress_unlzma.o
+  CC      fs/ext4/sysfs.o
+  CC      lib/decompress_unlzo.o
+  LD      kernel/built-in.o
+  CC      lib/decompress_unxz.o
+  CC      lib/dma-noop.o
+  CC      lib/dump_stack.o
+  LD      fs/ext4/ext4.o
+  LD      fs/ext4/built-in.o
+  CC      fs/hugetlbfs/inode.o
+  CC      lib/earlycpio.o
+  CC      fs/jbd2/transaction.o
+  CC      fs/kernfs/mount.o
+  CC      lib/extable.o
+  CC      drivers/char/hw_random/core.o
+  CC      lib/fdt.o
+  CC      fs/kernfs/inode.o
+  CC      lib/fdt_empty_tree.o
+  CC      lib/fdt_ro.o
+  LD      drivers/char/hw_random/rng-core.o
+  LD      drivers/char/hw_random/built-in.o
+  LD      drivers/char/built-in.o
+  LD      fs/hugetlbfs/hugetlbfs.o
+  LD      fs/hugetlbfs/built-in.o
+  CC      fs/kernfs/dir.o
+  CC      drivers/clk/clk-devres.o
+  CC      drivers/clk/clkdev.o
+  CC      lib/fdt_rw.o
+  CC      fs/jbd2/commit.o
+  LD      fs/notify/dnotify/built-in.o
+  LD      fs/notify/fanotify/built-in.o
+  LD      fs/notify/inotify/built-in.o
+  LD      fs/notify/built-in.o
+  CC      lib/fdt_strerror.o
+  CC      lib/fdt_sw.o
+  CC      drivers/clk/clk.o
+  CC      fs/kernfs/file.o
+  CC      fs/proc/task_mmu.o
+  CC      lib/fdt_wip.o
+  CC      lib/flex_proportions.o
+  CC      lib/idr.o
+  CC      fs/kernfs/symlink.o
+  CC      fs/jbd2/recovery.o
+  LD      fs/kernfs/built-in.o
+  CC      fs/proc/inode.o
+  LD      fs/quota/built-in.o
+  CC      fs/ramfs/inode.o
+  CC      lib/int_sqrt.o
+  CC      lib/ioremap.o
+  CC      fs/jbd2/checkpoint.o
+  CC      fs/ramfs/file-mmu.o
+  CC      fs/proc/root.o
+  CC      lib/irq_regs.o
+  CC      drivers/clk/clk-divider.o
+  CC      lib/is_single_threaded.o
+  LD      fs/ramfs/ramfs.o
+  LD      fs/ramfs/built-in.o
+  CC      fs/proc/base.o
+  CC      fs/jbd2/revoke.o
+  CC      fs/proc/generic.o
+  CC      lib/klist.o
+  CC      drivers/clk/clk-fixed-factor.o
+  CC      lib/kobject.o
+  CC      fs/jbd2/journal.o
+  CC      fs/proc/array.o
+  CC      drivers/clk/clk-fixed-rate.o
+  CC      lib/kobject_uevent.o
+  CC      drivers/clk/clk-gate.o
+  CC      lib/md5.o
+  CC      fs/proc/fd.o
+  CC      fs/proc/proc_tty.o
+  CC      drivers/clk/clk-multiplier.o
+  CC      lib/nmi_backtrace.o
+  CC      fs/proc/cmdline.o
+  CC      fs/proc/consoles.o
+  CC      drivers/clk/clk-mux.o
+  CC      fs/proc/cpuinfo.o
+  CC      lib/nodemask.o
+  CC      fs/proc/devices.o
+  LD      fs/jbd2/jbd2.o
+  CC      drivers/clk/clk-composite.o
+  LD      fs/jbd2/built-in.o
+  CC      lib/plist.o
+  CC      fs/proc/interrupts.o
+  CC      fs/proc/loadavg.o
+  CC      fs/sysfs/file.o
+  CC      lib/radix-tree.o
+  CC      fs/sysfs/dir.o
+  CC      drivers/clk/clk-fractional-divider.o
+  CC      fs/proc/meminfo.o
+  CC      fs/sysfs/symlink.o
+  CC      drivers/clk/clk-gpio.o
+  CC      fs/sysfs/mount.o
+  CC      fs/proc/stat.o
+  CC      lib/ratelimit.o
+  CC      fs/sysfs/group.o
+  CC      drivers/clk/clk-conf.o
+  CC      drivers/clk/clk-max77686.o
+  CC      lib/rbtree.o
+  CC      fs/proc/uptime.o
+  LD      fs/sysfs/built-in.o
+  CC      fs/tracefs/inode.o
+  CC      fs/eventpoll.o
+  CC      drivers/clk/tegra/clk.o
+  CC      fs/proc/version.o
+  CC      lib/seq_buf.o
+  CC      fs/proc/softirqs.o
+  CC      drivers/clk/tegra/clk-audio-sync.o
+  LD      fs/tracefs/tracefs.o
+  LD      fs/tracefs/built-in.o
+  CC      fs/anon_inodes.o
+  CC      lib/sha1.o
+  CC      drivers/clk/tegra/clk-dfll.o
+  CC      fs/proc/namespaces.o
+  CC      fs/signalfd.o
+  CC      fs/timerfd.o
+  CC      lib/show_mem.o
+  CC      lib/siphash.o
+  CC      fs/proc/self.o
+  CC      drivers/clk/tegra/clk-divider.o
+  CC      lib/string.o
+  CC      lib/timerqueue.o
+  CC      drivers/clk/tegra/clk-periph.o
+  CC      fs/proc/thread_self.o
+  CC      fs/proc/proc_sysctl.o
+  CC      fs/proc/kmsg.o
+  CC      lib/vsprintf.o
+  CC      drivers/clk/tegra/clk-periph-fixed.o
+  CC      lib/win_minmax.o
+  CC      fs/proc/page.o
+  CC      drivers/clk/tegra/clk-periph-gate.o
+  CC      fs/eventfd.o
+  CC      fs/aio.o
+  CC      drivers/clk/tegra/clk-pll.o
+  LD      fs/proc/proc.o
+  LD      fs/proc/built-in.o
+  CC      fs/compat.o
+  CC      drivers/clocksource/clksrc-probe.o
+  CC      drivers/clocksource/mmio.o
+  AR      lib/lib.a
+  EXPORTS lib/lib-ksyms.o
+  LD      lib/built-in.o
+  CC      drivers/clocksource/arm_arch_timer.o
+  CC      drivers/clk/tegra/clk-pll-out.o
+  CC      drivers/clk/tegra/clk-super.o
+  CC      drivers/clk/tegra/clk-tegra-audio.o
+  CC      fs/compat_ioctl.o
+  CC      fs/binfmt_misc.o
+  CC      fs/binfmt_script.o
+  CC      drivers/clk/tegra/clk-tegra-periph.o
+  CC      fs/binfmt_elf.o
+  CC      drivers/clk/tegra/clk-tegra-pmc.o
+  CC      drivers/clk/tegra/clk-tegra-fixed.o
+  CC      drivers/clocksource/timer-sp804.o
+  CC      drivers/clk/tegra/clk-tegra-super-gen4.o
+  CC      drivers/clk/tegra/cvb.o
+  CC      drivers/clocksource/dummy_timer.o
+  CC      drivers/clk/tegra/clk-tegra210.o
+  CC      fs/compat_binfmt_elf.o
+  CC      fs/mbcache.o
+  LD      drivers/clocksource/built-in.o
+  CC      drivers/cpufreq/cpufreq.o
+  CC      drivers/cpufreq/freq_table.o
+  LD      drivers/clk/tegra/built-in.o
+  LD      drivers/clk/built-in.o
+  CC      drivers/cpuidle/cpuidle.o
+  CC      drivers/cpuidle/driver.o
+  CC      fs/posix_acl.o
+  CC      drivers/dma-buf/dma-buf.o
+  CC      drivers/cpuidle/governor.o
+  CC      drivers/cpuidle/sysfs.o
+  CC      drivers/dma-buf/fence.o
+  CC      fs/coredump.o
+  CC      drivers/dma-buf/reservation.o
+  CC      drivers/cpufreq/cpufreq_stats.o
+  CC      drivers/cpuidle/governors/menu.o
+  CC      drivers/cpufreq/cpufreq_performance.o
+  CC      drivers/cpufreq/cpufreq_powersave.o
+  CC      fs/drop_caches.o
+  CC      drivers/dma-buf/seqno-fence.o
+  LD      drivers/cpuidle/governors/built-in.o
+  CC      drivers/cpuidle/dt_idle_states.o
+  CC      fs/fhandle.o
+  CC      drivers/cpufreq/cpufreq_userspace.o
+  CC      drivers/cpufreq/cpufreq_ondemand.o
+  CC      drivers/dma-buf/fence-array.o
+  CC      drivers/cpuidle/cpuidle-arm.o
+  CC      drivers/cpufreq/cpufreq_conservative.o
+  CC      fs/dcookies.o
+  CC      drivers/dma-buf/sync_file.o
+  LD      drivers/cpuidle/built-in.o
+  CC      drivers/cpufreq/cpufreq_governor.o
+  CC      drivers/cpufreq/cpufreq_governor_attr_set.o
+  CC      drivers/cpufreq/tegra20-cpufreq.o
+  LD      fs/built-in.o
+  CC      drivers/gpio/devres.o
+  CC      drivers/firmware/psci.o
+  CC      drivers/gpio/gpiolib.o
+  LD      drivers/dma-buf/built-in.o
+  LD      drivers/cpufreq/built-in.o
+  CC      drivers/gpio/gpiolib-legacy.o
+  LD      drivers/gpu/drm/built-in.o
+  LD      drivers/gpu/built-in.o
+  CC      drivers/i2c/i2c-boardinfo.o
+  CC      drivers/i2c/i2c-core.o
+  CC      drivers/gpio/gpiolib-of.o
+  LD      drivers/firmware/built-in.o
+  CC      drivers/input/input.o
+  CC      drivers/i2c/algos/i2c-algo-bit.o
+  CC      drivers/gpio/gpiolib-sysfs.o
+  CC      drivers/i2c/algos/i2c-algo-pca.o
+  CC      drivers/gpio/gpio-max77620.o
+  CC      drivers/gpio/gpio-pca953x.o
+  LD      drivers/i2c/algos/built-in.o
+  CC      drivers/i2c/busses/i2c-cadence.o
+  CC      drivers/input/input-compat.o
+  CC      drivers/gpio/gpio-tegra.o
+  CC      drivers/input/input-mt.o
+  LD      drivers/i2c/muxes/built-in.o
+  CC      drivers/i2c/busses/i2c-cbus-gpio.o
+  CC      drivers/i2c/busses/i2c-designware-core.o
+  CC      drivers/input/serio/serio.o
+  LD      drivers/gpio/built-in.o
+  CC      drivers/input/serio/ambakmi.o
+  CC      drivers/input/ff-core.o
+  CC      drivers/i2c/busses/i2c-designware-platdrv.o
+  CC      drivers/i2c/busses/i2c-emev2.o
+  CC      drivers/input/serio/libps2.o
+  CC      drivers/i2c/busses/i2c-gpio.o
+  CC      drivers/input/ff-memless.o
+  CC      drivers/input/input-polldev.o
+  CC      drivers/i2c/busses/i2c-nomadik.o
+  LD      drivers/input/serio/built-in.o
+  CC      drivers/i2c/busses/i2c-ocores.o
+  CC      drivers/irqchip/irqchip.o
+  CC      drivers/input/matrix-keymap.o
+  CC      drivers/irqchip/irq-tegra.o
+  CC      drivers/input/mousedev.o
+  CC      drivers/i2c/busses/i2c-pca-platform.o
+  CC      drivers/irqchip/irq-gic.o
+  LD      drivers/media/built-in.o
+  CC      drivers/irqchip/irq-gic-common.o
+  CC      drivers/irqchip/irq-gic-v3.o
+  CC      drivers/i2c/busses/i2c-rk3x.o
+  CC      drivers/irqchip/irq-partition-percpu.o
+  CC      drivers/input/joydev.o
+  CC      drivers/input/evdev.o
+  CC      drivers/i2c/busses/i2c-simtec.o
+  LD      drivers/irqchip/built-in.o
+  CC      drivers/mfd/mfd-core.o
+  CC      drivers/i2c/busses/i2c-tegra.o
+  CC      drivers/mfd/max77620.o
+  LD      drivers/i2c/busses/i2c-designware-platform.o
+  LD      drivers/input/joystick/built-in.o
+  CC      drivers/input/keyboard/adp5588-keys.o
+  CC      drivers/input/misc/uinput.o
+  CC      drivers/mfd/syscon.o
+  CC      drivers/input/mouse/cyapa.o
+  LD      drivers/i2c/busses/built-in.o
+  LD      drivers/i2c/built-in.o
+  CC      drivers/input/mouse/cyapa_gen3.o
+  CC      drivers/input/keyboard/adp5589-keys.o
+  LD      drivers/mfd/built-in.o
+  CC      drivers/input/touchscreen/of_touchscreen.o
+  LD      drivers/input/misc/built-in.o
+  LD      drivers/input/input-core.o
+  CC      drivers/input/mouse/cyapa_gen5.o
+  CC      drivers/input/mouse/cyapa_gen6.o
+  CC      drivers/input/mouse/gpio_mouse.o
+  LD      drivers/input/touchscreen/built-in.o
+  CC      drivers/misc/apds990x.o
+  CC      drivers/input/keyboard/atkbd.o
+  CC      drivers/input/mouse/sermouse.o
+  CC      drivers/input/mouse/synaptics_i2c.o
+  CC      drivers/misc/tsl2550.o
+  CC      drivers/input/mouse/vsxxxaa.o
+  CC      drivers/misc/eeprom/eeprom_93cx6.o
+  LD      drivers/input/mouse/cyapatp.o
+  CC      drivers/input/keyboard/bcm-keypad.o
+  CC      drivers/input/keyboard/cap11xx.o
+  LD      drivers/misc/eeprom/built-in.o
+  LD      drivers/misc/built-in.o
+  LD      drivers/mmc/built-in.o
+  LD      drivers/input/mouse/built-in.o
+  LD      drivers/net/built-in.o
+  LD      drivers/nvme/host/built-in.o
+  LD      drivers/nvme/built-in.o
+  CC      drivers/perf/arm_pmu.o
+  CC      drivers/phy/phy-core.o
+  CC      drivers/of/base.o
+  CC      drivers/input/keyboard/gpio_keys.o
+  CC      drivers/input/keyboard/gpio_keys_polled.o
+  CC      drivers/phy/tegra/xusb.o
+  LD      drivers/perf/built-in.o
+  CC      drivers/input/keyboard/tca6416-keypad.o
+  CC      drivers/pinctrl/core.o
+  CC      drivers/pinctrl/pinctrl-utils.o
+  CC      drivers/of/device.o
+  CC      drivers/phy/tegra/xusb-tegra210.o
+  CC      drivers/input/keyboard/tca8418_keypad.o
+  CC      drivers/pinctrl/pinmux.o
+  CC      drivers/input/keyboard/lkkbd.o
+  CC      drivers/of/platform.o
+  CC      drivers/pinctrl/pinconf.o
+  CC      drivers/of/dynamic.o
+  CC      drivers/input/keyboard/lm8333.o
+  LD      drivers/phy/tegra/phy-tegra-xusb.o
+  CC      drivers/pinctrl/devicetree.o
+  LD      drivers/phy/tegra/built-in.o
+  LD      drivers/phy/built-in.o
+  CC      drivers/of/fdt.o
+  CC      drivers/of/fdt_address.o
+  CC      drivers/power/supply/power_supply_core.o
+  CC      drivers/pinctrl/pinconf-generic.o
+  CC      drivers/input/keyboard/matrix_keypad.o
+  CC      drivers/power/supply/power_supply_sysfs.o
+  CC      drivers/power/supply/bq27xxx_battery.o
+  CC      drivers/pinctrl/pinctrl-max77620.o
+  CC      drivers/of/address.o
+  CC      drivers/of/irq.o
+  CC      drivers/input/keyboard/max7359_keypad.o
+  CC      drivers/pinctrl/pinctrl-single.o
+  CC      drivers/power/supply/bq27xxx_battery_i2c.o
+  CC      drivers/input/keyboard/mcs_touchkey.o
+  CC      drivers/pinctrl/tegra/pinctrl-tegra.o
+  CC      drivers/of/of_reserved_mem.o
+  LD      drivers/power/supply/power_supply.o
+  LD      drivers/power/supply/built-in.o
+  LD      drivers/power/built-in.o
+  LD      drivers/pwm/built-in.o
+  CC      drivers/reset/core.o
+  CC      drivers/input/keyboard/mpr121_touchkey.o
+  CC      drivers/pinctrl/tegra/pinctrl-tegra210.o
+  CC      drivers/of/resolver.o
+  CC      drivers/of/overlay.o
+  LD      drivers/reset/built-in.o
+  CC      drivers/input/keyboard/newtonkbd.o
+  CC      drivers/soc/tegra/fuse/fuse-tegra.o
+  CC      drivers/pinctrl/tegra/pinctrl-tegra-xusb.o
+  CC      drivers/soc/tegra/fuse/fuse-tegra30.o
+  LD      drivers/of/built-in.o
+  CC      drivers/soc/tegra/fuse/tegra-apbmisc.o
+  CC      drivers/input/keyboard/omap4-keypad.o
+  CC      drivers/soc/tegra/fuse/speedo-tegra210.o
+  LD      drivers/pinctrl/tegra/built-in.o
+  CC      drivers/input/keyboard/opencores-kbd.o
+  LD      drivers/pinctrl/built-in.o
+  LD      drivers/usb/built-in.o
+  CC      drivers/tty/tty_io.o
+  CC      drivers/tty/n_tty.o
+  LD      drivers/soc/tegra/fuse/built-in.o
+  CC      drivers/soc/tegra/common.o
+  CC      drivers/input/keyboard/qt1070.o
+  CC      drivers/soc/tegra/pmc.o
+  CC      drivers/video/console/dummycon.o
+  CC      drivers/input/keyboard/qt2160.o
+  CC      drivers/video/console/fbcon.o
+  CC      drivers/input/keyboard/samsung-keypad.o
+  LD      drivers/soc/tegra/built-in.o
+  LD      drivers/soc/built-in.o
+  CC      drivers/input/keyboard/stowaway.o
+  CC      drivers/video/console/bitblit.o
+  CC      drivers/input/keyboard/tegra-kbc.o
+  CC      drivers/input/keyboard/xtkbd.o
+  CC      drivers/tty/tty_ioctl.o
+  CC      drivers/tty/tty_ldisc.o
+  CC      drivers/video/console/softcursor.o
+  LD      drivers/input/keyboard/built-in.o
+  LD      drivers/input/built-in.o
+  CC      drivers/virtio/virtio.o
+  CC      drivers/tty/tty_buffer.o
+  CC      drivers/virtio/virtio_ring.o
+  LD      drivers/video/console/built-in.o
+  CC      drivers/video/fbdev/core/fb_cmdline.o
+  CC      drivers/tty/tty_port.o
+  CC      drivers/tty/tty_mutex.o
+  CC      drivers/virtio/virtio_mmio.o
+  CC      drivers/video/fbdev/core/fb_notify.o
+  CC      drivers/video/fbdev/core/fbmem.o
+  CC      drivers/tty/tty_ldsem.o
+  CC      drivers/video/fbdev/core/fbmon.o
+  CC      drivers/virtio/virtio_balloon.o
+  CC      drivers/video/fbdev/core/fbcmap.o
+  CC      drivers/tty/pty.o
+  CC      drivers/video/fbdev/core/fbsysfs.o
+  LD      drivers/virtio/built-in.o
+  CC      drivers/tty/sysrq.o
+  CC      drivers/video/fbdev/core/modedb.o
+  CC      drivers/tty/hvc/hvc_console.o
+  CC      drivers/video/fbdev/core/fbcvt.o
+  CC      drivers/tty/serial/serial_core.o
+  CC      drivers/tty/serial/earlycon.o
+  LD      drivers/video/fbdev/core/fb.o
+  LD      drivers/tty/hvc/built-in.o
+  LD      drivers/video/fbdev/core/built-in.o
+  LD      drivers/video/fbdev/built-in.o
+  CC      drivers/tty/vt/vt_ioctl.o
+  LD      drivers/video/built-in.o
+  CC      drivers/tty/serial/8250/8250_core.o
+  CC      drivers/tty/vt/vc_screen.o
+  CC      drivers/tty/serial/amba-pl011.o
+  CC      drivers/tty/serial/8250/8250_port.o
+  CC      drivers/tty/vt/selection.o
+  CC      drivers/tty/vt/keyboard.o
+  CC      drivers/tty/vt/consolemap.o
+  CC      drivers/tty/serial/8250/8250_early.o
+  CC      drivers/tty/vt/consolemap_deftbl.o
+  CC      drivers/tty/vt/vt.o
+  CC      drivers/tty/vt/defkeymap.o
+  CC      drivers/tty/serial/8250/8250_fsl.o
+  CC      drivers/tty/serial/8250/8250_dw.o
+  CC      drivers/tty/serial/8250/8250_of.o
+  LD      drivers/tty/serial/8250/8250.o
+  LD      drivers/tty/serial/8250/8250_base.o
+  LD      drivers/tty/serial/8250/built-in.o
+  LD      drivers/tty/serial/built-in.o
+  LD      drivers/tty/vt/built-in.o
+  LD      drivers/tty/built-in.o
+  LD      drivers/built-in.o
+  LD      vmlinux.o
+  MODPOST vmlinux.o
+  GEN     .version
+  CHK     include/generated/compile.h
+  UPD     include/generated/compile.h
+  CC      init/version.o
+  LD      init/built-in.o
+  KSYM    .tmp_kallsyms1.o
+  KSYM    .tmp_kallsyms2.o
+  LD      vmlinux
+  SORTEX  vmlinux
+  SYSMAP  System.map
+  OBJCOPY arch/arm64/boot/Image
+zhan@localhost:~/sd/linux-4.9.307$ cd ~
+zhan@localhost:~$ ls
+Desktop           Image                 now.dts         run.sh  tegra_defconfig
+examples.desktop  linux-4.9.253.tar.gz  ramdisk.img.gz  sd      zhan_board.dtb
+zhan@localhost:~$ rfm -rf Image 
+zhan@localhost:~$ cd -
+/home/zhan/sd/linux-4.9.307
+zhan@localhost:~/sd/linux-4.9.307$ ls
+arch     Documentation  ipc          Makefile        samples     usr
+block    drivers        Kbuild       mm              scripts     virt
+certs    firmware       Kconfig      Module.symvers  security    vmlinux
+COPYING  fs             kernel       net             sound       vmlinux.o
+CREDITS  include        lib          README          System.map
+crypto   init           MAINTAINERS  REPORTING-BUGS  tools
+zhan@localhost:~/sd/linux-4.9.307$ cd arch/arm64/boot
+zhan@localhost:~/sd/linux-4.9.307/arch/arm64/boot$ ls
+dts  Image  install.sh  Makefile
+zhan@localhost:~/sd/linux-4.9.307/arch/arm64/boot$ cp Image ~/
+zhan@localhost:~/sd/linux-4.9.307/arch/arm64/boot$ cd ~
+zhan@localhost:~$ ls -lh Image 
+-rw-rw-r-- 1 zhan zhan 8.7M 1   4 22:34 Image
+zhan@localhost:~$ sudo umount sd
+[sudo] password for zhan: 
+zhan@localhost:~$ sudo reboot
+[  943.682454] watchdog: watchdog0: watchdog did not stop!
+[  943.693562] systemd-shutdow: 39 output lines suppressed due to ratelimiting
+[  943.909747] reboot: Restarting system
+[0000.203] [L4T TegraBoot] (version 00.00.2018.01-l4t-8728f3cb)
+[0000.208] Processing in cold boot mode Bootloader 2
+[0000.213] A02 Bootrom Patch rev = 1023
+[0000.216] Power-up reason: software reset
+[0000.220] No Battery Present
+[0000.223] pmic max77620 reset reason
+[0000.226] pmic max77620 NVERC : 0x0
+[0000.229] RamCode = 0
+[0000.232] Platform has DDR4 type RAM
+[0000.235] max77620 disabling SD1 Remote Sense
+[0000.239] Setting DDR voltage to 1125mv
+[0000.243] Serial Number of Pmic Max77663: 0x241869
+[0000.251] Entering ramdump check
+[0000.254] Get RamDumpCarveOut = 0x0
+[0000.257] RamDumpCarveOut=0x0,  RamDumperFlag=0xe59ff3f8
+[0000.262] Last reboot was clean, booting normally!
+[0000.267] Sdram initialization is successful 
+[0000.271] SecureOs Carveout Base=0x00000000ff800000 Size=0x00800000
+[0000.277] Lp0 Carveout Base=0x00000000ff780000 Size=0x00001000
+[0000.283] BpmpFw Carveout Base=0x00000000ff700000 Size=0x00080000
+[0000.289] GSC1 Carveout Base=0x00000000ff600000 Size=0x00100000
+[0000.295] GSC2 Carveout Base=0x00000000ff500000 Size=0x00100000
+[0000.301] GSC4 Carveout Base=0x00000000ff400000 Size=0x00100000
+[0000.306] GSC5 Carveout Base=0x00000000ff300000 Size=0x00100000
+[0000.312] GSC3 Carveout Base=0x000000017f300000 Size=0x00d00000
+[0000.328] RamDump Carveout Base=0x00000000ff280000 Size=0x00080000
+[0000.334] Platform-DebugCarveout: 0
+[0000.338] Nck Carveout Base=0x00000000ff080000 Size=0x00200000
+[0000.343] Non secure mode, and RB not enabled.
+[0000.348] *** Booting BFS0.
+[0000.350] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.356] Read PT from (0:3)
+[0000.371] Csd NumOfBlocks=0
+[0000.410] PT crc32 and magic check passed.
+[0000.414] Using BFS PT to query partitions 
+[0000.418] PT: Partition LNX NOT found ! 
+[0000.422] *** Booting KFS0.
+[0000.425] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.431] BoardID = 3448, SKU = 0x2
+[0000.434] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.440] Read GPT from (0:3)
+[0000.448] Using GPT Primary to query partitions
+[0000.453] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.459] Loading Tboot-CPU binary
+[0000.465] Verifying TBC in OdmNonSecureSBK mode
+[0000.475] Bootloader load address is 0xa0000000, entry address is 0xa0000258
+[0000.482] Bootloader downloaded successfully.
+[0000.486] Downloaded Tboot-CPU binary to 0xa0000258
+[0000.491] MAX77620_GPIO5 configured
+[0000.494] CPU power rail is up
+[0000.497] CPU clock enabled
+[0000.501] Performing RAM repair
+[0000.504] Updating A64 Warmreset Address to 0xa00002e9
+[0000.509] BoardID = 3448, SKU = 0x2
+[0000.512] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.518] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.524] Loading NvTbootBootloaderDTB
+[0000.541] Verifying NvTbootBootloaderDTB in OdmNonSecureSBK mode
+[0000.613] Bootloader DTB Load Address: 0x83000000
+[0000.617] BoardID = 3448, SKU = 0x2
+[0000.621] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.626] Loading NvTbootKernelDTB
+[0000.643] Verifying NvTbootKernelDTB in OdmNonSecureSBK mode
+[0000.714] Kernel DTB Load Address: 0x83100000
+[0000.718] BoardID = 3448, SKU = 0x2
+[0000.722] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.728] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.735] Loading cboot binary
+[0000.746] Verifying EBT in OdmNonSecureSBK mode
+[0000.787] Bootloader load address is 0x92c00000, entry address is 0x92c00258
+[0000.794] Bootloader downloaded successfully.
+[0000.798] BoardID = 3448, SKU = 0x2
+[0000.802] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.808] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.814] PT: Partition NCT NOT found ! 
+[0000.818] Warning: Find Partition via PT Failed
+[0000.822] Next binary entry address: 0x92c00258 
+[0000.826] BoardId: 3448
+[0000.831] Overriding pmu board id with proc board id
+[0000.836] Display board id is not available 
+[0000.840] BoardID = 3448, SKU = 0x2
+[0000.843] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0000.849] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0000.863] Verifying SC7EntryFw in OdmNonSecureSBK mode
+[0000.919] /bpmp deleted
+[0000.921] SC7EntryFw header found loaded at 0xff700000
+[0001.109] OVR2 PMIC
+[0001.111] Bpmp FW successfully loaded
+[0001.114] BoardID = 3448, SKU = 0x2
+[0001.117] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0001.123] NvTbootFailControlDoFailover: No failover; Continuing ...
+[0001.130] WB0 init successfully at 0xff780000
+[0001.135] Verifying NvTbootWb0 in OdmNonSecureSBK mode
+[0001.140] Set NvDecSticky Bits
+[0001.143] GSC2 address ff53fffc value c0edbbcc
+[0001.150] GSC MC Settings done
+[0001.152] BoardID = 3448, SKU = 0x2
+[0001.156] Not Nano-SD or !QSPI-ONLY, check GPT table first ...
+[0001.162] TOS Image length 53680
+[0001.166]  Monitor size 53680
+[0001.168]  OS size 0
+[0001.174] Secure Os AES-CMAC Verification Success!
+[0001.178] TOS image cipher info: plaintext
+[0001.182] Loading and Validation of Secure OS Successful
+[0001.198] SC7 Entry Firmware - 0xff700000, 0x4000
+[0001.203] NvTbootPackSdramParams: start. 
+[0001.208] NvTbootPackSdramParams: done. 
+[0001.212] Tegraboot started after 131874 us
+[0001.216] Basic modules init took 744585 us
+[0001.220] Sec Bootdevice Read Time = 54 ms, Read Size = 3682 KB
+[0001.225] Sec Bootdevice Write Time = 0 ms, Write Size = 0 KB
+[0001.231] Next stage binary read took 7384 us
+[0001.235] Carveout took -34777 us
+[0001.238] CPU initialization took 391942 us
+[0001.242] Total time taken by TegraBoot 1109134 us
+
+[0001.247] Starting CPU & Halting co-processor 
+
+64NOTICE:  BL31: v1.3(release):b5eeb33f7
+NOTICE:  BL31: Built : 12:09:37, Jul 26 2021
+ERROR:   Error initializing runtime service trusty_fast
+[0001.369] RamCode = 0
+[0001.374] LPDDR4 Training: Read DT: Number of tables = 2
+[0001.379] EMC Training (SRC-freq: 204000; DST-freq: 1600000)
+[0001.391] EMC Training Successful
+[0001.394] 408000 not found in DVFS table
+[0001.401] RamCode = 0
+[0001.404] DT Write: emc-table@204000 succeeded
+[0001.410] DT Write: emc-table@1600000 succeeded
+[0001.414] LPDDR4 Training: Write DT: Number of tables = 2
+[0001.457] 
+[0001.458] Debug Init done
+[0001.460] Marked DTB cacheable
+[0001.463] Bootloader DTB loaded at 0x83000000
+[0001.468] Marked DTB cacheable
+[0001.471] Kernel DTB loaded at 0x83100000
+[0001.475] DeviceTree Init done
+[0001.488] Pinmux applied successfully
+[0001.492] gicd_base: 0x50041000
+[0001.496] gicc_base: 0x50042000
+[0001.499] Interrupts Init done
+[0001.503] Using base:0x60005090 & irq:208 for tick-timer
+[0001.508] Using base:0x60005098 for delay-timer
+[0001.513] platform_init_timer: DONE
+[0001.516] Timer(tick) Init done
+[0001.520] osc freq = 38400 khz
+[0001.524] 
+[0001.525] Welcome to L4T Cboot
+[0001.528] 
+[0001.529] Cboot Version: 00.00.2018.01-t210-c952b4e6
+[0001.534] calling constructors
+[0001.537] initializing heap
+[0001.539] initializing threads
+[0001.542] initializing timers
+[0001.545] creating bootstrap completion thread
+[0001.550] top of bootstrap2()
+[0001.552] CPU: ARM Cortex A57
+[0001.555] CPU: MIDR: 0x411FD071, MPIDR: 0x80000000
+[0001.560] initializing platform
+[0001.614] Config for emmc ddr50 mode completed
+[0001.618] sdmmc bdev is already initialized
+[0001.622] Enable APE clock
+[0001.625] Un-powergate APE partition
+[0001.628] of_register: registering tegra_udc to of_hal
+[0001.633] of_register: registering inv20628-driver to of_hal
+[0001.639] of_register: registering ads1015-driver to of_hal
+[0001.644] of_register: registering lp8557-bl-driver to of_hal
+[0001.650] of_register: registering bq2419x_charger to of_hal
+[0001.656] of_register: registering bq27441_fuel_gauge to of_hal
+[0001.667] gpio framework initialized
+[0001.671] of_register: registering tca9539_gpio to of_hal
+[0001.676] of_register: registering tca9539_gpio to of_hal
+[0001.681] of_register: registering i2c_bus_driver to of_hal
+[0001.687] of_register: registering i2c_bus_driver to of_hal
+[0001.692] of_register: registering i2c_bus_driver to of_hal
+[0001.698] pmic framework initialized
+[0001.701] of_register: registering max77620_pmic to of_hal
+[0001.707] regulator framework initialized
+[0001.711] of_register: registering tps65132_bl_driver to of_hal
+[0001.717] initializing target
+[0001.723] gpio_driver_register: register 'tegra_gpio_driver' driver
+[0001.733] fixed regulator driver initialized
+[0001.751] initializing OF layer
+[0001.754] NCK carveout not present
+[0001.757] Skipping dts_overrides
+[0001.761] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.777] I2C Bus Init done
+[0001.780] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.790] I2C Bus Init done
+[0001.793] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.803] I2C Bus Init done
+[0001.806] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.816] I2C Bus Init done
+[0001.818] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.829] I2C Bus Init done
+[0001.831] of_children_init: Ops found for compatible string maxim,max77620
+[0001.842] max77620_init using irq 118
+[0001.846] register 'maxim,max77620' pmic
+[0001.851] gpio_driver_register: register 'max77620-gpio' driver
+[0001.857] of_children_init: Ops found for compatible string nvidia,tegra210-i2c
+[0001.867] I2C Bus Init done
+[0001.871] NCK carveout not present
+[0001.880] Find /i2c@7000c000's alias i2c0
+[0001.884] get eeprom at 1-a0, size 256, type 0
+[0001.893] Find /i2c@7000c500's alias i2c2
+[0001.896] get eeprom at 3-a0, size 256, type 0
+[0001.901] get eeprom at 3-ae, size 256, type 0
+[0001.905] pm_ids_update: Updating 1,a0, size 256, type 0
+[0001.911] I2C slave not started
+[0001.914] I2C write failed
+[0001.916] Writing offset failed
+[0001.919] eeprom_init: EEPROM read failed
+[0001.923] pm_ids_update: eeprom init failed
+[0001.927] pm_ids_update: Updating 3,a0, size 256, type 0
+[0001.957] pm_ids_update: The pm board id is 3448-0002-401
+[0001.964] Adding plugin-manager/ids/3448-0002-401=/i2c@7000c500:module@0x50
+[0001.973] pm_ids_update: pm id update successful
+[0001.977] pm_ids_update: Updating 3,ae, size 256, type 0
+[0002.007] eeprom_init: EEPROM incompatible version found
+[0002.012] pm_ids_update: eeprom init failed
+[0002.042] eeprom_get_mac: EEPROM invalid MAC address (all 0xff)
+[0002.048] shim_eeprom_update_mac:267: Failed to update 0 MAC address in DTB
+[0002.056] eeprom_get_mac: EEPROM invalid MAC address (all 0xff)
+[0002.062] shim_eeprom_update_mac:267: Failed to update 1 MAC address in DTB
+[0002.070] updating /chosen/nvidia,ethernet-mac node 48:b0:2d:3e:43:f0
+[0002.077] Plugin Manager: Parse ODM data 0x000a4000
+[0002.089] shim_cmdline_install: /chosen/bootargs: earlycon=uart8250,mmio32,0x70006000 
+[0002.103] Find /i2c@7000c000's alias i2c0
+[0002.107] get eeprom at 1-a0, size 256, type 0
+[0002.116] Find /i2c@7000c500's alias i2c2
+[0002.120] get eeprom at 3-a0, size 256, type 0
+[0002.124] get eeprom at 3-ae, size 256, type 0
+[0002.129] pm_ids_update: Updating 1,a0, size 256, type 0
+[0002.134] I2C slave not started
+[0002.137] I2C write failed
+[0002.139] Writing offset failed
+[0002.143] eeprom_init: EEPROM read failed
+[0002.146] pm_ids_update: eeprom init failed
+[0002.151] pm_ids_update: Updating 3,a0, size 256, type 0
+[0002.181] pm_ids_update: The pm board id is 3448-0002-401
+[0002.187] Adding plugin-manager/ids/3448-0002-401=/i2c@7000c500:module@0x50
+[0002.194] pm_ids_update: pm id update successful
+[0002.198] pm_ids_update: Updating 3,ae, size 256, type 0
+[0002.229] eeprom_init: EEPROM incompatible version found
+[0002.234] pm_ids_update: eeprom init failed
+[0002.264] Add serial number:1423321097676 as DT property
+[0002.271] Applying platform configs
+[0002.278] platform-init is not present. Skipping
+[0002.282] calling apps_init()
+[0002.303] Found 17 GPT partitions in "sdmmc3_user"
+[0002.308] Proceeding to Cold Boot
+[0002.311] starting app android_boot_app
+[0002.315] Device state: unlocked
+[0002.318] display console init
+[0002.326] could not find regulator
+[0002.350] hdmi cable not connected
+[0002.353] is_hdmi_needeDT entry for leds-pwm not found
+d[0002.361] : HDMI not connected, returning false
+[0002.366] hdmi is not connected
+[0002.369] sor0 is not supported
+[0002.372] display_console_init: no valid display out_type
+[0002.380] subnode volume_up is not found !
+[0002.384] subnode back is not found !
+[0002.387] subnode volume_down is not found !
+[0002.391] subnode menu is not found !
+[0002.395] Gpio keyboard init success
+[0002.442] found decompressor handler: lz4-legacy
+[0002.457] decompressing blob (type 1)...
+[0002.523] display_resolution: No display init
+[0002.527] Failed to retrieve display resolution
+[0002.532] Could not load/initialize BMP blob...ignoring
+[0002.581] decompressor handler not found
+[0002.585] load_firmware_blob: Firmware blob loaded, entries=2
+[0002.591] XUSB blob version 0 size 126464 @ 0x92cb328c
+[0002.597] -------> se_aes_verify_sbk_clear: 747
+[0002.601] se_aes_verify_sbk_clear: Error
+[0002.605] SE operation failed
+[0002.608] bl_battery_charging: connected to external power supply
+[0002.617] display_console_ioctl: No display init
+[0002.621] switch_backlight failed
+[0002.631] device_query_partition_size: failed to open partition sdmmc3_user:MSC !
+[0002.638] MSC Partition not found
+[0002.648] device_query_partition_size: failed to open partition sdmmc3_user:USP !
+[0002.655] USP partition read failed!
+[0002.659] blob_init: blob-partition USP header read failed
+[0002.664] android_boot Unable to update recovery partition
+[0002.670] kfs_getpartname: name = LNX
+[0002.673] Loading kernel from LNX
+[0002.768] load kernel from storage
+[0002.778] decompressor handler not found
+[0002.811] Successfully loaded kernel and ramdisk images
+[0002.816] board ID = D78, board SKU = 2
+[0002.821] display_resolution: No display init
+[0002.825] Failed to retrieve display resolution
+[0002.830] bmp blob is not loaded and initialized
+[0002.834] Failed to display boot-logo
+[0002.838] NCK carveout not present
+[0002.841] Skipping dts_overrides
+[0002.844] NCK carveout not present
+[0002.854] Find /i2c@7000c000's alias i2c0
+[0002.858] get eeprom at 1-a0, size 256, type 0
+[0002.866] Find /i2c@7000c500's alias i2c2
+[0002.870] get eeprom at 3-a0, size 256, type 0
+[0002.875] get eeprom at 3-ae, size 256, type 0
+[0002.879] pm_ids_update: Updating 1,a0, size 256, type 0
+[0002.884] I2C slave not started
+[0002.887] I2C write failed
+[0002.890] Writing offset failed
+[0002.893] eeprom_init: EEPROM read failed
+[0002.897] pm_ids_update: eeprom init failed
+[0002.901] pm_ids_update: Updating 3,a0, size 256, type 0
+[0002.931] pm_ids_update: The pm board id is 3448-0002-401
+[0002.938] Adding plugin-manager/ids/3448-0002-401=/i2c@7000c500:module@0x50
+[0002.946] pm_ids_update: pm id update successful
+[0002.951] pm_ids_update: Updating 3,ae, size 256, type 0
+[0002.981] eeprom_init: EEPROM incompatible version found
+[0002.986] pm_ids_update: eeprom init failed
+[0003.016] eeprom_get_mac: EEPROM invalid MAC address (all 0xff)
+[0003.022] shim_eeprom_update_mac:267: Failed to update 0 MAC address in DTB
+[0003.030] eeprom_get_mac: EEPROM invalid MAC address (all 0xff)
+[0003.036] shim_eeprom_update_mac:267: Failed to update 1 MAC address in DTB
+[0003.044] updating /chosen/nvidia,ethernet-mac node 48:b0:2d:3e:43:f0
+[0003.051] Plugin Manager: Parse ODM data 0x000a4000
+[0003.063] shim_cmdline_install: /chosen/bootargs: earlycon=uart8250,mmio32,0x70006000 
+[0003.071] Add serial number:1423321097676 as DT property
+[0003.080] "bpmp" doesn't exist, creating 
+[0003.086] Updated bpmp info to DTB
+[0003.090] Updated initrd info to DTB
+[0003.094] "proc-board" doesn't exist, creating 
+[0003.100] Updated board info to DTB
+[0003.103] "pmu-board" doesn't exist, creating 
+[0003.109] Updated board info to DTB
+[0003.112] "display-board" doesn't exist, creating 
+[0003.118] Updated board info to DTB
+[0003.122] "reset" doesn't exist, creating 
+[0003.126] Updated reset info to DTB
+[0003.130] display_console_ioctl: No display init
+[0003.134] display_console_ioctl: No display init
+[0003.139] display_console_ioctl: No display init
+[0003.143] Cmdline: tegraid=21.1.2.0.0 ddr_die=4096M@2048M section=512M memtype=0 vpr_resize usb_port_owner_info=0 lane_owner_info=0 emc_max_dvfs=0 touch_id=0@63 video=tegrafb no_console_suspend=1 console=ttyS0,115200n8 debug_uartport=lsport,4 earlyprintk=uart8250-32bit,0x70006000 maxcpus=4 usbcore.old_scheme_first=1 lp0_vec=0x1000@0xff780000 core_edp_mv=1075 core_edp_ma=4000 gpt 
+[0003.178] DTB cmdline: earlycon=uart8250,mmio32,0x70006000 
+[0003.184] boot image cmdline: root=/dev/mmcblk0p1 rw rootwait rootfstype=ext4 console=ttyS0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0 sdhci_tegra.en_boot_part_access=1 
+[0003.200] Updated bootarg info to DTB
+[0003.204] Adding uuid 00000001643174400800000001058180 to DT
+[0003.210] Adding eks info 0 to DT
+[0003.215] WARNING: Failed to pass NS DRAM ranges to TOS, err: -7
+[0003.221] Updated memory info to DTB
+[0003.229] set vdd_core voltage to 1075 mv
+[0003.232] setting 'vdd-core' regulator to 1075000 micro volts
+[0003.238] Found secure-pmc; disable BPMP
+
+
+U-Boot 2020.04-g46e4604c78 (Jul 26 2021 - 12:09:42 -0700)
+
+SoC: tegra210
+Model: NVIDIA Jetson Nano Developer Kit
+Board: NVIDIA P3450-0000
+DRAM:  4 GiB
+MMC:   sdhci@700b0000: 1, sdhci@700b0600: 0
+Loading Environment from MMC... OK
+In:    serial
+Out:   serial
+Err:   serial
+Net:   No ethernet found.
+Hit any key to stop autoboot:  2  0
+Tegra210 (P3450-0000) # 
+Tegra210 (P3450-0000) # 
+Tegra210 (P3450-0000) # 
+Tegra210 (P3450-0000) # 
+Tegra210 (P3450-0000) # pri bootargs
+bootargs=initrd=0xa0000000,0x800000 root=/dev/ram0 rw rootwait rootfstype=ext2 console=ttyS0,115200 init=/linuxrc ip=192.168.9.9
+Tegra210 (P3450-0000) # pri ramdisk_bootcmd 
+ramdisk_bootcmd=ext4load mmc 0:1 0x84000000 /home/zhan/Image ; ext4load mmc 0:1 83100000 /boot/tegra210-p3448-0002-p3449-0000-b00.dtb ; ext4load mmc 0:1 0xa0000000 /home/zhan/ramdisk.img.gz ; booti 0x84000000 - 83100000
+Tegra210 (P3450-0000) # run ramdisk_bootcmd 

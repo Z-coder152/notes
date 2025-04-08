@@ -1,0 +1,45 @@
+$ cd /nfs/
+$ dd if=/dev/zero of=ramdisk.img bs=1k count=8192 //创建一个8M的空磁盘(8192需与内核一致)，(if :input file)，(of: output file)
+$ mkfs.ext2 -i 8192 ramdisk.img -d rootfs	 /*拷贝rootfs内容到 ramdisk.img
+  报错：大部分原因是 空间不够 
+把比较大的库删除 
+注意：rootfs的大小要小于8M
+ */
+$ gzip -9 -f ramdisk.img  //压缩
+$ du -h ramdisk.img.gz  /*查看大小
+3.3M	ramdisk.img.gz   //压缩包大小为3.3M
+*/
+
+
+//板子登录后
+$ sudo nmcli device wifi connect 'ChinaNet-xqqe_EXT2.4G' password 'lzvjryud'
+$ ifconfig //查看当前ip 如192.168.10.237
+
+//虚拟机端运行 
+$ scp ramdisk.img.gz  yhbd@192.168.10.237:/home/yhbd/  //传文件到板子SD卡文件系统中
+
+//重启板子停在u-boot阶段
+ //设置ramdisk启动参数（该参数传给内核，从而内核能获取文件系统路径）setenv bootargs  console=ttyS0,115200  
+# setenv bootargs initrd=0xa0000000,0x800000 root=/dev/ram0 rw  rootwait rootfstype=ext2 console=ttyS0,115200 init=/linuxrc ip=192.168.9.9 
+# saveenv
+# ext4load mmc 0:1 0x84000000 /boot/Image
+# ext4load mmc 0:1 83100000	  /boot/tegra210-p3448-0002-p3449-0000-b00.dtb
+# ext4load mmc 0:1 0xa0000000 /home/yhbd/ramdisk.img.gz		
+#	booti 0x84000000 - 83100000
+
+尝试在里面创建内容    //注意重启后就消失了，
+setenv ramdisk_bootcmd  ext4load mmc 0:1 0x84000000 /boot/Image \; ext4load mmc 0:1 83100000 /boot/tegra210-p3448-0002-p3449-0000-b00.dtb \; ext4load mmc 0:1  0xa0000000 /home/zhan/ramdisk.img.gz \; booti 0x84000000 - 83100000
+//设置自启动(在emmc中)
+# setenv ramdisk_bootcmd  ext4load mmc 0:1 0x84000000 /boot/Image \; ext4load mmc 0:1 83100000 /home/zhan/zhan_board.dtb \; ext4load mmc 0:1  0xa0000000 /home/zhan/ramdisk.img.gz \; booti 0x84000000 - 83100000
+# setenv bootcmd run ramdisk_bootcmd 	
+# saveenv
+# reset  
+注 //因把ramdisk 放在sd卡里，系统启动是不需要网卡的，而且初始最简roofs做成ramdisk 即保证启动速度，也保证信息不被篡改
+
+//测试从零开始的内核
+setenv bootargs initrd=0xa0000000,0x800000 root=/dev/ram0 rw  rootwait rootfstype=ext2 console=ttyS0,115200 init=/linuxrc ip=192.168.9.9 
+setenv ramdisk_bootcmd  ext4load mmc 0:1 0x84000000 /home/zhan/Image \; ext4load mmc 0:1 83100000 /boot/tegra210-p3448-0002-p3449-0000-b00.dtb \; ext4load mmc 0:1  0xa0000000 /home/zhan/ramdisk.img.gz \; booti 0x84000000 - 83100000
+setenv ramdisk_bootcmd  ext4load mmc 0:1 0x84000000 /home/zhan/Image.ok \; ext4load mmc 0:1 83100000 /boot/tegra210-p3448-0002-p3449-0000-b00.dtb \; ext4load mmc 0:1  0xa0000000 /home/zhan/ramdisk.img.gz \; booti 0x84000000 - 83100000
+
+注意：原bootargs为：
+bootargs=root=/dev/nfs rw nfsroot=192.168.137.118:/nfs/rootfs,v3 console=ttyS0,115200 init=/inuxrc ip=192.168.137.9

@@ -1,0 +1,33 @@
+//用NFS + TFTP方式
+$ make dtbs
+$ make modules
+$ make Image -j4
+		
+$ cp arch/arm64/boot/dts/tegra210-p3448-0000-p3449-0000-b00.dtb   /tftpboot/
+         //老方式 $ scp arch/arm64/boot/dts/tegra210-p3448-0000-p3449-0000-b00.dtb   yhbd@192.168.10.237:/home/yhbd/
+$ scp arch/arm64/boot/Image   zhan@192.168.10.237:/home/zhan/		
+$ cp plat_driver.ko  /nfs/rootfs
+
+# setenv bootargs  root=/dev/nfs rw nfsroot=192.168.137.118:/nfs/rootfs,v3 console=ttyS0,115200 init=/linuxrc ip=192.168.137.9 
+# setenv nfsboot pci enum \; pci \; ext4load mmc 0:1 0x84000000 /home/zhan/Image \; tftp 83100000 tegra210-p3448-0000-p3449-0000-b00.dtb \; booti 0x84000000 - 83100000
+         //老方式 # setenv nfsboot ext4load mmc 0:1 0x84000000 /home/yhbd/Image \; ext4load mmc 0:1 83100000 /home/yhbd/tegra210-p3448-0000-p3449-0000-b00.dtb \; booti 0x84000000 - 83100000
+# saveenv
+# run nfsboot  //手动运行(注意⚠️：run之前最好先 单独运行 ``pci enum; pci``命令)
+
+# setenv bootcmd run nfsboot  //测试成功后，可设为自启动命令，避免每次都手动运行
+# saveenv	
+	
+$ insmod plat_driver.ko //发现plat_probe未进入
+	 //原因时，内核 设备树，模块的编译必须在同一套源码下编译才行,它们是要相互匹配的
+$ rmmod plat_driver
+
+#####################################
+# pci enum;pci
+# setenv serverip  192.168.137.118
+# setenv ipaddr 192.168.137.9
+# ping  192.168.9.119   /*再ping通虚拟机
+		Using eth_rtl8169 device
+		host 192.168.9.119 is alive
+    */
+# saveeenv
+#####################################

@@ -1,0 +1,25 @@
+$ make  /*编译所有
+ 常需指定 交叉编译工具链 CROSS_COMPILE(如无默认采用 gcc)
+方式一： make  CROSS_COMPILE=aarch64-linux-gnu-   直接指定
+方式二： export CROSS_COMPILE=aarch64-linux-gnu-  导出环境变量
+方式三：直接在Makefile里指定交叉编译工具链
+ */
+$ make  all    //编译所有
+$ make Image //只编译内核
+$ make modules //只编译模块
+$ make dtbs //只编译设备树
+
+$ make install /*安装内核（理解为将编译生成的镜像保存到指定路径）
+ 常需指定 安装路径 INSTALL_PATH
+方式一： make install INSTALL_PATH=/tftpboot   直接指定
+方式二： export INSTALL_PATH=/tftpboot  导出环境变量
+ */
+$ make modules_install /*安装模块
+  常需指定 安装路径 INSTALL_MOD_PATH
+方式一：make modules_install INSTALL_MOD_PATH=~/Linux_for_Tegra/rootfs   直接指定
+方式二：export INSTALL_MOD_PATH=~/Linux_for_Tegra/rootfs  导出环境变量
+ */
+ 
+$ make clean      //清除编译中产生的临时文件(如.o)，这会导致下一次编译时间很长
+$ make distclean  //清除所有(临时文件 + 配置)，会清除掉配置好的.config文件，
+		//最好在第一次配置之前使用该命令

@@ -1,0 +1,54 @@
+#### 将Linux官方源码压缩包传至板子，然后解压，
+
+接着导入英伟达的配置：“tegra_defconfig”： `make tegra_defconfig `
+【注意：报错：Can't find default configuration "arch/arm64/configs/tegra_defconfig"!
+  原因是 找不到配置，可以把官方的移植好的内核4.9里的配置拷贝过来】
+配置后，只编译内核：`make Image -j5` ；
+然后，运行下面命令以关机
+`sync `
+
+`sudo shutdown now`
+
+#### 最后，拔下u盘，进行以下操作以复制u盘中的镜像：（防止u盘系统损坏又要从零编译内核）
+
+sd卡插入电脑 -> 虚拟机 -> 可移动设备 -> 选 Super Top	-> 连接 //让SD卡连接到虚拟机中
+` sudo dd if=/dev/sdc conv=sync,noerror bs=4M | gzip -c > ~/backup_image.img.gz       `    
+
+` sudo pkill -USR1 -n -x dd  `     //需在新窗口中执行，激活进度信息，再回到原窗口，就能看到进度信息了
+
+​														//每次查看都要执行一次，64G卡要把64G全部读完才成功，成功后可ls -lh 
+
+#### 镜像还原操作：
+
+//格式化
+用usb读卡器把待还原的sd卡插入电脑 // 注意要用高速sd卡(如闪迪tf卡Extreme)，否则烧写很慢
+打开SD Card Formatter  -> Select card 选SD卡  //注意：千万别选错了，把别的盘格式了
+-> 选Quick format -> 让Volume label空白 -> 点Format
+//还原： 烧写(需确认 /dev/sdb 是新插入的SD卡 )，时间3小时左右
+` sudo gunzip -dc backup_image.img.gz | sudo dd of=/dev/sdb bs=4M `
+//查看进度：需在新窗口中执行，激活进度信息，再回到原窗口，就能看到进度信息了
+//    每次查看都要执行一次，128G卡要，把128G全部写完才成功，
+`sudo pkill -USR1 -n -x dd `
+
+烧写成功后，把sd卡插入到小车，看能成功启动否
+
+#### 再由u盘启动来验证内核是否ok
+```bash
+ cd  /boot/extlinux/
+ sudo cp usb_extlinux.conf  usb_extlinux_new.conf
+ sudo chmod 777 usb_extlinux_new.conf
+ vim usb_extlinux_new.conf/*指定从新内核启动
+ 改 LINUX /boot/Image 
+ 为 LINUX /home/zhan/kernel-4.9/arch/arm64/boot/Image 
+ */
+重启板子 快速停在u-boot阶段 
+
+setenv boot_syslinux_conf extlinux/usb_extlinux_new.conf  //指定启动配置文件为我们自定义的
+
+//原默认的是 boot_syslinux_conf=extlinux/usb_extlinux.conf
+
+run usb_boot //从u盘启动
+```
+
+
+

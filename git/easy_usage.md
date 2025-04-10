@@ -134,7 +134,140 @@ $ git push -u origin main
 从现在起，只要本地作了提交，就可以通过命令：
 
 ```bash
-$ git push origin master
+$ git push origin main
 ```
 
-把本地`master`分支的最新修改推送至GitHub
+把本地`main`分支的最新修改推送至GitHub；
+
+
+
+------
+
+==在虚拟机的情况下==
+
+要将代码从虚拟机（Linux）推送到 GitHub 仓库，以下是每一步的详细操作步骤。
+
+### 步骤 1: 安装 Git（如果没有安装）
+
+首先，确保你的虚拟机上已安装 `git`。如果没有安装，可以使用以下命令安装：
+
+```bash
+# 对于 Ubuntu/Debian 系统
+sudo apt update
+sudo apt install git
+
+# 对于 CentOS/RHEL 系统
+sudo yum install git
+```
+
+### 步骤 2: 配置 Git 用户信息
+
+如果你之前没有配置过 Git 用户信息（用户名和邮箱），需要先设置它们。执行以下命令进行配置：
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your_email@example.com"
+```
+
+这将配置你的 Git 提交的用户名和电子邮件。
+
+### 步骤 3: 创建一个新的 GitHub 仓库
+
+1. 打开 GitHub 网站：[https://github.com](https://github.com/)。
+2. 登录到你的 GitHub 账号。
+3. 在右上角点击 "+"，然后选择 **"New repository"**。
+4. 在新页面上，为你的仓库命名并填写描述（可以留空）。
+5. 选择 **"Public"** 或 **"Private"**，决定仓库的可见性。
+6. 点击 **"Create repository"** 创建仓库。
+
+### 步骤 4: 初始化本地 Git 仓库
+
+在虚拟机中，进入你希望推送的项目文件夹：
+
+```bash
+cd /path/to/your/project
+```
+
+然后，初始化 Git 仓库：
+
+```bash
+git init
+```
+
+### 步骤 5: 添加文件到 Git 仓库
+
+将所有代码添加到 Git 版本控制：
+
+```bash
+git add .
+```
+
+你也可以选择只添加特定的文件，例如：
+
+```bash
+git add file1 file2
+```
+
+### 步骤 6: 提交文件
+
+现在，提交文件并为提交添加注释：
+
+```bash
+git commit -m "Initial commit"
+```
+
+### 步骤 7: 连接到 GitHub 仓库
+
+返回 GitHub 上你创建的仓库页面，找到远程仓库的 URL。例如：
+
+```bash
+https://github.com/your-username/your-repository.git
+```
+
+将这个 URL 作为远程仓库添加到本地 Git 配置中：
+
+```bash
+git remote add origin https://github.com/your-username/your-repository.git
+```
+
+### 步骤 8: 推送代码到 GitHub
+
+最后，将你的代码推送到 GitHub 仓库：
+
+```bash
+git push -u origin master
+```
+
+或者，如果你使用的是 Git 的默认分支 `main`，而不是 `master`，则需要推送到 `main` 分支：
+
+```bash
+git push -u origin main
+```
+
+### 步骤 9: 输入 GitHub 用户名和密码（如果需要）
+
+在推送时，Git 会提示你输入 GitHub 的用户名和密码。如果你启用了 **GitHub 双重认证**，则需要使用 **Personal Access Token** 代替密码。可以在 GitHub 中创建一个 **Personal Access Token**，并在输入密码时使用它。
+
+#### 创建 GitHub Personal Access Token：
+
+1. 登录到 GitHub。
+2. 点击右上角的头像，选择 **Settings**。
+3. 在侧边栏选择 **Developer settings**。
+4. 在左侧选择 **Personal access tokens**。
+5. 点击 **Generate new token**，并选择需要的权限。
+6. 生成并复制 Token，在 Git 推送时使用它。
+
+### 步骤 10: 完成
+
+完成推送后，你的代码应该已经成功上传到 GitHub 仓库。你可以刷新 GitHub 页面查看你的代码是否已经出现在仓库中。
+
+------
+
+### 总结：
+
+1. 安装 Git 并配置用户名和邮箱。
+2. 在 GitHub 上创建一个新仓库。
+3. 在本地项目文件夹中初始化 Git 仓库并提交文件。
+4. 将本地仓库连接到 GitHub 仓库并推送代码。
+
+这样就能成功地将本地代码推送到 GitHub 仓库了。如果你有其他问题，随时告诉我！

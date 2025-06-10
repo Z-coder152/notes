@@ -6,6 +6,8 @@
 
 
 
+==命令模式下，从 windows 复制信息然后粘贴到vim ,使用快捷键组合：ctrl + shift + V ;==
+
 #### 用户刚刚启动vim时，便进入了命令模式
 
 以下是普通模式常用的几个命令：
@@ -57,7 +59,7 @@
 
 按 **ESC** 键可随时退出底线命令模式。
 
-<img src="vim工作模式.png" style="zoom: 50%;" />
+<img src="vim工作模式.png" style="width: 50%;" />
 
 #### [**Vim 删除命令的常用方法包括**](https://blog.csdn.net/jiesa/article/details/53319755)[1](https://blog.csdn.net/jiesa/article/details/53319755)[2](https://zhuanlan.zhihu.com/p/358292858)[3](https://blog.csdn.net/guotianqing/article/details/106722407)[4](https://zhuanlan.zhihu.com/p/159458128)[5](https://www.cnblogs.com/zknublx/p/8795789.html):
 
@@ -81,6 +83,39 @@
 3、vim +n filename （在打开文件后，跳转到文件的第n行
 
 
+
+==区域选择 <action>a<object> 或 <action>i<object>==
+在visual 模式下，这些命令很强大，其命令格式为
+
+```
+<action>a<object> 和 <action>i<object>
+
+action可以是任何的命令，如 d (删除), y (拷贝), v (可以视模式选择)。
+object 可能是： w 一个单词， W 一个以空格为分隔的单词， s 一个句字， p 一个段落。也可以是一个特别的字符："、 '、 )、 }、 ]。
+假设你有一个字符串 (map (+) ("foo")).而光标键在第一个 o 的位置。
+
+vi" → 会选择 foo.
+va" → 会选择 "foo".
+vi) → 会选择 "foo".
+va) → 会选择("foo").
+v2i) → 会选择 map (+) ("foo")
+v2a) → 会选择 (map (+) ("foo"))
+```
+
+
+
+##### 块操作: `<C-v>`
+
+块操作，典型的操作： `0 <C-v> <C-d> I-- [ESC]`
+
+- `^` → 到行头
+- `<C-v>` → 开始块操作
+- `<C-d>` → 向下移动 (你也可以使用hjkl来移动光标，或是使用%，或是别的)
+- `I-- [ESC]` → I是插入，插入“`--`”，按ESC键来为每一行生效。
+
+
+
+ 
 
 ==结合ctag用法==
 

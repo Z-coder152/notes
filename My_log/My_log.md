@@ -1,5 +1,4 @@
 > 2024/12/15
->
 
 过了第一遍内核移植的视频，发现前面的一些知识（如：内核源码分析、make的编译过程、Makefile文件的理解）全部在这里串了起来，解释如下：
 
@@ -20,7 +19,7 @@
 
 > 2024/12/16
 
-众多的Kconfig 文件代码其实是构成了源码顶层目录中，用来配置.config 的图形菜单界面；注意到某些驱动配置所对应的Konfig文件位置是源码driver目录下，也即这部分和芯片的体系架构无关。此外，在菜单中进行配置修改时，Kconfig文件内容是不会改的，而是将修改内容输出/保存/加载到同级目录下的.config文件中。
+众多的Kconfig 文件代码其实是构成了源码顶层目录中，用来配置.config 的图形菜单界面；注意到某些驱动配置所对应的Kconfig文件位置是源码driver目录下，也即这部分和芯片的体系架构无关。此外，在菜单中进行配置修改时，Kconfig文件内容是不会改的，而是将修改内容输出/保存/加载到同级目录下的.config文件中。
 
 大型项目的编译往往由最顶层Makefile和子目录下面的众多Makefile管理，底层的Makefile一般比较简单（通过配置菜单界面生成的.config文件中的变量，来决定哪些文件参加编译），通过修改底层目录的Makefile和Kconfig文件，可以添加第三方驱动。
 
@@ -99,10 +98,6 @@ grep -r "pattern"
 
 ​	安徽美术馆，参观了主题为“何处寻行迹”的巡展（突出人与自然），并学习了一下山水画的知识。
 
-[跨年大展：“何处寻行迹”巡展在安徽省美术馆启幕！中央美术学院美术馆 CAFA Art Museum](https://www.cafamuseum.org/exhibit/newsdetail/3670)
-
-<img src="figure/生活_画展.png" width="60" height = "700" />
-
 
 
 > 2025/1/4
@@ -156,6 +151,7 @@ grep -r "pattern"
   这两个设备文件 `/dev/ttyS0` 和 `/dev/ttyS1` 对应同一个驱动（主设备号为 4），但它们是两个不同的物理串口（通过次设备号区分）。==主设备号确定驱动，次设备号区分设备（具体的硬件）。==
   
 - 2）、初始化字符设备
+  
   - **动机**：字符设备驱动程序需要在系统启动时正确初始化，使其能够响应设备的操作请求，如读、写等。
   - **原因**：初始化过程是必要的，因为只有在初始化后，字符设备才能被操作系统识别并能正确响应操作请求
   
@@ -192,7 +188,13 @@ grep -r "pattern"
 
 平台设备驱动最简的编写
 
+框架：
 
+![](figure/平台设备框架.png)
+
+`struct platform_driver`这个函数指针结构体里面 包含了平台驱动的 核心操作， 包括设备初始化、释放等等；
+
+`struct platform_device` 这个结构体里面包含  硬件设备的信息（从设备树那里获取的）
 
 > 2/20
 
@@ -2164,17 +2166,157 @@ static inline void __raw_spin_lock(raw_spinlock_t *lock)
 
 生产者-消费者模型
 
-缓冲区，环形缓冲区
+​		**生产者**：负责生成数据、写入缓冲区。
 
-由于“缓冲区”的存在，引出另一种“同步”（看做是任务间的配合）：*任务B必须等任务A完全执行完以后再执行*
+​		**消费者**：负责从缓冲区中取出数据进行处理。
+
+​		二者通过**共享缓冲区**进行通信，但不能同时读写
+
+```less
+         +------------+      		        +-------------+
+         | Producer   |      		           | Consumer    |
+         | (内核线程) |       		             | (内核线程)  |
+         +------------+     		       +-------------+
+               ↓                     				     ↑
+           [写缓冲区] ←——共享数据——→ [读缓冲区]
+               ↓                     				     ↑
+ wait_event / wake_up                  wait_event / wake_up
+```
+
+### ⚙️ 内核实现中的关键机制
+
+1. ### **环形缓冲区（Ring Buffer）**
+   
+   - 通常用于日志系统（如 printk 的 log_buf）、网络数据包收发队列等。
+   - 高效、无锁或低锁，实现生产和消费的解耦。
+   
+   环形缓冲区（**Circular Buffer**，也叫**Ring Buffer**）是一种非常常用的数据结构，主要用来处理**数据流**，尤其适合需要**生产者-消费者模型**或者**实时数据处理**的场景。
+    简单理解就是：
+   
+   - **把一个数组首尾连接成一个“环”**，新数据到了就往后放，满了就从头开始覆盖最旧的数据。
+   - 用**两个指针**（或者索引）：一个表示**写入位置**，一个表示**读取位置**。
+   
+   #### 1. 结构
+   
+   - 内部就是一个**固定大小**的数组。
+   - 维护两个指针（索引）：
+     - `head`：指向**下一次写入数据**的位置
+     - `tail`：指向**下一次读取数据**的位置
+   
+   比如：
+   
+   ```plaintext
+   [空][空][空][空][空][空][空][空]
+    ^写指针
+    ^读指针
+   ```
+   
+   #### 2. 操作过程
+   
+   - **写数据**（比如放进一条消息）：
+     - 把数据写到`head`位置；
+     - `head`往后移一格；
+     - 如果`head`到数组末尾了，就绕到0号位置（**取模操作**）。
+   - **读数据**（比如取出一条消息）：
+     - 从`tail`位置取数据；
+     - `tail`往后移一格；
+     - 同样遇到末尾绕到开头。
+   
+   #### 3. 特点
+   
+   - **先进先出（FIFO）**的特性。
+   - **内存连续**，缓存命中率高。
+   - 不需要频繁移动数据。
+   - 写满时可以有两种策略：
+     - **覆盖旧数据**（常用于音频缓存、日志）
+     - **阻塞或者丢弃新数据**（常用于数据通信缓冲）
+   
+   #### 4. 举个具体的小例子
+   
+   假设缓冲区大小是5，初始状态：
+   
+   ```plaintext
+   数组：[ ][ ][ ][ ][ ]
+   head = 0
+   tail = 0
+   ```
+   
+   连续写入 A, B, C：
+   
+   ```plaintext
+   数组：[A][B][C][ ][ ]
+   head = 3
+   tail = 0
+   ```
+   
+   读取一个元素（读到 A）：
+   
+   ```plaintext
+   数组：[A][B][C][ ][ ]
+   head = 3
+   tail = 1
+   ```
+   
+   继续写入 D, E：
+   
+   ```plaintext
+   数组：[A][B][C][D][E]
+   head = 0 （回到起点）
+   tail = 1
+   ```
+   
+   再写入 F，会发现 `(head+1)%size == tail`，说明**满了**，需要根据策略决定：覆盖掉B，还是阻塞等待。
+   
+   #### 4. 应用场景
+   
+   #### 4.1 串口（UART）驱动里的接收/发送缓冲区
+   
+   比如，一个串口驱动通常有：
+   
+   - **接收缓冲区（RX Ring Buffer）**：外设把数据硬件中断地写进缓冲区，CPU在空闲时来读取。
+   - **发送缓冲区（TX Ring Buffer）**：应用层写数据到发送缓冲区，由串口底层慢慢地一个个发出去。
+   
+   ###### 为什么要用环形缓冲区？
+   
+   - 串口收发是**异步**的，数据随时可能到达。
+   - CPU不可能一直死等，要**用中断**或者**DMA**收数据，先缓存起来。
+   - 防止因 CPU处理不及时而**丢数据**。
+   - 高效（读写只动指针，不移动内存）。
+   
+   ▶ **示例**：
+    在串口中断服务函数里，接收到的字符放入`RX buffer`的`head`指向的位置，然后移动`head`。应用读取时从`tail`位置拿数据。
+   
+   #### 4.2 音频/视频流播放
+   
+   比如播放音频（I2S、音频Codec）时：
+   
+   - 应用把音频数据源源不断写入环形缓冲区。
+   - 硬件控制器从缓冲区自动读数据，连续播放。
+   
+   如果缓冲区写得慢于播放速率，会**播放中断**（buffer underrun）；
+    如果写得太快，又可能**覆盖未播放的数据**（需要仔细管理满/空状态）
+   
+   
+   
+2. ### **等待队列（Wait Queue）**
+   
+   - 若缓冲区满，生产者调用 `wait_event()` 睡眠；
+   - 若缓冲区空，消费者也会进入等待；
+   - 数据准备好后用 `wake_up()` 唤醒等待方。
+   
+3. ### **信号量 / 自旋锁 / 互斥量**
+   
+   - 用于保护临界区，防止并发访问共享数据出错。
 
 
 
 > 4/10
 
-阻塞
+==阻塞==
 
-轮询
+Linux 内核中，**阻塞（Blocking）** 是指一个进程或线程由于等待某些资源或事件，而**主动放弃 CPU 使用权**，进入**睡眠状态（sleep）**，直到条件满足后才被唤醒，继续执行
+
+
 
 ------
 
@@ -2246,13 +2388,17 @@ int main(void)
 
 <img src="figure/I_O阻塞2.png" style="width:67%;" />
 
-------
 
-异步通知（通过信号机制完成）
 
-IO多路复用
+两种阻塞的区别总结：
 
-性能最大化（如何评价？ 吞吐量  实时性）
+| 特性     | 阻塞调用 | 非阻塞调用     |
+| -------- | -------- | -------------- |
+| 等待资源 | 是       | 否             |
+| 是否睡眠 | 是       | 否（立即返回） |
+| CPU占用  | 释放CPU  | 占用CPU        |
+
+
 
 ------
 
@@ -2293,3 +2439,1328 @@ size_t malloc(size_t size);
 ```
 
 这里 `malloc` 函数返回的是 `size_t`，表示分配的内存块的字节数，它永远不会是负数。
+
+
+
+> 4/12
+
+==轮询机制==
+
+Linux 内核中，**轮询机制（Polling）** 是一种**主动查询资源状态**的方式，通常用于检测某个设备或条件是否满足，比如数据是否准备就绪
+
+**轮询**指的是内核或用户程序**不断检查某个条件**，比如：
+
+- 是否有数据可读
+- 是否可以写入设备
+- 是否有事件发生
+
+**特点**：
+
+- **持续占用 CPU**，效率较低（尤其是条件未满足时）
+- 实现简单，响应及时
+- 常用于设备驱动初始化阶段、调试或低复杂度场景
+
+| 机制 | 是否占用CPU | 响应方式         | 场景适用               |
+| ---- | ----------- | ---------------- | ---------------------- |
+| 轮询 | 是          | 主动反复查询     | 简单设备、忙等场合     |
+| 阻塞 | 否          | 条件满足后唤醒   | 需要节省 CPU、并发控制 |
+| 中断 | 否          | 事件触发自动响应 | 实时性高、I/O设备驱动  |
+
+------
+
+==异步通知==（通过信号机制完成）
+
+Linux 内核中，**异步通知（Asynchronous Notification）** 是一种机制，用于在某个事件发生时**主动通知用户空间进程**，而**不需要进程持续轮询或阻塞等待**；
+
+​		当内核中某个事件（如设备数据就绪）发生后，会**向用户空间进程发送信号（通常是 `SIGIO`）**；
+
+​		用户进程注册后，无需等待或轮询，当事件发生时，**自动收到通知并执行对应处理**。
+
+#### 📌 应用场景：
+
+- **串口驱动**：当有数据接收时通知用户进程处理
+- **输入子系统**：如键盘、鼠标事件触发用户进程响应
+- **网络编程**：监控 socket 是否可读写
+- **音视频流处理**：设备状态变化自动回调处理
+
+| 机制     | 是否等待资源 | 是否及时通知   | CPU占用 | 实时性 |
+| -------- | ------------ | -------------- | ------- | ------ |
+| 阻塞     | 是           | 是（被动唤醒） | 低      | 中等   |
+| 轮询     | 否           | 否（需主动查） | 高      | 高     |
+| 异步通知 | 否           | 是（主动通知） | 低      | 高     |
+
+------
+
+==IO多路复用==
+
+Linux 内核中，**I/O 多路复用（I/O Multiplexing）** 是一种允许一个进程**同时监听多个 I/O 文件描述符**，在任何一个就绪时进行处理的机制
+
+### ✅ 核心概念简述：
+
+- 一个线程/进程可以通过**单个阻塞调用**（如 `select`、`poll`、`epoll`）同时**监控多个 I/O 事件**；
+- 当某个文件描述符（如 socket、管道、设备等）变为可读/可写时，立即响应；
+- 避免为每个 I/O 创建线程或进程，提高资源利用率。
+
+------
+
+==并发性能最大化==（如何优化？如何评价？）
+
+✅ 一、如何在并发控制中使性能最大化？
+
+### 1. **减少锁竞争（Lock Contention）**
+
+- 减少临界区粒度（如使用读写锁），缩短加锁时间
+- 使用**读写锁**或**RCU**替代互斥锁（如只读时）
+- 避免“全局大锁”（big lock）
+
+### 2. **选择合适的同步机制**
+
+- 短时间保护：使用**自旋锁**
+- 长时间等待：使用**互斥锁、信号量**
+- 非阻塞场景：考虑**无锁队列、原子操作**
+
+### 3. **减少上下文切换**
+
+- 尽量减少线程/进程数，不盲目创建
+- 使用**线程池**代替频繁创建销毁线程
+
+### 4. **使用异步机制**
+
+- 利用事件驱动、I/O 多路复用（epoll）
+- 合理使用异步通知、信号处理等机制
+
+### 📊 二、如何评价并发的性能？
+
+### 1. **吞吐量（Throughput）**
+
+- 单位时间内完成的任务数量
+- 越高越好，反映系统整体处理能力
+
+### 2. **延迟（Latency）**
+
+- 单个请求从发出到响应的时间
+- 尤其关键于实时系统
+
+### 3. **并发数（Concurrency Level）**
+
+- 系统同时能处理的线程/请求数
+- 衡量并发能力的直接指标
+
+### 4. **CPU利用率**
+
+- 合理调度下，应保持较高但不饱和
+
+### 5. **上下文切换频率**
+
+- 频繁切换意味着调度成本高，可能是锁设计不合理
+
+✅并发性能优化的核心在于：**减少资源竞争、提升资源利用率、避免不必要的等待**；性能评估则需结合吞吐、延迟、CPU 利用、锁竞争等多维度指标综合判断。
+
+------
+
+> 4/14
+
+关于==阻塞==的驱动：(内容是，在`read`函数实现里面，通过调用`wait_event_interruptible`，使得被阻塞的进程id进入队列等待；其次，在`write`函数实现里面，通过调用`wake_up_interruptible`唤醒在队列中等待的进程)
+
+```c
+#include <linux/sched.h>
+static wait_queue_head_t queue;   //定义等待队列
+
+write_dev(){
+  wake_up_interruptible(&queue); //唤醒在等待队列上等待的进程，依次取
+}
+
+read_dev(){
+  //等待(睡眠）直到条件满足（睡眠时，会把当前进程放入 等待队列中）
+  if (wait_event_interruptible(queue, data_len!=0)) 
+  {
+     return -ERESTARTSYS; 
+  }		
+	
+}
+
+dev_init(){
+  init_waitqueue_head(&queue);   //初始化等待队列
+}
+
+//验证测试
+$ make
+$ aarch64-linux-gnu-gcc app.c
+$ cp a.out driver.ko /nfs/rootfs
+
+# insmod driver.ko   
+# mknod /dev/uart c 500 0 
+# ./a.out  &    // 加上& 表示该进程后台执行   
+# echo 10TV > /dev/uart
+
+```
+
+应用：
+
+```c
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/ioctl.h>
+#include <string.h>
+
+int main(int argc, char **argv)
+{
+	int fd;
+	char buff[10];
+	
+	fd = open("/dev/uart", O_RDWR); //以可读可写，默认阻塞方式打开
+	if (fd < 0) {
+		perror("open");
+		exit(1);
+	}
+
+	read (fd, buff, sizeof(buff) - 1); //阻塞睡眠等待，直到有数据
+	printf("read buf is %s\n",buff);
+        close(fd);
+	return 0;
+}
+```
+
+------
+
+#### ==信号机制==
+
+好的，以下是将你需要的内容总结为两部分，便于你整理到文档中使用：
+
+📘 一、信号机制的介绍（Signal Mechanism in Linux）
+
+### 1. 概述
+
+信号是 Linux 中一种**异步通信机制**，==用于在进程之间或内核向用户空间发送通知==。它允许**异步事件驱动的处理方式**，常用于中断进程执行或唤醒阻塞中的进程。
+
+### 2. 常见信号及作用（可以 通过 `kill -l` 命令查询）
+
+| 信号名称  | 编号  | 含义                  |
+| --------- | ----- | --------------------- |
+| `SIGINT`  | 2     | 中断信号，来自 Ctrl+C |
+| `SIGKILL` | 9     | 强制终止（不可捕获）  |
+| `SIGTERM` | 15    | 请求终止（可捕获）    |
+| `SIGIO`   | 29/23 | I/O 事件通知信号      |
+| `SIGCHLD` | 17    | 子进程退出通知        |
+| `SIGSEGV` | 11    | 段错误，非法访问内存  |
+
+### 3. 驱动中的作用
+
+在内核驱动中，信号机制主要用于**向用户空间进程发送异步通知**，如数据准备就绪、硬件中断触发等。
+
+最典型的使用方式是结合 `fasync` 机制和 `SIGIO` 信号，通知用户进程有 I/O 事件发生，避免用户阻塞等待。
+
+### 4. 工作机制（以 `SIGIO` 为例）
+
+1. 用户进程设置设备为异步通知模式（`fcntl(fd, F_SETFL, O_ASYNC)`）
+2. 驱动实现 `.fasync` 文件操作
+3. 驱动在事件发生时调用 `kill_fasync()` 发送 `SIGIO`
+4. 用户进程收到信号后执行注册的信号处理函数
+
+## 🛠️ 二、内核常用 API（Signal-Related Kernel Interfaces）
+
+| 接口                                                         | 功能                                       | 使用说明                               |
+| ------------------------------------------------------------ | ------------------------------------------ | -------------------------------------- |
+| `int fasync_helper(int fd, struct file *filp, int mode, struct fasync_struct **fa);` | 帮助建立或移除异步通知链表                 | 驱动中用于实现 `.fasync` 操作函数      |
+| `void kill_fasync(struct fasync_struct **fa, int sig, int band);` | 向注册进程发送信号（通常为 `SIGIO`）       | 驱动在数据就绪时调用，用于通知用户空间 |
+| `int fcntl(fd, F_SETFL, O_ASYNC);`                           | 用户进程启用异步通知（非内核 API，但关键） | 必须设置后内核才能发送 `SIGIO`         |
+| `signal(SIGIO, handler);`                                    | 用户态注册信号处理函数（非内核）           | 响应 `kill_fasync` 发送的信号          |
+
+### 示例片段（驱动端）
+
+```c
+static struct fasync_struct *async_queue;
+
+static int my_fasync(int fd, struct file *filp, int mode) {
+    return fasync_helper(fd, filp, mode, &async_queue);
+}
+
+// 数据到达或事件触发时
+kill_fasync(&async_queue, SIGIO, POLL_IN);
+```
+
+### 示例片段（用户态）
+
+```c
+signal(SIGIO, handler);  // 设置信号处理器
+fcntl(fd, F_SETOWN, getpid());   // 设置拥有者为当前进程
+fcntl(fd, F_SETFL, FASYNC);      // 开启异步通知模式
+```
+
+------
+
+最简应用层程序：
+
+```c
+#include <signal.h>
+#include <unistd.h>
+#include <stdio.h>
+
+void sigint_handle(int signo) {
+   switch (signo) {
+
+      case SIGINT:
+	printf("Get a signal -- SIGINT\n");
+	break;
+   }
+   return;
+}
+
+int main() {
+  signal(SIGINT, sigint_handle);  //设置信号的处理函数 -> 发现ctrl+c不再终止进程了（改写了默认的行为）
+  //改用ctrl+\ 发送QUIT信号来终止程序       
+  while(1) {
+    sleep(1);
+  }
+}
+```
+
+------
+
+在 shell 中运行 `echo xxx > /dev/xxx`，是通过 shell 内置的 I/O 重定向（>）实现的，它会对目标路径 `/dev/xxx`：
+
+1. **打开文件**（open）
+2. **写入内容**（write）
+3. **关闭文件**（close）
+
+而所有这些系统调用最终都通过内核的文件操作机制，调用到你驱动实现的 `.open`、`.write`、`.release` 等接口。
+
+------
+
+结合内核测试程序：见github -> fasync_info_driver.c
+
+
+
+> 4/15
+
+==多路复用==
+
+**多路复用适用于需要同时监听多个 I/O 通道但又不想开多线程/多进程的场合**
+
+```c
+I/O多路复用 //阻塞等待，有事件发生，才轮询取数据  -> 使用最多(三合一:  阻塞+ 非阻塞 + 异步通知)
+
+动因 //当有海量设备需轮询时 -> 轮询时间太长
+     //当服务端有大量socket连接请求时 -> 为避免轮询时间太长，可创建多个线程，每个线程监控一个连接
+     //但海量线程的切换成本也很高 -> 用一线程去监控多设备，事件唤醒，再轮询的方式
+     //设备不多时（如5个），开多个线程阻塞读也可以的，但太多时I/O多路复用更好
+
+	---------------------------
+	| 应用
+	|         select/poll
+	---------------------------
+                     |        
+	---------------------------
+	|内核     sys_poll  //poll系统调用,轮询poll_table中的驱动.poll， 
+	|            |
+	|          .poll    //驱动实现的.poll
+	---------------------------
+
+/*原理：
+select/poll 会调用  sys_poll(系统调用)  ，再调用驱动中的.poll
+sys_poll它会循环监听 poll_table上的设备是否就绪（由其关联的等待队列queue触发），如果就绪则返回
+如不就绪，则 schedule (让渡内核去执行别的进程)， 返回后继续监测。
+如果发生阻塞，会发生在sys_poll中，
+*/
+```
+
+驱动代码：https://github.com/Z-coder152/Linux_driver_study/blob/main/I/O_Multiplexing/Multiplexing_driver.c
+
+<img src="figure/IO多路复用图.png" style="width:60%;" />
+
+```
+用户态：poll(fd, ...)
+  ↳ 内核传入 wait
+       ↳ wait->qproc = __pollwait;
+  
+驱动：poll_wait(filp, &dev->read_queue, wait)
+       ↳ 实际调用 __pollwait(filp, &dev->read_queue, wait)
+            ↳ 将当前进程加到 dev->read_queue 中
+            ↳ 把这个等候登记记录写入 wait 中
+
+当有事件：
+  驱动调用 wake_up(&dev->read_queue)
+       ↳ 之前挂进去的进程被唤醒，poll() 返回
+```
+
+驱动里面 .poll 的实现：
+
+!!!注意: I/O多路复用时，轮询（包括无效的和有效的）操作在sys_poll里做了，且每次系统调用里做的循环 都是调用驱动里的 dev_poll(.poll的实现)，从而判断设备状态 ; 韦东山博客里面的图片解释的很好。
+
+```c
+static unsigned int dev_poll(struct file *filp, poll_table *wait)
+{
+	unsigned int mask = 0;
+
+	poll_wait(filp, &queue, wait);  /*
+  当设备有数据时，会唤醒再其等待队列上等待的所有进程，去执行。
+  这实现了，多对多，poll_table里存放多个设备，等待队列里，存放访问设备的多个任务。
+  poll_wait函数并不阻塞， 真正的阻塞动作是在poll系统调用中完成
+					*/
+	if (data_len != 0)
+	{
+		mask |= POLLIN | POLLRDNORM; //POLLIN:可阻塞读  POLLRDNORM:可读
+		                         
+	}
+	if (data_len < C_BUF_LEN)
+	{
+		mask |= POLLOUT | POLLWRNORM; //POLLOUT:可阻塞写  POLLRDNORM:可写
+	}
+	return mask;      //通过立即unsigned int mask = 0;返回标志
+}
+```
+
+- 驱动中的`poll_wait`函数回调`__pollwait`，这个函数完成的工作是向`struct poll_wqueue`结构(见下图)中添加一条`poll_table_entry`；
+- `poll_table_entry`中包含了等待队列的相关数据结构；
+- 对等待队列的相关数据结构进行初始化，包括设置等待队列唤醒时的回调函数指针，设置成`pollwake`；
+- 将任务添加到驱动程序中的等待队列中，最终驱动可以通过`wake_up_interruptile`等接口来唤醒处理；
+
+这一顿操作，其实就是驱动向`select`维护的`struct poll_wqueue`中注册，并将调用`select`的任务添加到驱动的等待队列中，以便在合适的时机进行唤醒。
+
+![](figure/等待队列和poll_table数据结构.png)
+
+
+
+> 4/17
+
+[韦东山：Linux驱动基石之POLL机制-腾讯云开发者社区-腾讯云](https://cloud.tencent.com/developer/article/1708996)
+
+对于Poll（==轮询==）机制的补充理解：
+
+![](figure/POLL机制理解.png)
+
+注意几点： ① drv_poll要把线程挂入队列wq，但是并不是在drv_poll中进入休眠，而是在调用drv_poll之后休眠 
+
+② drv_poll要返回数据状态 
+
+③ APP调用一次poll，有可能会导致drv_poll被调用2次
+
+④ 线程被唤醒的原因有2：中断发生了去队列wq中把它唤醒，超时时间到了内核把它唤醒
+
+⑤ APP要判断poll返回的原因：有数据，还是超时。有数据时再去调用read函数。
+
+**使用poll机制时，驱动程序的核心就是提供对应的drv_poll函数。 在drv_poll函数中要做2件事： **
+
+① 把当前线程挂入队列wq：poll_wait APP调用一次poll，可能导致drv_poll被调用2次，但是我们并不需要把当前线程挂入队列2次。 可以使用内核的函数poll_wait把线程挂入队列，如果线程已经在队列里了，它就不会再次挂入。 
+
+② 返回设备状态： APP调用poll函数时，有可能是查询“有没有数据可以读”：POLLIN，也有可能是查询“你有没有空间给我写数据”：POLLOUT。 所以drv_poll要返回自己的当前状态：(POLLIN | POLLRDNORM) 或 (POLLOUT | POLLWRNORM)。 POLLRDNORM等同于POLLIN，为了兼容某些APP把它们一起返回。 POLLWRNORM等同于POLLOUT ，为了兼容某些APP把它们一起返回。
+
+
+
+Linux APP系统调用，基本都可以在它的名字前加上“sys_”前缀，这就是它在内核中对应的函数。比如系统调用open、read、write、poll，与之对应的内核函数为：sys_open、sys_read、sys_write、sys_poll。 对于系统调用poll或select，它们对应的内核函数都是sys_poll。
+
+------
+
+> 4/21
+
+缓冲和缓存对比：
+
+| 概念               | 解释                                                         |
+| ------------------ | ------------------------------------------------------------ |
+| **缓冲（Buffer）** | 用于**协调速度不一致的两个设备/系统之间的数据传输**，比如输入输出（I/O）操作时临时存放数据。它是“顺利传输”的中介。 |
+| **缓存（Cache）**  | 用于**提升访问速度**，通过临时存储一部分“经常使用”的数据，避免每次都从慢速设备（如磁盘、网络）重新读取。 |
+
+内存资源管控（模拟项目：远程监控AI识别）
+
+功能：1）视频采集；2）本地存储；3）网络传输；4）本地显示；5）AI识别；
+
+动因：  1）磁盘IO太多（要求使用缓冲 和 缓存机制）
+
+​			2）拷贝操作太多 （要求使用 DMA 机制）
+
+​			3）内存不够 （要求使用 SWAP; 如果频繁爆内存则要考虑在硬件上增大内存空间）
+
+​			4）频繁申请然后释放内存 （内存池；一开始就一次性申请一大块内存，然后将它分成多个固定大小的小块（如每块 128 字节），以后只在这些块中进行“分配”和“回收”；避免了频繁申请释放带来的耗时问题）
+
+​			5）越运行，越卡，甚至死机（内存泄露）
+
+​			6）多任务，多设备 最优化（无锁化  环形缓冲区）
+
+​			7）安全 易用 独立 （映射）
+
+​			8）内核到应用空间的频繁拷贝 （mmap）
+
+------
+
+映射机制（MMU）
+
+*在 Linux 中，设备的寄存器地址通常是物理地址（比如外设的控制寄存器可能是 `0xF0000000`），而内核代码不能直接访问物理地址，必须先映射成内核能访问的虚拟地址。内核为每个进程单独维护属于这个进程的页表（记录了虚拟和物理地址之间的映射关系）*
+
+==直接映射（静态）和 动态映射：==
+
+​	是两种常见的物理内存到虚拟地址的映射机制；
+
+​	**直接映射**是内核在初始化时**自动建立的**一段**线性映射**，主要用于管理**普通 RAM（主内存）**；
+
+​	**动态映射**（如ioremap）是内核或驱动开发者在运行时**手动建立的**一段映射，主要用于访问**I/O 设备寄存器、外设内存空间**。
+
+
+
+==进程和进程之间如何传输数据==（共享内存 shmat ; 直接在物理层读写，看起来像是跨过映射）
+
+| 方法                                | 是否跨进程 | 内存拷贝次数           | 是否内核参与 | 适用场景           | 传输效率     |
+| ----------------------------------- | ---------- | ---------------------- | ------------ | ------------------ | ------------ |
+| 管道 / FIFO                         | ✅          | 2 次（用户→内核→用户） | ✅            | 小量数据           | 中           |
+| 消息队列                            | ✅          | 2 次                   | ✅            | 结构化数据         | 中           |
+| 信号                                | ✅          | 0（仅传事件）          | ✅            | 控制/同步          | 低           |
+| **共享内存（shm）**                 | ✅          | ⚠️0 次（手动控制同步）  | ❌            | **高效、大数据**   | 🚀最快        |
+| socket / UNIX 域套接字              | ✅          | 2 次                   | ✅            | 网络透明、稳定性好 | 中偏上       |
+| mmap 文件映射                       | ✅          | 0 或 1 次              | ⚠️半内核态    | 大文件共享         | 高           |
+| Zero-Copy socket（sendfile/splice） | ✅          | 0 次                   | ✅            | 文件/数据转发      | 高（但受限） |
+
+
+
+>4/22
+
+共享内存（shm）：多个进程共享同一块物理内存，这是进程间通讯的最快方法；（==API如下==）
+
+```c
+//API
+//申请共享内存(key值，大小，权限等标志)
+int shm=shmget((key_t)1006,4096,IPC_CREAT);
+if(shm<0){
+	perror("shmget");
+	return 2;
+}
+
+//申请完了，还要把这块内存映射到应用层
+char* mem=shmat(shm,NULL,0);
+
+//后面就可以 操作 mem 这个指针进行读写了
+
+```
+
+
+
+内存管理之文件内存映射（mmap）：外存（磁盘/flash）的文件映射到应用层（跨越内核层）
+
+1、简介
+
+文件内存映射（Memory-mapped File） 是一种**将文件内容直接映射到进程虚拟地址空间**的技术。通过调用 `mmap()` 系统调用，程序可以像访问普通内存一样访问文件数据，而无需反复使用 `read()` 或 `write()` 进行数据拷贝。内存映射提高了文件访问效率，适合处理大文件、共享内存和与设备驱动的交互等场景。常见用法包括读取大规模日志、图像处理、数据库缓存等。
+
+
+
+> 4/23
+
+内存碎片
+
+
+
+> 5/7
+
+现在在 emmc 上刷上 jetpack-4.5 (对应 L4T 版本为 35.5)
+
+只有在这种情况下，才能正常使用 sd 卡里的镜像；
+
+注意：烧写之前要修改设备树文件，使其能够识别sd卡；
+
+
+
+
+
+> 5/9 V4L2开始学习
+
+```c
+#include <linux/videodev2.h>
+
+struct v4l2_pix_format {
+    __u32          width;         // 图像宽度（像素）
+    __u32          height;        // 图像高度（像素）
+    __u32          pixelformat;   // 像素格式（FOURCC 编码）
+    __u32          field;         // 场格式（逐行、交错、任意）
+    __u32          bytesperline;  // 每行字节数
+    __u32          sizeimage;     // 一帧图像总字节数
+    __u32          colorspace;    // 颜色空间（sRGB, JPEG, BT.601 等）
+    __u32          priv;          // 驱动私有使用字段
+    __u32          flags;         // 扩展标志位（如压缩、稀疏帧等）
+    union {
+        __u32      ycbcr_enc;     // YCbCr 编码方式（BT.601、BT.709等）
+        __u32      hsv_enc;       // HSV 编码方式（不常用）
+    };
+    __u32          quantization;  // 量化范围（full range 或 limited）
+    __u32          xfer_func;     // 光电转换函数（sRGB, Rec709等）
+};
+
+```
+
+
+
+```c
+1. VIDIOC_REQBUFS   // 请求缓冲区
+2. VIDIOC_QUERYBUF  // 查询地址 + 大小
+3. mmap()           // 建立用户空间访问
+4. VIDIOC_QBUF      // 入队，交给驱动采集
+5. VIDIOC_STREAMON  // 开始采集
+6. VIDIOC_DQBUF     // 拿到图像数据
+7. 处理数据 → 再 VIDIOC_QBUF 交回循环
+
+```
+
+
+
+> 5/10
+>
+> 在 V4L2 框架下取一帧图像，主要有设备打开、能力查询、请求缓冲区、入队缓冲区、启动流、出队缓冲区、处理数据、重新入队缓冲区和停止流这几个必要步骤，以下是详细总结：
+
+````
+
+### 1. 打开设备
+- **功能**：打开视频设备文件，获取文件描述符用于后续操作。
+- **API**：`open(const char *pathname, int flags)` 
+- **示例代码**：
+```c
+int fd = open("/dev/video0", O_RDWR);
+```
+
+### 2. 查询设备能力
+- **功能**：查询设备支持的功能和特性，如是否支持视频捕获等。
+- **API**：`ioctl(int fd, unsigned long request, ...)` ，请求码为 `VIDIOC_QUERYCAP`
+- **示例代码**：
+```c
+struct v4l2_capability cap;
+ioctl(fd, VIDIOC_QUERYCAP, &cap);
+```
+
+### 3. 请求缓冲区
+- **功能**：向设备请求一定数量的缓冲区用于存储图像数据。
+- **API**：`ioctl(int fd, unsigned long request, ...)` ，请求码为 `VIDIOC_REQBUFS`
+- **示例代码**：
+```c
+struct v4l2_requestbuffers req;
+req.count = 4; // 请求 4 个缓冲区
+req.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+req.memory = V4L2_MEMORY_MMAP;
+ioctl(fd, VIDIOC_REQBUFS, &req);
+```
+
+### 4. 入队缓冲区
+- **功能**：将空闲的缓冲区放入设备的缓冲区队列，供设备填充数据。
+- **API**：`ioctl(int fd, unsigned long request, ...)` ，请求码为 `VIDIOC_QBUF`
+- **示例代码**：
+```c
+struct v4l2_buffer buf;
+buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+buf.memory = V4L2_MEMORY_MMAP;
+buf.index = 0;
+ioctl(fd, VIDIOC_QBUF, &buf);
+```
+
+### 5. 启动数据流
+- **功能**：开始从设备采集图像数据，将数据填充到入队的缓冲区中。
+- **API**：`ioctl(int fd, unsigned long request, ...)` ，请求码为 `VIDIOC_STREAMON`
+- **示例代码**：
+```c
+enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+ioctl(fd, VIDIOC_STREAMON, &type);
+```
+
+### 6. 出队缓冲区
+- **功能**：从设备的缓冲区队列中取出一个已填充好图像数据的缓冲区。
+- **API**：`ioctl(int fd, unsigned long request, ...)` ，请求码为 `VIDIOC_DQBUF`
+- **示例代码**：
+```c
+struct v4l2_buffer buf;
+buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+buf.memory = V4L2_MEMORY_MMAP;
+ioctl(fd, VIDIOC_DQBUF, &buf);
+```
+
+### 7. 处理图像数据
+- **功能**：对从出队缓冲区中获取的图像数据进行处理，如显示、保存等。
+- **API**：根据具体处理需求使用不同的库和函数，无固定 V4L2 API
+- **示例代码（简单打印信息）**：
+```c
+printf("Captured buffer index: %d\n", buf.index);
+```
+
+### 8. 重新入队缓冲区
+- **功能**：将处理完数据的缓冲区重新放入设备的缓冲区队列，供设备再次使用。
+- **API**：`ioctl(int fd, unsigned long request, ...)` ，请求码为 `VIDIOC_QBUF`
+- **示例代码**：
+```c
+ioctl(fd, VIDIOC_QBUF, &buf);
+```
+
+### 9. 停止数据流
+- **功能**：停止从设备采集图像数据。
+- **API**：`ioctl(int fd, unsigned long request, ...)` ，请求码为 `VIDIOC_STREAMOFF`
+- **示例代码**：
+```c
+ioctl(fd, VIDIOC_STREAMOFF, &type);
+```
+
+### 10. 关闭设备
+- **功能**：关闭之前打开的视频设备文件，释放资源。
+- **API**：`close(int fd)`
+- **示例代码**：
+```c
+close(fd);
+
+````
+
+
+
+> 5/11
+
+```c
+//include/media/v4l2-dev.h  对上: 管理v4l2设备，向应用暴露控制接口
+// 定义视频设备对象: 创建 /dev/video0, 把操作暴露给应用层，管理v4l2设备
+struct video_device   
+{
+    const struct v4l2_file_operations *fops; //v4l2设备的文件操作 
+    struct device dev; //内核设备模型支持，允许 video_device 被作为 struct device 使用，从而享受内核对设备提供的一系列通用功能
+    struct cdev *cdev; //继承于 字符设备，为这个摄像头设备提供最基本的系统调用接口；video_device 提供设备抽象，cdev 提供用户接口；
+    struct v4l2_device *v4l2_dev; //设备组统一管理和资源共享，分层思想（将子设备用链表串起来，便于统一管理）
+    struct vb2_queue *queue; //videobuf2 的队列 -> 构建环形缓冲区(无锁化)
+    const struct v4l2_ioctl_ops *ioctl_ops;  //v4l2的ioctl操作集
+};
+```
+
+ ==V4L2 系统调用分层框图==
+
+```c
+【应用层】
+┌─────────────────────────────────────┐
+│ open("/dev/video0"), ioctl()│  <-- 用户空间调用系统接口
+└─────────────────────────────────────┘
+                                             │
+                                             ▼
+【内核字符设备层】
+┌─────────────────────────────────────┐
+│ struct cdev                 │  <-- 内核中用于注册字符设备
+│   ↳ ops = &v4l2_fops        │      （标准 file_operations）
+└─────────────────────────────────────┘
+                                             │
+                                             ▼
+【V4L2 框架公共接口】
+┌─────────────────────────────────────┐
+│ struct file_operations v4l2_fops  <-- 所有 video 设备共用
+│   .open   = v4l2_open()          						     │
+│   .ioctl  = v4l2_ioctl()          						    │
+│   .read   = v4l2_read()        						      │				
+│   ...                             								│
+└─────────────────────────────────────┘
+                                             │
+                                             ▼
+【video_device 的封装层】
+┌─────────────────────────────────────┐
+│ struct video_device vdev;              				   	   │
+│   ↳ fops = &my_v4l2_file_ops;       │ <-- 驱动开发者实现的接口
+└─────────────────────────────────────┘
+                                             │
+                                             ▼
+【驱动开发者实现的接口】
+┌─────────────────────────────────────┐
+│ struct v4l2_file_operations my_v4l2_file_ops;     	     │
+│   .open   = my_driver_open();                   			     │
+│   .ioctl  = my_driver_ioctl();                 				  │
+│   .read   = my_driver_read();               				    │
+│   ...                                            						   │
+└─────────────────────────────────────┘
+
+```
+
+V4L2 框架公共接口对系统调用进一步做了封装，其中的`v4l2_open()` 是所有 V4L2 字符设备的统一入口函数，它做了通用层的初始化、检查和封装工作，最终由`vdev->fops->open(filp)`跳转到你驱动层的 `v4l2_file_operations.open()` 函数去执行设备特定的打开操作;
+
+
+
+`v4l2_ioctl_ops` 是 V4L2 驱动与用户空间 `ioctl()` 接口通信的核心接口表，你只需要实现这个结构体中的回调函数，V4L2 框架就会自动解析 `VIDIOC_*` 命令并分发给你，实现图像格式设置、流控制、缓冲管理等核心功能; 调用流程：
+
+```c
+用户空间 ioctl(fd, VIDIOC_G_FMT, ...)
+         ↓
+v4l2_ioctl(filp, VIDIOC_G_FMT, ...)
+         ↓
+→ 查找 video_device->ioctl_ops
+→ 调用 ioctl_ops->vidioc_g_fmt_vid_cap(filp, arg)
+
+```
+
+------
+
+==video_device 和 v4l2_device 之间的关系：==
+
+`v4l2_device` :是一个代表“**整个 V4L2 多媒体设备**”的结构体，表示一个驱动内部的逻辑控制核心（驱动核心）;
+
+`video_device`:是代表一个“**具体节点功能**”的结构体，通常对应 `/dev/video0`、`/dev/video1` 这样的设备文件;
+
+同一个 `v4l2_device` 表示一个物理设备或驱动核心，多个 `video_device` 对应其上提供的不同“功能接口”，每个 `video_device` 生成一个独立的 `/dev/videoX` 设备节点。
+
+多个 `video_device` 可以共享一个 `v4l2_device`，即“多对一”关系:
+
+一个物理摄像头或ISP系统往往有多个输出或用途，例如：
+
+| 功能               | video_device 节点 |
+| ------------------ | ----------------- |
+| 主 RGB 图像输出    | `/dev/video0`     |
+| 深度图像输出       | `/dev/video1`     |
+| 红外通道输出       | `/dev/video2`     |
+| 视频编码（如H264） | `/dev/video3`     |
+
+这些 **功能节点（video_device）** 来自于同一个 **底层控制器（v4l2_device）**，所以它们挂载在同一个 `v4l2_device` 上。
+
+
+
+```c
+struct v4l2_device {
+	struct device *dev;
+	struct list_head subdevs;  *****用来挂载多个子设备节点
+	spinlock_t lock;
+	char name[V4L2_DEVICE_NAME_SIZE];
+	void (*notify)(struct v4l2_subdev *sd,
+			unsigned int notification, void *arg);
+	struct v4l2_ctrl_handler *ctrl_handler;
+	struct v4l2_prio_state prio;
+	struct kref ref;
+	void (*release)(struct v4l2_device *v4l2_dev);
+};
+```
+
+在复杂平台（比如 ISP+sensor 架构）中，sensor 是挂在 I2C 总线上的独立设备，叫 `v4l2_subdev`。这些 subdev 会挂在 `v4l2_device.subdevs` 链表上。多个 `video_device` 要访问这些 subdev（例如设置曝光、对焦），就必须通过 **同一个 `v4l2_device` 桥梁** 来通信
+
+```c
+                                      		      struct v4l2_device
+                                        ┌─────────────────────┐
+                                        │    	   ISP、I2C、控制状态等     │
+                                        │  		     subdev 链表      	     │
+                                        └─────────▲────────────┘
+                                                 		     │
+         ┌───────────────────────┴────────────────────────┐
+         │                        					│                     					       │
+┌────────────────┐     ┌────────────────┐        ┌────────────────┐
+│ video_device 0             │      │ 	 video_device 1     │  	    ...  │ video_device N  		  │
+│ /dev/video0                 │      │ 	   /dev/video1         │      	   │ /dev/videoN     	      │
+└────────────────┘     └────────────────┘        └────────────────┘
+
+```
+
+上图表示 `v4l2_device` 这个结构体可以被多个 `video_device` 共用，并且结构体 `v4l2_device`中的 `subdev`这个链表（双向的）也用来支持 **子设备架构**；
+
+------
+
+进一步理解==v4l2_subdev 以及 v4l2_subdev_ops==
+
+（一）首先，我们要知道，一个嵌入式摄像头模块可以由多个子设备组成，在 V4L2 中，每一部分可以抽象为一个 `v4l2_subdev`，挂在同一个 `v4l2_device` 上（如前所述）
+
+```scss
+Sensor (I2C 芯片)
+   ↓
+MIPI CSI-2 接口
+   ↓
+ISP (图像信号处理器)
+   ↓
+Video Capture Device (/dev/video0)
+```
+
+| v4l2_subdev 的功能         | 说明                                                     |
+| -------------------------- | -------------------------------------------------------- |
+| 表示子设备                 | 通常用于 sensor、ISP、解码器、MIPI 接口等                |
+| 模块化设计                 | 每个模块独立驱动，组合注册                               |
+| 统一访问接口               | 所有子模块通过 `v4l2_subdev_call()` 访问                 |
+| 适配 media controller 拓扑 | 可在 `/dev/media0` 中呈现设备拓扑结构                    |
+| 与主设备协作               | 可响应主 `video_device` 的设置请求，例如格式、控制参数等 |
+
+```c
+struct v4l2_subdev { 
+    struct list_head list;
+    struct v4l2_device *v4l2_dev; //关联 v4l2设备
+    const struct v4l2_subdev_ops *ops; //子设备操作集
+    const struct v4l2_subdev_internal_ops *internal_ops;//子设备的内部操作集
+    struct v4l2_ctrl_handler *ctrl_handler;
+    char name[V4L2_SUBDEV_NAME_SIZE];
+    struct video_device *devnode; //使得某个 v4l2_subdev 也可以作为一个设备节点被用户访问（使其暴露到应用层成为可能）
+    struct device *dev; 
+};
+```
+
+（二）`v4l2_subdev_ops`是子设备对外暴露的**操作函数集合**，相当于 `video_device` 中的 `v4l2_ioctl_ops`
+
+```c
+struct v4l2_subdev_ops {
+    const struct v4l2_subdev_core_ops    *core; //核心操作集，通用核心控制，如 reset、power_on、s_stream 等；例如：core->s_power()
+    const struct v4l2_subdev_video_ops   *video; //视频操作集；例如：video->s_stream()
+    const struct v4l2_subdev_pad_ops     *pad;
+    const struct v4l2_subdev_sensor_ops  *sensor;  // 非标准扩展
+    ...
+};
+```
+
+结构关系：
+
+```csharp
+      			  struct v4l2_device
+        ┌──────────────────────┐
+        │    		subdevs 链表          	│
+        └──────────┬───────────┘
+                                   │
+              ┌────────┴─────────┐
+              ▼                 			     ▼
+        struct v4l2_subdev      struct v4l2_subdev
+         (sensor (I2C 芯片))                  (ISP)
+              ↑                    			        ↑
+              │                    			       │
+              │                  			      │
+        主设备通过 `v4l2_subdev_call()` 向子设备发起请求
+
+```
+
+gst-launch-1.0 nvarguscamerasrc ! \
+  'video/x-raw(memory:NVMM), width=640, height=480, framerate=30/1' ! \
+  nvvidconv ! nvv4l2h264enc ! rtph264pay config-interval=1 pt=96 ! \
+  udpsink host=192.168.74.128 port=5000
+
+
+
+gst-launch-1.0 nvarguscamerasrc ! \
+  'video/x-raw(memory:NVMM), width=640, height=480, framerate=30/1' ! \
+  nvvidconv ! nvv4l2h264enc ! h264parse ! mpegtsmux ! \
+  udpsink host=192.168.74.128 port=5000
+
+
+
+gst-launch-1.0 nvarguscamerasrc ! \
+  'video/x-raw(memory:NVMM), width=640, height=480, framerate=30/1' ! \
+  nvvidconv ! jpegenc ! multipartmux ! tcpserversink host=192.168.74.128 port=8080
+
+
+
+板子推流存在 2s 左右的延时；
+
+Qt 解析存在 8s 左右的延时； 
+
+
+
+> 5/18
+
+```c
+drivers/media/v4l2-core/ // v4l2 核心框架： 构建内核中标准视频设备驱动的框架
+                         //为应用的视频操作提供统一的接口函数	
+drivers/media/platform/  //不同平台的soc驱动(如英伟达，三星)
+                         //不同平台,它们对视频 vi进入SOC内部处理各家都不一样的
+//不同类型的v4l2子设备
+drivers/media/usb/     //usb接口的摄像头驱动   
+drivers/media/i2c/     //i2c接口的摄像头驱动  
+drivers/media/spi/     //spi接口的摄像头驱动
+drivers/media/pci/     //pci接口的摄像头驱动
+drivers/media/adio/    //无线电设备 
+drivers/media/tuners/  //调谐收音设备                 
+drivers/media/mmc      //mmc接口的设备
+       
+//英伟达平台(tegra)独立出来驱动代码 
+//注：它由原厂驱动工程师提供，二次开发时，要参考它，
+//开发针对不同平台的摄像头驱动，这也是摄像头驱动开发难点所
+nvidia/drivers/media/i2c/  //i2c接口的摄像头驱动
+         //如imx219.c的摄像头驱动，它是根据英伟达平台定制的驱动。
+         //如果你的摄像头该目录没有，需要按英伟达平台框架，重新改写。
+nvidia/drivers/media/platform/tegra/camera //独立出来tegra平台摄像头通用代码
+nvidia/drivers/media/platform/tegra-vivid/ //虚拟的摄像头的测试驱动
+nvidia/drivers/media/platform/tegra/vi  //视频输入模块
+```
+
+
+
+> 5/21
+
+高效源码阅读与定位的方法论:
+
+### 一、先“看结构”，再“读源码”是第一原则：
+
+建议你自己画出（或者参考已有的）**模块结构图 / 调用关系图**，例如 Jetson 摄像头驱动结构如下：
+
+```
+设备树 DTS
+   ↓
+platform 驱动（tegra_vi、tegra_camera_platform）
+   ↓
+i2c sensor 驱动（imx219.c、ov5647.c）
+   ↓
+camera_common + tegracam_device 抽象层
+   ↓
+V4L2 subdev 注册
+   ↓
+用户态 media-ctl / v4l2-ctl
+
+```
+
+### 二、使用这类“源码快速定位”策略：
+
+| 工具 / 方法                                | 用法                                          |
+| ------------------------------------------ | --------------------------------------------- |
+| `cscope` / `ctags`                         | 跟踪结构体、函数定义/引用最快方式             |
+| `git grep "xxx"`                           | 精确搜索字符串或结构体成员出现的地方          |
+| `dev_dbg()` 调试                           | 源码中插桩调试打印出关键字段（适合内核模块）  |
+| 阅读 `probe()` / `register()` 开头函数     | 大多数驱动逻辑从 `xxx_probe()` 开始，优先读它 |
+| 看 `Makefile` / `Kconfig` 看哪些模块被启用 | 明确哪些代码是“激活”的                        |
+| 看设备树 `compatible` 匹配的文件           | 明确设备初始化的起点（i2c、platform 等）      |
+
+### 三、源码阅读中避免“死盯细节”的技巧：
+
+| 错误做法                              | 正确替代                                                     |
+| ------------------------------------- | ------------------------------------------------------------ |
+| 一层层追函数                          | 只追 **2层以内**（例如从 probe → register → ops）            |
+| 盲读 `.c` 文件                        | 优先读 `.h` 中的结构体 + `.c` 中 `init/probe` 入口           |
+| 一开始就读 `v4l2_subdev_ops` 每个函数 | 先读注册过程，看驱动用没用这些 ops                           |
+| 被结构体耦合搞乱                      | 只抓住主线：`struct camera_common_data`、`tegracam_device`、`v4l2_subdev`，其他先略过 |
+
+### 四、三步法快速分析驱动模块
+
+#### ① 看初始化函数（`probe()`）
+
+- 明确结构体分配方式（`camera_common_data`、`tegracam_device`）
+- 找 `ops` 函数表初始化
+- 看设备树 compatible 匹配关系
+
+#### ② 找关键调用链
+
+```
+tegracam_device_register()
+tegracam_v4l2subdev_register()
+```
+
+这两个函数注册了 V4L2 子设备，连接了 media graph —— **只需要理解调用这两者之前的数据结构搭建过程即可。**
+
+#### ③ 看 `sensor_ops` 与 `ctrl_ops`
+
+这些是你需要自己写的部分（比如设置格式、启动流、控制曝光）：
+
+```c
+static const struct tegracam_sensor_ops ov5647_tegracam_sensor_ops = {
+    .probe   = ov5647_probe,
+    .init    = ov5647_init,
+    .start_streaming = ov5647_start_stream,
+    .stop_streaming  = ov5647_stop_stream,
+    .set_mode        = ov5647_set_mode,
+};
+```
+
+------
+
+```c
+初始化流程图：
+---------------------------------------------------------------------
+probe()
+  ↓
+申请 priv / tc_dev 内存
+  ↓
+设置 tc_dev 参数（ops / regmap / dev / client）
+  ↓
+注册 tegracam_device_register() → 初始化电源、时钟、regmap
+  ↓
+保存 priv → tc_dev 的私有字段
+  ↓
+imx219_board_setup() → 读取 sensor ID
+  ↓
+tegracam_v4l2subdev_register() → 注册 V4L2 节点
+----------------------------------------------------------------------
+    
+static int imx219_probe(struct i2c_client *client,
+	const struct i2c_device_id *id)
+{
+    //为什么在这个probe函数里面用到的device结构体指针不是自己定义的，而是来自i2c这个结构体??
+    //答：这里只是用一个结构体指针指向了 i2c 设备的地址（类似做了个变量代换）
+	struct device *dev = &client->dev; //用设备指针申请资源，绑定生命周期，驱动卸载时自动释放内存
+	struct tegracam_device *tc_dev;
+	struct imx219 *priv;
+	int err;
+
+	dev_dbg(dev, "probing v4l2 sensor at addr 0x%0x\n", client->addr);
+
+	if (!IS_ENABLED(CONFIG_OF) || !client->dev.of_node)
+		return -EINVAL;
+
+	priv = devm_kzalloc(dev,
+			sizeof(struct imx219), GFP_KERNEL);
+	if (!priv)
+		return -ENOMEM;
+
+	tc_dev = devm_kzalloc(dev,
+			sizeof(struct tegracam_device), GFP_KERNEL);
+	if (!tc_dev)
+		return -ENOMEM;
+
+	priv->i2c_client = tc_dev->client = client;
+	tc_dev->dev = dev;
+	strncpy(tc_dev->name, "imx219", sizeof(tc_dev->name));
+	tc_dev->dev_regmap_config = &sensor_regmap_config;
+	tc_dev->sensor_ops = &imx219_common_ops;
+	tc_dev->v4l2sd_internal_ops = &imx219_subdev_internal_ops;
+	tc_dev->tcctrl_ops = &imx219_ctrl_ops;
+
+	err = tegracam_device_register(tc_dev);
+	if (err) {
+		dev_err(dev, "tegra camera driver registration failed\n");
+		return err;
+	}
+	priv->tc_dev = tc_dev;
+	priv->s_data = tc_dev->s_data;
+	priv->subdev = &tc_dev->s_data->subdev;
+	tegracam_set_privdata(tc_dev, (void *)priv);
+
+	err = imx219_board_setup(priv);
+	if (err) {
+		tegracam_device_unregister(tc_dev);
+		dev_err(dev, "board setup failed\n");
+		return err;
+	}
+
+	err = tegracam_v4l2subdev_register(tc_dev, true);
+	if (err) {
+		dev_err(dev, "tegra camera subdev registration failed\n");
+		return err;
+	}
+
+	dev_dbg(dev, "detected imx219 sensor\n");
+
+	return 0;
+}
+```
+
+🚩在 `probe()` 中使用 `client->dev` 是因为 Linux 内核**通过总线子系统为每个设备已经创建好了 `device` 对象**，你只需要利用它来申请资源、打印日志、解析设备树等。不要自己定义 `device`，只需要使用它即可。
+
+在 Linux 设备模型中，`device` 是由总线/核心框架**在设备注册阶段自动创建**的，而不是你作为驱动开发者自己创建的。你的任务是**通过内核给你的 `struct device *dev` 来申请/绑定资源，而不是自己造它**。
+
+```c
+client         --->  struct i2c_client
+   |
+   |  （封装）
+   ↓
+dev            --->  struct device （统一接口）
+   ↓
+|__ 电源 / 时钟 / 资源 / 设备树节点
+|__ 日志上下文
+|__ 用于 devm_*() 系列的内存和资源自动释放
+
+```
+
+------
+
+在 Linux 内核中，设备不是“你在驱动里随便 new 一个结构体”——它是一套标准 **Bus → Device → Driver** 的绑定与生命周期框架。
+
+我们来用图先快速总结这套关系：
+
+```c#
+         ┌────────────┐
+         │  Bus 总线              │（I2C / SPI / PCI / USB / Platform）
+         └────┬───────┘
+                     │
+        注册 device（硬件）
+                     ↓
+        ┌──────────────┐
+        │ struct device│
+        └──────────────┘
+                      ↑
+        注册 driver（软件）
+                      ↓
+        ┌──────────────┐
+        │ struct driver│
+        └──────────────┘
+
+系统通过 Bus 的 match() 回调函数，把 device 和 driver 绑定起来
+
+```
+
+以 `imx219` 驱动为例，它属于 **I2C 子系统**，是这样匹配的：
+
+```c
+static const struct of_device_id imx219_of_match[] = {
+    { .compatible = "nvidia,imx219", },
+    { },
+};
+static struct i2c_driver imx219_i2c_driver = {
+    .driver = {
+        .name = "imx219",
+        .of_match_table = imx219_of_match,
+    },
+    .probe = imx219_probe,
+};
+```
+
+通过以上驱动代码，我们注册了一个叫 `"imx219"` 的驱动，**等待有人来匹配它**。
+
+Jetson的设备树：
+
+```c
+i2c@7000c400 {
+    imx219_a@10 {
+        compatible = "nvidia,imx219";
+        reg = <0x10>; // I2C地址
+        ...
+    };
+};
+```
+
+Jetson 内核启动后，解析设备树，发现有个 I2C 设备 `"nvidia,imx219"`，于是：
+
+💡 **内核就会自动构造出一个 `struct i2c_client` → 里面含有 `struct device dev`，并尝试通过 `of_match_table` 找到你的驱动进行匹配。**
+
+一旦匹配成功，就调用你的 `probe()`，并把构建好的 `i2c_client`（含 `dev`）传进来！
+
+#### 可以对这个 `dev` 做哪些事情？
+
+| 用法           | 示例                           | 解释                               |
+| -------------- | ------------------------------ | ---------------------------------- |
+| 申请资源       | `devm_kzalloc(dev, ...)`       | 绑定生命周期，设备卸载时自动释放   |
+| 获取设备树节点 | `dev->of_node`                 | 获取 `reset-gpio`、`regulators` 等 |
+| 获取电源       | `devm_regulator_get(dev, ...)` | 找到 AVDD/IODD 的电压域控制        |
+| 获取时钟       | `devm_clk_get(dev, ...)`       | 分配 MCLK                          |
+| 日志输出       | `dev_dbg(dev, "msg")`          | 输出带设备上下文的调试信息         |
+
+
+
+> 关于 ELF 文件
+
+在嵌入式中，程序的运行分为两种：
+
+一种是有操作系统的环境下执行一个应用程序(Linux下：ELF文件，Windows下：exe)；
+
+​		ELF文件出了基本的代码段、数据段，还有文件头、符号表、等用来辅助程序运行的信息；
+
+另一种是在无操作系统下执行一个裸机程序(BIN/HEX)；
+
+​		BIN/HEX为纯指令文件；
+
+| 区域名称                       | 作用说明                                       | 是否必须         | 常见内容举例                                                 |
+| ------------------------------ | ---------------------------------------------- | ---------------- | ------------------------------------------------------------ |
+| **ELF Header**                 | 文件的元信息，如架构类型、入口地址、偏移位置等 | ✅ 必须           | 入口点地址（Entry Point）、段表偏移等                        |
+| **Program Header Table (PHT)** | 指示哪些部分要被加载到内存（用于运行）         | ✅ 程序用         | `.text`, `.data`, `.interp`, 动态段等                        |
+| **Section Header Table (SHT)** | 指示各个节的名称和位置（用于链接）             | 可选（可剥离）   | `.text`, `.data`, `.bss`, `.symtab`, `.strtab`, `.debug*` 等 |
+| **.text 段**                   | 存放程序代码（机器指令）                       | ✅ 必须           | 编译后的函数体等                                             |
+| **.data 段**                   | 存放已初始化的全局/静态变量                    | ✅ 必须           | int g = 42;                                                  |
+| **.bss 段**                    | 存放未初始化的全局/静态变量（运行时清零）      | ✅ 必须           | int g;                                                       |
+| **.rodata 段**                 | 只读数据，比如字符串常量                       | 常见             | `"hello world"` 等                                           |
+| **.symtab / .strtab**          | 符号表 / 字符串表，包含函数和变量的名字等      | ✅（非 stripped） | `main`, `printf` 等符号                                      |
+| **.rel.plt / .rela.plt**       | 延迟绑定（lazy binding）重定位表，用于动态链接 | 动态链接时必有   | 外部函数调用绑定信息                                         |
+| **.dynamic 段**                | 动态链接信息，如依赖库、RPATH 等               | ✅ 动态链接时     | `libc.so`, `libm.so` 等                                      |
+| **.interp 段**                 | 指定解释器（动态链接器）的路径                 | ✅ 动态链接时     | `/lib64/ld-linux-x86-64.so.2`                                |
+| **.debug_\* 段**               | 调试信息（DWARF 格式）                         | 非必需           | 源码映射、变量名、类型信息等                                 |
+| **.comment / .note**           | 编译器元信息、构建版本                         | 可选             | GCC 版本，Build ID 等                                        |
+
+
+
+> 6/1
+
+下面针对你的两个问题，用中文做详细解答。
+
+------
+
+## 1）如何从代码中区分主线程和子线程？
+
+- **主线程（GUI 线程）**：
+   在 Qt 程序里，`main()` 函数运行的那条线程就是主线程。主线程通常负责创建 `QApplication`、构建主窗口、响应用户界面事件（如按钮点击、重绘等）。在你的例子中，主线程会创建 `VideoDecoderThread` 对象，然后调用 `decoder->start()`，并在主窗口里通过 `connect(decoder, &VideoDecoderThread::newFrameAvailable, this, &MainWindow::onNewFrame)` 这种方式连接信号槽，以便收到“有新帧可用”的通知后，在 UI 线程里把图像显示到 `videoLabel` 上。
+- **子线程（解码线程）**：
+   `VideoDecoderThread` 继承自 `QThread`，它内部重写了 `run()` 方法，并在 `decoder->start()` 时由 Qt 自动在新线程中执行 `run()`。运行 `run()` 的那条线程就是子线程，专门负责调用 OpenCV 的 `cap.read(frame)` 循环拉取帧、写入环形缓冲、统计 FPS/延迟并发信号。因为 `run()` 一旦开始运行，就是一个独立于主线程的线程，主线程里正常执行 UI 逻辑，不会被拉帧循环阻塞。
+
+### 如何在代码里看出是哪段在子线程？
+
+1. `VideoDecoderThread *decoder = new VideoDecoderThread(...);` 这只是在主线程里创建了一个线程对象，并不会立刻启动线程。
+2. 调用 `decoder->start();` 后，Qt 会帮你在后台创建一个实际的操作系统线程，并让该线程调用 `VideoDecoderThread::run()`。
+   - 也就是说，运行到 `run()` 方法里面的代码，就属于子线程上下文。
+   - 而主线程继续执行自己的逻辑，比如等待信号、监听用户交互、绘制界面等。
+
+所以总的来说：
+
+- **凡是在 `run()` 方法里执行的，就是在子线程。**
+- **凡是在构造 `VideoDecoderThread`、调用 `start()` 之前或之后接收信号并更新 UI 的槽函数，都在主线程。**
+
+------
+
+## 2）为什么使用互斥锁时，只看到了加锁的语句，没有显式的解锁？
+
+在代码里，你看到的是这样：
+
+```cpp
+{
+    QMutexLocker locker(&bufferMutex);
+    ringBuffer[writeIndex % bufferSize] = frame.clone();
+    writeIndex++;
+}   // locker 的作用域结束，自动解锁
+```
+
+这里用到了 Qt 提供的 **`QMutexLocker`** 辅助类。它的特点是：
+
+1. **构造时加锁**：`QMutexLocker locker(&bufferMutex);` 这一行，构造函数内部会自动调用 `bufferMutex.lock()`，为当前线程加锁。
+2. **析构时自动解锁**：当 `locker` 变量所在的作用域结束（也就是右花括号 `}` 处），`locker` 会被自动销毁，其析构函数里会调用 `bufferMutex.unlock()`，实现自动解锁。
+
+也就是说，`QMutexLocker` 把“加锁”和“解锁”这两步操作都封装进一个 C++ 对象里：
+
+- 当你创建 `QMutexLocker locker(&mutex);` 时，就相当于手动写了 `mutex.lock();`。
+- 当 `locker` 变量离开作用域（析构）时，就相当于手动写了 `mutex.unlock();`。
+
+因此，你只在代码里显式看到“创建 `QMutexLocker`”这一句，不用写 `mutex.unlock()`。这种“在析构里自动解除锁”的方式能够确保：
+
+- 即使中间发生异常或函数提前 `return`，析构也会执行，自动 `unlock()`，避免死锁。
+- 代码更简洁、可读性更好，不容易忘记显式解锁。
+
+举个简化示例对比：
+
+```cpp
+void exampleBad() {
+    bufferMutex.lock();
+    // … 做一些可能抛异常或提前返回的操作 …
+    bufferMutex.unlock();  // 如果中间 return 或抛异常，会导致这一行无法执行，锁永远不会释放
+}
+
+void exampleGood() {
+    QMutexLocker locker(&bufferMutex);  // 构造时 lock()
+    // … 做一些操作 …
+    // 不论函数是否正常执行到结尾，locker 离开作用域时自动 unlock()
+}
+```
+
+在你的 `VideoDecoderThread` 里，无论是在写入环形缓冲（`run()` 里）还是在获取最新帧（`getLatestFrame()` 里）都用了 `QMutexLocker locker(&bufferMutex);`，正是为了利用这种“自动加锁、自动解锁”方式，保证线程安全同时让代码更加健壮。
+
+
+
+> 6/3
+
+在 Jetson Nano（Tegra210）平台中，**VI 驱动**是指 **Video Input（视频输入）子系统驱动**;
+
+它的核心作用是：
+ ✅ **接收来自 MIPI CSI 接口的原始图像数据流**
+ ✅ **将这些数据流存储到内存中**（比如 RAM buffer）
+ ✅ **为后续 ISP（Image Signal Processor）或者用户态应用提供接口**
+
+1️⃣ 摄像头驱动（sensor）负责：
+
+- 通过 I2C 总线**配置 sensor**（寄存器配置、模式切换）
+- 启动摄像头的 MIPI CSI 输出流
+
+2️⃣ VI 驱动负责：
+
+- 通过 MIPI CSI（nvcsi 子模块）**接收 sensor 输出的像素数据流**
+- **管理内存缓冲区**（DMA，硬件写入帧缓存）
+- 生成 **V4L2 流**，供用户态（GStreamer、OpenCV）采集
+
+重点：
+
+✅ **VI 驱动是平台驱动**
+
+- 不关心具体 sensor 是谁（只要是 MIPI 输出、符合规范）
+- 只管收数据、存内存
+
+✅ **sensor 驱动是 I2C 驱动**
+
+- 只负责配置寄存器，控制工作模式
+- 不直接参与大数据传输（真正的像素数据是 VI 接收）
+
+**设备树里面查找某个符号，最好使用 Vscode 的查找功能**
+
+| 主体         | 作用                                               |
+| ------------ | -------------------------------------------------- |
+| **host1x**   | “多媒体调度中心”，控制子模块互联、数据流、内存分配 |
+| **VI**       | 视频输入子模块（摄像头数据采集）                   |
+| 用户访问视频 | 通过 V4L2 层，底层由 host1x 调度 VI 把数据写内存   |
+
+
+
+> 6/7
+
+将botsh Agent移植到板子上，注意以下几点：
+
+1、创建python3.8的虚拟环境，安装openai以及其他相关包；
+
+2、修改botsh.py这个脚本的第一行，即python解释器路径（改成上一步骤的虚拟环境中路径）
+
+3、在./bashrc中添加alias，方便在任意路径下唤起Agent;
